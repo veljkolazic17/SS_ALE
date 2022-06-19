@@ -2,11 +2,13 @@
 #include <vector>
 
 class Lines {
+  public:
+    Lines();
 
-  Line* getLine(int index);
-  void putLine(Line* line);
+    ~Lines();
 
+    Line* getLine(int index);
+    void putLine(Line* line);
   private:
-    std::vector<Line*> lines;    
-
+    std::vector<Line*>* lines;    
 };

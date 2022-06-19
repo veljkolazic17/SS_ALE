@@ -11,8 +11,10 @@ class Instruction{
     Instruction(InstructionTypes instruction_type, Argument* argument);
     Instruction(InstructionTypes instruction_type, Argument* argument1, Argument* argument2);
 
+    ~Instruction();
+
     void addArgument(Argument* argument);
-    Argument getArgument(int index);
+    Argument* getArgument(int index);
     int getNumOfArguments();
     InstructionTypes getInstructionType();
 
@@ -22,5 +24,5 @@ class Instruction{
 
     OPCodes instruction_opcode;
     InstructionTypes instruction_type;
-    std::vector<Argument*> operands;
+    std::vector<Argument*>* operands;
 };

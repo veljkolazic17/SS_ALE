@@ -130,10 +130,13 @@ line:
     lineNumber++;
   }
   ;
+label:
+  SYMBOL COLON{
+    $$ = new Label($1);
+  }
 directive:
   GLOBAL symbolList{
     $$ = new Directive(GLOBAL_TYPE,$2);
-
   }
   | EXTERN symbolList{
     $$ = new Directive(EXTERN_TYPE,$2);

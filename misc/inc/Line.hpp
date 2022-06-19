@@ -3,8 +3,6 @@
 #include "Instruction.hpp"
 
 class Line{
-  
-
   public:
     Line(Directive* directive);
     Line(Instruction* instruction);
@@ -12,13 +10,13 @@ class Line{
     Line(Label* label, Directive* directive);
     Line(Label* label, Instruction* instruction);
 
+    ~Line();
+
     int getLineNumber();
     void setLineNumber(int lineNumber);
-    
-
   private:
-    Directive* directive;
-    Instruction* instruction;
-    Label* label;
+    Directive* directive = nullptr;
+    Instruction* instruction = nullptr;
+    Label* label = nullptr;
     int line_number = 0;
 };
