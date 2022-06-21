@@ -1,5 +1,6 @@
-#include "Types.h"
-#include "SymbolListElement.hpp"
+#pragma once
+#include "../inc/Types.h"
+#include "../inc/SymbolListElement.hpp"
 #include <vector>
 #include <string>
 

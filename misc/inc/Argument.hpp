@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Types.h"
 #include <string>
 
@@ -6,6 +8,7 @@ class Argument{
     Argument(ArgumentTypes type, int literal);
     Argument(ArgumentTypes type, char reg);
     Argument(ArgumentTypes type, char reg, int litreal);
+    Argument(ArgumentTypes type, std::string* symbol);
     Argument(ArgumentTypes type, char reg, std::string* symbol);
 
     ~Argument();

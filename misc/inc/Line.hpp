@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Directive.hpp"
 #include "Label.hpp"
 #include "Instruction.hpp"

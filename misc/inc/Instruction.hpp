@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Argument.hpp"
 #include "Types.h"
 #include "OPCodes.h"

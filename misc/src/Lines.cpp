@@ -12,6 +12,10 @@ Line* Lines::getLine(int index){
 void Lines::putLine(Line* line){
   this->lines->push_back(line);
 }
+ 
+int Lines::getLineSize(){
+  return this->lines->size();
+} 
 
 Lines::~Lines(){
   int size = this->lines->size();

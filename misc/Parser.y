@@ -2,17 +2,33 @@
   #include <stdio.h>
   #include <string>
   #include <stdlib.h>
-  #include "Types.h"
-  #include "Directive.hpp"
-  #include "Argument.hpp"
-  #include "Instruction.hpp"
-  #include "Line.hpp"
-  #include "Label.hpp"
-  #include "OPCodes.hpp"
-  #include "Lines.hpp"
-  Lines* lineVec;
   int lineNumber = 0;
+  int yydebug = 1;
+
+  extern int yylineno;
+  extern int yylex();
+  extern char *yytext;
+
+  void yyerror(const char *s) { 
+      printf("Syntax error on line: %d\n", yylineno);
+  }
 %}
+
+%code requires{
+   #include "../inc/Types.h"
+  #include "../inc/Directive.hpp"
+  #include "../inc/Argument.hpp"
+  #include "../inc/Instruction.hpp"
+  #include "../inc/Line.hpp"
+  #include "../inc/Label.hpp"
+  #include "../inc/OPCodes.h"
+  #include "../inc/Lines.hpp"
+
+  extern Lines* lineVec;  
+}
+
+%output "./src/parser.cpp"
+%defines "./inc/parser.hpp"
 
 %union {
   std::string *symbol;
@@ -23,7 +39,7 @@
   Directive* directive;
   Instruction* instruction;
   Line* line;
-  Argument* argument;
+  // Argument* argument;
   Label* label;
   Lines* lines;
 
@@ -47,12 +63,12 @@
 */
 %token<token>       PC PSW SP
 %token<token>       COMMENT
-%token<token>       COMMA COLON PLUS MINUS STAR MOD DOLLAR HASH LBRACKET RBRACKET NEW_LINE
+%token<token>       COMMA DOT COLON PLUS MINUS STAR MOD DOLLAR LBRACKET RBRACKET NEW_LINE
 
 %type<directive> directive
 %type<instruction> instruction
 %type<line> line
-%type<argument> argument
+/* %type<argument> argument */
 %type<label> label
 %type<lines> lines
 %type<symbolList> symbolList
@@ -80,7 +96,10 @@ lines:
   }
   ;
 line:
-  COMMENT NEW_LINE{
+  NEW_LINE{
+    $$ = nullptr;
+  }
+  | COMMENT NEW_LINE{
     $$ = nullptr;
     lineNumber++;
   }
@@ -141,17 +160,17 @@ directive:
   | EXTERN symbolList{
     $$ = new Directive(EXTERN_TYPE,$2);
   }
-  | SECTION SYMBOL{
-    $$ = new Directive(SECTION_TYPE,$2);
+  | SECTION DOT SYMBOL{
+    $$ = new Directive(SECTION_TYPE,$3);
   }
   | WORD symbolLiterallList{
-    $$ = new Direcrive(WORD_TYPE,$2);
+    $$ = new Directive(WORD_TYPE,$2);
   }
   | SKIP NUMBER{
-    $$ = new Direcrive(SKIP_TYPE,$2);
+    $$ = new Directive(SKIP_TYPE,$2);
   }
   | END{
-    $$ = new Direcrive(END_TYPE,$2);
+    $$ = new Directive(END_TYPE);
   }
 symbolList:
   SYMBOL{
@@ -175,7 +194,7 @@ symbolLiterallList:
     $1->push_back(new SymbolListElement(SYMBOL_TYPE,$3));
   }
   | symbolLiterallList COMMA NUMBER{
-    $1->push_back(new SymbolListElement(LITERAL_TYPE,$3))
+    $1->push_back(new SymbolListElement(LITERAL_TYPE,$3));
   }
   ;
 instruction:
@@ -261,7 +280,7 @@ instruction:
 
 dataOperand:
   DOLLAR NUMBER{
-    $$ = new Arguemnt(DATA_OPERAND_LIT,$2);
+    $$ = new Argument(DATA_OPERAND_LIT,$2);
   }
   | DOLLAR SYMBOL{
     $$ = new Argument(DATA_OPERAND_SYM,$2);

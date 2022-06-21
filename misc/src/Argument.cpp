@@ -23,6 +23,11 @@ Argument::Argument(ArgumentTypes type, char reg, std::string* symbol){
   this->symbol = symbol;
 }
 
+Argument::Argument(ArgumentTypes type, std::string* symbol){
+  this->type;
+  this->symbol;
+}
+
 Argument::~Argument(){
   delete this->symbol;
 }

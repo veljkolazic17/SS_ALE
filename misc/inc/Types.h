@@ -1,3 +1,5 @@
+#pragma once
+
 enum ArgumentTypes {
   REGISTER_TYPE,
   /*
@@ -28,6 +30,7 @@ enum ArgumentTypes {
 
 enum InstructionTypes {
   HALT_TYPE,
+  INT_TYPE,
   IRET_TYPE,
   CALL_TYPE,
   RET_TYPE,
@@ -67,4 +70,9 @@ enum DirectiveType {
 enum SymbolListElementType {
   SYMBOL_TYPE,
   LITERAL_TYPE,
+};
+
+enum SymbolTableType {
+  NOTYP,
+  SCTN,
 };
