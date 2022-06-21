@@ -19,7 +19,7 @@ Directive::Directive(DirectiveType directiveType, int literal){
 }
 
 Directive::Directive(DirectiveType directiveType, std::vector<SymbolListElement*>* symbolList){
-  this->directive_type = directive_type;
+  this->directive_type = directiveType;
   this->symbolList = symbolList;
 }
 
@@ -29,6 +29,14 @@ std::vector<SymbolListElement*>*  Directive::getSymbolList(){
 
 DirectiveType Directive::getDirectiveType(){
   return this->directive_type;
+}
+
+std::string Directive::getSectionName(){
+  return *this->section;
+}
+
+int Directive::getLiteral(){
+  return this->literal;
 }
 
 Directive::~Directive(){

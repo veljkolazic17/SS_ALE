@@ -606,13 +606,13 @@ static const yytype_int8 yytranslate[] =
 static const yytype_int16 yyrline[] =
 {
        0,    83,    83,    88,    93,    99,   102,   106,   111,   116,
-     121,   126,   131,   136,   141,   146,   151,   158,   162,   165,
-     168,   171,   174,   177,   181,   185,   190,   194,   198,   201,
-     206,   209,   212,   215,   218,   221,   224,   227,   230,   233,
-     236,   239,   242,   245,   248,   251,   254,   257,   260,   263,
-     266,   269,   272,   275,   278,   281,   287,   290,   293,   296,
-     299,   302,   305,   308,   311,   317,   320,   323,   326,   329,
-     332,   335,   338,   341
+     121,   126,   131,   136,   141,   146,   151,   158,   163,   166,
+     169,   172,   175,   178,   183,   187,   192,   196,   200,   203,
+     208,   211,   214,   217,   220,   223,   226,   229,   232,   235,
+     238,   241,   244,   247,   250,   253,   256,   259,   262,   265,
+     268,   271,   274,   277,   280,   283,   289,   292,   295,   298,
+     301,   304,   307,   310,   313,   319,   322,   325,   328,   331,
+     334,   337,   340,   343
 };
 #endif
 
@@ -1660,7 +1660,7 @@ yyreduce:
     break;
 
   case 18:
-#line 162 "Parser.y"
+#line 163 "Parser.y"
                    {
     (yyval.directive) = new Directive(GLOBAL_TYPE,(yyvsp[0].symbolList));
   }
@@ -1668,7 +1668,7 @@ yyreduce:
     break;
 
   case 19:
-#line 165 "Parser.y"
+#line 166 "Parser.y"
                      {
     (yyval.directive) = new Directive(EXTERN_TYPE,(yyvsp[0].symbolList));
   }
@@ -1676,7 +1676,7 @@ yyreduce:
     break;
 
   case 20:
-#line 168 "Parser.y"
+#line 169 "Parser.y"
                       {
     (yyval.directive) = new Directive(SECTION_TYPE,(yyvsp[0].symbol));
   }
@@ -1684,7 +1684,7 @@ yyreduce:
     break;
 
   case 21:
-#line 171 "Parser.y"
+#line 172 "Parser.y"
                            {
     (yyval.directive) = new Directive(WORD_TYPE,(yyvsp[0].symbolLiterallList));
   }
@@ -1692,7 +1692,7 @@ yyreduce:
     break;
 
   case 22:
-#line 174 "Parser.y"
+#line 175 "Parser.y"
                {
     (yyval.directive) = new Directive(SKIP_TYPE,(yyvsp[0].number));
   }
@@ -1700,7 +1700,7 @@ yyreduce:
     break;
 
   case 23:
-#line 177 "Parser.y"
+#line 178 "Parser.y"
        {
     (yyval.directive) = new Directive(END_TYPE);
   }
@@ -1708,7 +1708,7 @@ yyreduce:
     break;
 
   case 24:
-#line 181 "Parser.y"
+#line 183 "Parser.y"
         {
     (yyval.symbolList) = new std::vector<SymbolListElement*>();
     (yyval.symbolList)->push_back(new SymbolListElement(SYMBOL_TYPE,(yyvsp[0].symbol)));
@@ -1717,7 +1717,7 @@ yyreduce:
     break;
 
   case 25:
-#line 185 "Parser.y"
+#line 187 "Parser.y"
                            {
     (yyvsp[-2].symbolList)->push_back(new SymbolListElement(SYMBOL_TYPE,(yyvsp[0].symbol)));
   }
@@ -1725,7 +1725,7 @@ yyreduce:
     break;
 
   case 26:
-#line 190 "Parser.y"
+#line 192 "Parser.y"
         {
     (yyval.symbolLiterallList) = new std::vector<SymbolListElement*>();
     (yyval.symbolLiterallList)->push_back(new SymbolListElement(SYMBOL_TYPE,(yyvsp[0].symbol)));
@@ -1734,7 +1734,7 @@ yyreduce:
     break;
 
   case 27:
-#line 194 "Parser.y"
+#line 196 "Parser.y"
           {
     (yyval.symbolLiterallList) = new std::vector<SymbolListElement*>();
     (yyval.symbolLiterallList)->push_back(new SymbolListElement(LITERAL_TYPE,(yyvsp[0].number)));
@@ -1743,7 +1743,7 @@ yyreduce:
     break;
 
   case 28:
-#line 198 "Parser.y"
+#line 200 "Parser.y"
                                    {
     (yyvsp[-2].symbolLiterallList)->push_back(new SymbolListElement(SYMBOL_TYPE,(yyvsp[0].symbol)));
   }
@@ -1751,7 +1751,7 @@ yyreduce:
     break;
 
   case 29:
-#line 201 "Parser.y"
+#line 203 "Parser.y"
                                    {
     (yyvsp[-2].symbolLiterallList)->push_back(new SymbolListElement(LITERAL_TYPE,(yyvsp[0].number)));
   }
@@ -1759,7 +1759,7 @@ yyreduce:
     break;
 
   case 30:
-#line 206 "Parser.y"
+#line 208 "Parser.y"
       {
     (yyval.instruction) = new Instruction(HALT_TYPE);
   }
@@ -1767,7 +1767,7 @@ yyreduce:
     break;
 
   case 31:
-#line 209 "Parser.y"
+#line 211 "Parser.y"
         {
     (yyval.instruction) = new Instruction(IRET_TYPE);
   }
@@ -1775,7 +1775,7 @@ yyreduce:
     break;
 
   case 32:
-#line 212 "Parser.y"
+#line 214 "Parser.y"
        {
     (yyval.instruction) = new Instruction(RET_TYPE);
   }
@@ -1783,7 +1783,7 @@ yyreduce:
     break;
 
   case 33:
-#line 215 "Parser.y"
+#line 217 "Parser.y"
                 {
     (yyval.instruction) = new Instruction(INT_TYPE, new Argument(REGISTER_TYPE,(yyvsp[0].reg)));
   }
@@ -1791,7 +1791,7 @@ yyreduce:
     break;
 
   case 34:
-#line 218 "Parser.y"
+#line 220 "Parser.y"
                  {
     (yyval.instruction) = new Instruction(PUSH_TYPE, new Argument(REGISTER_TYPE,(yyvsp[0].reg)));
   }
@@ -1799,7 +1799,7 @@ yyreduce:
     break;
 
   case 35:
-#line 221 "Parser.y"
+#line 223 "Parser.y"
                 {
     (yyval.instruction) = new Instruction(POP_TYPE, new Argument(REGISTER_TYPE,(yyvsp[0].reg)));
   }
@@ -1807,7 +1807,7 @@ yyreduce:
     break;
 
   case 36:
-#line 224 "Parser.y"
+#line 226 "Parser.y"
                                 {
     (yyval.instruction) = new Instruction(XCHG_TYPE, new Argument(REGISTER_TYPE,(yyvsp[-2].reg)), new Argument(REGISTER_TYPE,(yyvsp[0].reg)));
   }
@@ -1815,7 +1815,7 @@ yyreduce:
     break;
 
   case 37:
-#line 227 "Parser.y"
+#line 229 "Parser.y"
                                {
     (yyval.instruction) = new Instruction(ADD_TYPE, new Argument(REGISTER_TYPE,(yyvsp[-2].reg)), new Argument(REGISTER_TYPE,(yyvsp[0].reg)));
   }
@@ -1823,7 +1823,7 @@ yyreduce:
     break;
 
   case 38:
-#line 230 "Parser.y"
+#line 232 "Parser.y"
                                {
     (yyval.instruction) = new Instruction(SUB_TYPE, new Argument(REGISTER_TYPE,(yyvsp[-2].reg)), new Argument(REGISTER_TYPE,(yyvsp[0].reg)));
   }
@@ -1831,7 +1831,7 @@ yyreduce:
     break;
 
   case 39:
-#line 233 "Parser.y"
+#line 235 "Parser.y"
                                {
     (yyval.instruction) = new Instruction(MUL_TYPE, new Argument(REGISTER_TYPE,(yyvsp[-2].reg)), new Argument(REGISTER_TYPE,(yyvsp[0].reg)));
   }
@@ -1839,7 +1839,7 @@ yyreduce:
     break;
 
   case 40:
-#line 236 "Parser.y"
+#line 238 "Parser.y"
                                {
     (yyval.instruction) = new Instruction(DIV_TYPE, new Argument(REGISTER_TYPE,(yyvsp[-2].reg)), new Argument(REGISTER_TYPE,(yyvsp[0].reg)));
   }
@@ -1847,7 +1847,7 @@ yyreduce:
     break;
 
   case 41:
-#line 239 "Parser.y"
+#line 241 "Parser.y"
                                {
     (yyval.instruction) = new Instruction(CMP_TYPE, new Argument(REGISTER_TYPE,(yyvsp[-2].reg)), new Argument(REGISTER_TYPE,(yyvsp[0].reg)));
   }
@@ -1855,7 +1855,7 @@ yyreduce:
     break;
 
   case 42:
-#line 242 "Parser.y"
+#line 244 "Parser.y"
                 {
     (yyval.instruction) = new Instruction(NOT_TYPE, new Argument(REGISTER_TYPE,(yyvsp[0].reg)));
   }
@@ -1863,7 +1863,7 @@ yyreduce:
     break;
 
   case 43:
-#line 245 "Parser.y"
+#line 247 "Parser.y"
                                {
     (yyval.instruction) = new Instruction(AND_TYPE, new Argument(REGISTER_TYPE,(yyvsp[-2].reg)), new Argument(REGISTER_TYPE,(yyvsp[0].reg)));
   }
@@ -1871,7 +1871,7 @@ yyreduce:
     break;
 
   case 44:
-#line 248 "Parser.y"
+#line 250 "Parser.y"
                               {
     (yyval.instruction) = new Instruction(OR_TYPE, new Argument(REGISTER_TYPE,(yyvsp[-2].reg)), new Argument(REGISTER_TYPE,(yyvsp[0].reg)));
   }
@@ -1879,7 +1879,7 @@ yyreduce:
     break;
 
   case 45:
-#line 251 "Parser.y"
+#line 253 "Parser.y"
                                {
     (yyval.instruction) = new Instruction(XOR_TYPE, new Argument(REGISTER_TYPE,(yyvsp[-2].reg)), new Argument(REGISTER_TYPE,(yyvsp[0].reg)));
   }
@@ -1887,7 +1887,7 @@ yyreduce:
     break;
 
   case 46:
-#line 254 "Parser.y"
+#line 256 "Parser.y"
                                 {
     (yyval.instruction) = new Instruction(TEST_TYPE, new Argument(REGISTER_TYPE,(yyvsp[-2].reg)), new Argument(REGISTER_TYPE,(yyvsp[0].reg)));
   }
@@ -1895,7 +1895,7 @@ yyreduce:
     break;
 
   case 47:
-#line 257 "Parser.y"
+#line 259 "Parser.y"
                                {
     (yyval.instruction) = new Instruction(SHL_TYPE, new Argument(REGISTER_TYPE,(yyvsp[-2].reg)), new Argument(REGISTER_TYPE,(yyvsp[0].reg)));
   }
@@ -1903,7 +1903,7 @@ yyreduce:
     break;
 
   case 48:
-#line 260 "Parser.y"
+#line 262 "Parser.y"
                                {
     (yyval.instruction) = new Instruction(SHR_TYPE, new Argument(REGISTER_TYPE,(yyvsp[-2].reg)), new Argument(REGISTER_TYPE,(yyvsp[0].reg)));
   }
@@ -1911,7 +1911,7 @@ yyreduce:
     break;
 
   case 49:
-#line 263 "Parser.y"
+#line 265 "Parser.y"
                     {
     (yyval.instruction) = new Instruction(CALL_TYPE, (yyvsp[0].jumpOperand));
   }
@@ -1919,7 +1919,7 @@ yyreduce:
     break;
 
   case 50:
-#line 266 "Parser.y"
+#line 268 "Parser.y"
                    {
     (yyval.instruction) = new Instruction(JMP_TYPE, (yyvsp[0].jumpOperand));
   }
@@ -1927,7 +1927,7 @@ yyreduce:
     break;
 
   case 51:
-#line 269 "Parser.y"
+#line 271 "Parser.y"
                    {
     (yyval.instruction) = new Instruction(JEQ_TYPE, (yyvsp[0].jumpOperand));
   }
@@ -1935,7 +1935,7 @@ yyreduce:
     break;
 
   case 52:
-#line 272 "Parser.y"
+#line 274 "Parser.y"
                    {
     (yyval.instruction) = new Instruction(JNE_TYPE, (yyvsp[0].jumpOperand));
   }
@@ -1943,7 +1943,7 @@ yyreduce:
     break;
 
   case 53:
-#line 275 "Parser.y"
+#line 277 "Parser.y"
                    {
     (yyval.instruction) = new Instruction(JGT_TYPE, (yyvsp[0].jumpOperand));
   }
@@ -1951,7 +1951,7 @@ yyreduce:
     break;
 
   case 54:
-#line 278 "Parser.y"
+#line 280 "Parser.y"
                                   {
     (yyval.instruction) = new Instruction(LDR_TYPE, new Argument(REGISTER_TYPE,(yyvsp[-2].reg)),(yyvsp[0].dataOperand));
   }
@@ -1959,7 +1959,7 @@ yyreduce:
     break;
 
   case 55:
-#line 281 "Parser.y"
+#line 283 "Parser.y"
                                   {
     (yyval.instruction) = new Instruction(LDR_TYPE, new Argument(REGISTER_TYPE,(yyvsp[-2].reg)),(yyvsp[0].dataOperand));
   }
@@ -1967,7 +1967,7 @@ yyreduce:
     break;
 
   case 56:
-#line 287 "Parser.y"
+#line 289 "Parser.y"
                {
     (yyval.dataOperand) = new Argument(DATA_OPERAND_LIT,(yyvsp[0].number));
   }
@@ -1975,7 +1975,7 @@ yyreduce:
     break;
 
   case 57:
-#line 290 "Parser.y"
+#line 292 "Parser.y"
                  {
     (yyval.dataOperand) = new Argument(DATA_OPERAND_SYM,(yyvsp[0].symbol));
   }
@@ -1983,7 +1983,7 @@ yyreduce:
     break;
 
   case 58:
-#line 293 "Parser.y"
+#line 295 "Parser.y"
           {
     (yyval.dataOperand) = new Argument(DATA_OPERAND_MEMLIT,(yyvsp[0].number));
   }
@@ -1991,7 +1991,7 @@ yyreduce:
     break;
 
   case 59:
-#line 296 "Parser.y"
+#line 298 "Parser.y"
           {
     (yyval.dataOperand) = new Argument(DATA_OPERAND_MEMSYMABS,(yyvsp[0].symbol));
   }
@@ -1999,7 +1999,7 @@ yyreduce:
     break;
 
   case 60:
-#line 299 "Parser.y"
+#line 301 "Parser.y"
               {
     (yyval.dataOperand) = new Argument(DATA_OPERAND_MEMSYMPCREL,(yyvsp[0].symbol));
   }
@@ -2007,7 +2007,7 @@ yyreduce:
     break;
 
   case 61:
-#line 302 "Parser.y"
+#line 304 "Parser.y"
             {
     (yyval.dataOperand) = new Argument(DATA_OPERAND_REG,(yyvsp[0].reg));
   }
@@ -2015,7 +2015,7 @@ yyreduce:
     break;
 
   case 62:
-#line 305 "Parser.y"
+#line 307 "Parser.y"
                               {
     (yyval.dataOperand) = new Argument(DATA_OPERAND_REGMEM,(yyvsp[-1].reg));
   }
@@ -2023,7 +2023,7 @@ yyreduce:
     break;
 
   case 63:
-#line 308 "Parser.y"
+#line 310 "Parser.y"
                                           {
     (yyval.dataOperand) = new Argument(DATA_OPERAND_REGMEMLIT,(yyvsp[-3].reg),(yyvsp[-1].number));
   }
@@ -2031,7 +2031,7 @@ yyreduce:
     break;
 
   case 64:
-#line 311 "Parser.y"
+#line 313 "Parser.y"
                                           {
     (yyval.dataOperand) = new Argument(DATA_OPERAND_REGMEMSYM,(yyvsp[-3].reg),(yyvsp[-1].symbol));
   }
@@ -2039,7 +2039,7 @@ yyreduce:
     break;
 
   case 65:
-#line 317 "Parser.y"
+#line 319 "Parser.y"
         {
     (yyval.jumpOperand) = new Argument(JMP_OPERAND_LIT,(yyvsp[0].number));
   }
@@ -2047,7 +2047,7 @@ yyreduce:
     break;
 
   case 66:
-#line 320 "Parser.y"
+#line 322 "Parser.y"
           {
     (yyval.jumpOperand) = new Argument(JMP_OPERAND_SYM,(yyvsp[0].symbol));
   }
@@ -2055,7 +2055,7 @@ yyreduce:
     break;
 
   case 67:
-#line 323 "Parser.y"
+#line 325 "Parser.y"
               {
     (yyval.jumpOperand) = new Argument(JMP_OPERAND_SYMPCREL,(yyvsp[0].symbol));
   }
@@ -2063,7 +2063,7 @@ yyreduce:
     break;
 
   case 68:
-#line 326 "Parser.y"
+#line 328 "Parser.y"
                {
     (yyval.jumpOperand) = new Argument(JMP_OPERAND_MEMLIT,(yyvsp[0].number));
   }
@@ -2071,7 +2071,7 @@ yyreduce:
     break;
 
   case 69:
-#line 329 "Parser.y"
+#line 331 "Parser.y"
                {
     (yyval.jumpOperand) = new Argument(JMP_OPERAND_MEMSYM,(yyvsp[0].symbol));
   }
@@ -2079,7 +2079,7 @@ yyreduce:
     break;
 
   case 70:
-#line 332 "Parser.y"
+#line 334 "Parser.y"
                  {
     (yyval.jumpOperand) = new Argument(JMP_OPERAND_REG,(yyvsp[0].reg));
   }
@@ -2087,7 +2087,7 @@ yyreduce:
     break;
 
   case 71:
-#line 335 "Parser.y"
+#line 337 "Parser.y"
                                    {
     (yyval.jumpOperand) = new Argument(JMP_OPERAND_REGMEM,(yyvsp[-1].reg));
   }
@@ -2095,7 +2095,7 @@ yyreduce:
     break;
 
   case 72:
-#line 338 "Parser.y"
+#line 340 "Parser.y"
                                                {
     (yyval.jumpOperand) = new Argument(JMP_OPERAND_REGMEMLIT,(yyvsp[-3].reg),(yyvsp[-1].number));
   }
@@ -2103,7 +2103,7 @@ yyreduce:
     break;
 
   case 73:
-#line 341 "Parser.y"
+#line 343 "Parser.y"
                                                {
     (yyval.jumpOperand) = new Argument(JMP_OPERAND_REGMEMSYM,(yyvsp[-3].reg),(yyvsp[-1].symbol));
   }
@@ -2343,4 +2343,4 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 345 "Parser.y"
+#line 347 "Parser.y"

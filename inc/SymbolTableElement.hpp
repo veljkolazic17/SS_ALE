@@ -43,6 +43,9 @@ class SymbolTableElement{
         bool getDefined();
         void setDefined(bool);
 
+        int getNDX();
+        void setNDX(int Ndx);
+
         std::string getSymbolName();
         void setSymbolName(std::string);
 

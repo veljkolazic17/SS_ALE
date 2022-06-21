@@ -158,6 +158,7 @@ label:
   SYMBOL COLON{
     $$ = new Label($1);
   }
+  ;
 directive:
   GLOBAL symbolList{
     $$ = new Directive(GLOBAL_TYPE,$2);
@@ -177,6 +178,7 @@ directive:
   | END{
     $$ = new Directive(END_TYPE);
   }
+  ;
 symbolList:
   SYMBOL{
     $$ = new std::vector<SymbolListElement*>();
