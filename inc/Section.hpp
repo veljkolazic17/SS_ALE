@@ -3,7 +3,7 @@
 
 class Section{
     public:
-        Section(char index, std::string* sectionName);
+        Section(char index, std::string sectionName);
         int getLocationCounter();
         char getIndex();
         std::string getSectionName();
@@ -12,6 +12,6 @@ class Section{
     private:
         int locationCounter = 0;
         char index;
-        std::string* sectionName;
+        std::string sectionName;
         char* data;
 };

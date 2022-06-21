@@ -11,9 +11,8 @@ class Directive{
     Directive(DirectiveType directiveType, std::string* section);
     Directive(DirectiveType directiveType, int literal);
     Directive(DirectiveType directiveType, std::vector<SymbolListElement*>* symbolList);
-
+    DirectiveType getDirectiveType();
     ~Directive();
-
     std::vector<SymbolListElement*>* getSymbolList();
   private:
     DirectiveType directive_type;

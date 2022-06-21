@@ -25,6 +25,10 @@ std::vector<SymbolListElement*>*  Directive::getSymbolList(){
   return this->symbolList;
 }
 
+DirectiveType Directive::getDirectiveType(){
+  return this->directive_type;
+}
+
 Directive::~Directive(){
   int size = this->symbolList->size();
   for(int i = 0; i < size ; i++){

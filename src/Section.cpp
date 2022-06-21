@@ -1,7 +1,7 @@
 #include "../inc/Section.hpp"
 #include <string.h>
 
-Section::Section(char index, std::string* sectionName){
+Section::Section(char index, std::string sectionName){
     this->index = index;
     this->sectionName = sectionName;
 }

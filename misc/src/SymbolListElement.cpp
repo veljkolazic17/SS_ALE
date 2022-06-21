@@ -10,7 +10,7 @@ SymbolListElement::SymbolListElement(SymbolListElementType type, std::string *sy
   this->symbol = symbol;
 }
 
-std::string* SymbolListElement::getSymbol(){
+std::string SymbolListElement::getSymbol(){
   return this->symbol;
 }
 
