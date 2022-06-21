@@ -84,3 +84,11 @@ std::string SymbolTableElement::getSymbolName(){
 void SymbolTableElement::setSymbolName(std::string symbolName){
     this->symbolName = symbolName;
 }
+
+int SymbolTableElement::getNDX(){
+    return this->Ndx;
+}
+
+void SymbolTableElement::setNDX(int Ndx){
+    this->Ndx = Ndx;
+}

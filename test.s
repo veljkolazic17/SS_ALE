@@ -1,3 +1,8 @@
-.global baba,gaba
+.global a
+.extern d
 .section .text
-labela1: 
+.skip 14
+label1:
+.section .data
+.skip 69
+label2:
