@@ -9,11 +9,13 @@ Directive::Directive(DirectiveType directiveType){
 Directive::Directive(DirectiveType directiveType, std::string* section){
   this->directive_type = directiveType;
   this->section = section;
+  this->symbolList = new std::vector<SymbolListElement*>();
 }
 
 Directive::Directive(DirectiveType directiveType, int literal){
   this->directive_type = directiveType;
   this->literal = literal;
+  this->symbolList = new std::vector<SymbolListElement*>();
 }
 
 Directive::Directive(DirectiveType directiveType, std::vector<SymbolListElement*>* symbolList){
@@ -37,4 +39,28 @@ Directive::~Directive(){
   // CHECK proveri treba li brisati section
   delete this->section;
   delete this->symbolList;
+}
+
+std::string Directive::toString(){
+  std::string str;
+  switch (this->directive_type)
+  {
+  case GLOBAL_TYPE:
+    str+="global ";
+    break;
+  case EXTERN_TYPE:
+    str+="extern ";
+    break;
+  case SECTION_TYPE:
+    str+="section " + *this->section;
+    break;
+  case WORD_TYPE:
+    str+="word ";
+    break;
+  }
+  int size = this->symbolList->size();
+  for(int i = 0;i<size;i++){
+    str+=this->symbolList->at(i)->getSymbol()+" ";
+  }
+  return str;
 }

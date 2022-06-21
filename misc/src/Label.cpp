@@ -11,3 +11,7 @@ std::string* Label::getLabel(){
 Label::~Label(){
   delete this->label;
 }
+
+std::string Label::toString(){
+  return *this->label;
+}

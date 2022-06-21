@@ -31,6 +31,18 @@ void Line::setLineNumber(int lineNumber){
   this->line_number = line_number;
 }
 
+Directive* Line::getDirective(){
+  return this->directive;
+}
+
+Instruction* Line::getInstruction(){
+  return this->instruction;
+}
+
+Label* Line::getLabel(){
+  return this->label;
+}
+
 Line::~Line(){
   if(label != nullptr){
     delete label;
@@ -42,3 +54,4 @@ Line::~Line(){
     delete directive;
   }
 }
+

@@ -5,9 +5,9 @@ SymbolListElement::SymbolListElement(SymbolListElementType type, int literal){
   this->literal = literal;
 }
 
-SymbolListElement::SymbolListElement(SymbolListElementType type, std::string *symbol){
+SymbolListElement::SymbolListElement(SymbolListElementType type, std::string* symbol){
   this->type = type;
-  this->symbol = symbol;
+  this->symbol = *symbol;
 }
 
 std::string SymbolListElement::getSymbol(){

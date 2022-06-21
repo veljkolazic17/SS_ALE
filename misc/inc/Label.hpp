@@ -1,5 +1,5 @@
 #pragma once
-
+#include<iostream>
 #include <string>
 
 class Label{
@@ -9,6 +9,8 @@ class Label{
 
     ~Label();
     
+    std::string toString();
+
   private:
     std::string* label;
 };

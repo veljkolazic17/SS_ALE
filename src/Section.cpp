@@ -15,7 +15,7 @@ char Section::getIndex(){
 }
 
 std::string Section::getSectionName(){
-    return *this->sectionName;
+    return this->sectionName;
 }
 
 void Section::setLocationCounter(int locationCounter){

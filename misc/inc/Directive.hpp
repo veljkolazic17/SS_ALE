@@ -1,6 +1,7 @@
 #pragma once
 #include "../inc/Types.h"
 #include "../inc/SymbolListElement.hpp"
+#include <iostream>
 #include <vector>
 #include <string>
 
@@ -14,6 +15,7 @@ class Directive{
     DirectiveType getDirectiveType();
     ~Directive();
     std::vector<SymbolListElement*>* getSymbolList();
+    std::string toString();
   private:
     DirectiveType directive_type;
     std::vector<SymbolListElement*>* symbolList;

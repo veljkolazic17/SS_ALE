@@ -2,10 +2,34 @@
 
 Assembler::Assembler(){
     this->symbolTable = new std::vector<SymbolTableElement*>();
+    this->sections = new std::vector<Section*>();
 }
 
 void Assembler::insertSection(Section* section){
     this->sections->push_back(section);
+}
+
+void Assembler::objdump(){
+
+}
+
+void Assembler::crack(Lines* lines){
+    int size = lines->getLineSize();
+    for(int i = 0;i<size;i++){
+        this->crackLine(lines->getLine(i));
+    }
+}
+
+void Assembler::crackLine(Line* line){
+    if(line->getLabel() != nullptr){
+        this->insertLabel(line->getLabel());
+    }
+    if(line->getDirective() != nullptr){
+        this->insertDirective(line->getDirective());
+    }
+    if(line->getInstruction() != nullptr){
+        // TODO Implementirati insertInstruction !!!
+    }
 }
 
 void Assembler::insertDirective(Directive* directive){
@@ -15,19 +39,21 @@ void Assembler::insertDirective(Directive* directive){
         crackGLOBAL(directive);
         break;
     case EXTERN_TYPE:
+        crackEXTERN(directive);
         break;
     case SECTION_TYPE:
+        crackSECTION(directive);
         break;
     case WORD_TYPE:
+        crackSECTION(directive);
         break;
     case SKIP_TYPE:
-        break;
-    case EQU_TYPE:
+        crackSKIP(directive);
         break;
     case END_TYPE:
+        crackEND(directive);
         break;
     }
-    
 }
 
 void Assembler::crackGLOBAL(Directive* directive){
@@ -79,10 +105,23 @@ void Assembler::crackEXTERN(Directive* directive){
 
 void Assembler::crackSECTION(Directive* directive){
     this->currentSection = new Section(
-        entry++,
+        entry,
         directive->getSymbolList()->at(0)->getSymbol()
     );
     this->sections->push_back(this->currentSection);
+
+    SymbolTableElement* symbolTableElement = new SymbolTableElement(
+        entry,
+        0,
+        0,
+        0,
+        SCTN,
+        LOC,
+        entry++,
+        currentSection,
+        currentSection->getSectionName()
+    );
+    this->symbolTable->push_back(symbolTableElement);
 }
 
 void Assembler::crackWORD(Directive* directive){

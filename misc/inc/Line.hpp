@@ -16,6 +16,11 @@ class Line{
 
     int getLineNumber();
     void setLineNumber(int lineNumber);
+
+    Directive* getDirective();
+    Instruction* getInstruction();
+    Label* getLabel();
+
   private:
     Directive* directive = nullptr;
     Instruction* instruction = nullptr;

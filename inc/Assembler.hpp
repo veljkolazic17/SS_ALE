@@ -4,10 +4,18 @@
 #include "../misc/inc/Label.hpp"
 #include "../misc/inc/Directive.hpp"
 #include "../misc/inc/Instruction.hpp"
+#include "../misc/inc/Lines.hpp"
+#include "../misc/inc/Line.hpp"
 #include <vector>
 
 class Assembler{
     public:
+        Assembler();
+
+        void objdump();
+        void crack(Lines* lines);
+        void crackLine(Line* line);
+
         void insertLabel(Label* label);
         void insertDirective(Directive* Directive);
 
