@@ -72,7 +72,12 @@ enum SymbolListElementType {
   LITERAL_TYPE,
 };
 
-enum SymbolTableType {
+enum SymbolTableEntryType {
   NOTYP,
   SCTN,
+};
+
+enum Binding{
+  LOC,
+  GLOB,
 };

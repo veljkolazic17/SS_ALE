@@ -103,6 +103,11 @@ line:
     $$ = nullptr;
     lineNumber++;
   }
+  | label NEW_LINE{
+    $$ = new Line($1);
+    $$->setLineNumber(lineNumber);
+    lineNumber++;
+  }
   | label directive NEW_LINE{
     $$ = new Line($1, $2);
     $$->setLineNumber(lineNumber);

@@ -1,6 +1,6 @@
 .global baba,gaba
 .section .text
-
-add r1, r0
-baba:#lego
-not r1
+labela1:
+.skip 20
+.word 20
+    
