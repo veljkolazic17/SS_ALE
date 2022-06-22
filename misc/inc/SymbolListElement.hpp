@@ -7,6 +7,7 @@ class SymbolListElement{
   public:
     SymbolListElement(SymbolListElementType type, int literal);
     SymbolListElement(SymbolListElementType type, std::string* symbol);
+    SymbolListElementType getSymbolListElementType();
     std::string getSymbol();
     int getLiteral();
 

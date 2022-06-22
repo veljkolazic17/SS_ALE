@@ -44,9 +44,7 @@ void Section::setDataByOffsetMem(int offset, char* data, size_t size){
         this->dataSize+=size;
         this->data = (char*)realloc(this->data, this->dataSize);
     }
-    for(int i = 0;i < size;i++){
-        this->data[offset+i]=data[i];
-    }
+    memcpy(this->data+offset,data,size);
 }
 
 char Section::getData(int index){

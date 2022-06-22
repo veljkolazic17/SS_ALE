@@ -1,5 +1,6 @@
 #include "../inc/SymbolTableElement.hpp"
 
+
 SymbolTableElement::SymbolTableElement(
     char num,
     long value,
@@ -20,6 +21,8 @@ SymbolTableElement::SymbolTableElement(
     this->section = section;
     this->Ndx = Ndx;
     this->symbolName = symbolName;
+
+    this->flink = new std::vector<BackpatchElement>();
 }
 
 char SymbolTableElement::getNum(){
@@ -91,4 +94,8 @@ int SymbolTableElement::getNDX(){
 
 void SymbolTableElement::setNDX(int Ndx){
     this->Ndx = Ndx;
+}
+
+void SymbolTableElement::backpatch(BackpatchElement backpatchElement){
+    this->flink->push_back(backpatchElement);
 }

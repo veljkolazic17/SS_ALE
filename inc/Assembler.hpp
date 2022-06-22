@@ -8,6 +8,10 @@
 #include "../misc/inc/Line.hpp"
 #include <vector>
 
+#define PROCESSING 0
+#define END 1
+typedef unsigned char STATE;
+
 class Assembler{
     public:
         Assembler();
@@ -34,5 +38,5 @@ class Assembler{
         std::vector<Section*>* sections;
         Section* currentSection = nullptr;
         int entry = 1;
-
+        STATE ASMSTATE = PROCESSING; 
 };

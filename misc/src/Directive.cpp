@@ -68,7 +68,13 @@ std::string Directive::toString(){
   }
   int size = this->symbolList->size();
   for(int i = 0;i<size;i++){
-    str+=this->symbolList->at(i)->getSymbol()+" ";
+    if(this->symbolList->at(i)->getSymbolListElementType() == SYMBOL_TYPE){
+      // printf("NAISAO NA SIMBOL\n");
+      str+=this->symbolList->at(i)->getSymbol()+" ";
+    }else{
+      // printf("NAISAO NA LITERAL %d\n",this->symbolList->at(i)->getLiteral());
+      str+=this->symbolList->at(i)->getLiteral()+" ";
+    }
   }
   return str;
 }

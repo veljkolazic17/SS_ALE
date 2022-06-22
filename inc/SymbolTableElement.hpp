@@ -1,6 +1,7 @@
 #pragma once
 #include "../misc/inc/Types.h"
 #include "../inc/Section.hpp"
+#include "../inc/BackpatchElement.hpp"
 #include<vector>
 #include<string>
 #define UND -1
@@ -49,6 +50,8 @@ class SymbolTableElement{
         std::string getSymbolName();
         void setSymbolName(std::string);
 
+        void backpatch(BackpatchElement);
+
     private:
         char num;
         long value;
@@ -60,5 +63,5 @@ class SymbolTableElement{
         Section* section;
         std::string symbolName;
         bool defined = false;
-        std::vector<SymbolTableElement>* flink = nullptr;
+        std::vector<BackpatchElement>* flink = nullptr;
 };

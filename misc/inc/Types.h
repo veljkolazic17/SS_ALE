@@ -56,7 +56,6 @@ enum InstructionTypes {
   LDR_TYPE,
   STR_TYPE,
 };
-
 enum DirectiveType {
   GLOBAL_TYPE,
   EXTERN_TYPE,

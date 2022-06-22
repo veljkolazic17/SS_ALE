@@ -1,8 +1,5 @@
-.global a
-.extern d
 .section .text
-.skip 14
-label1:
-.section .data
-.skip 69
-label2:
+.skip 8
+a:
+.word 258,4,5,a
+.word 300,b
