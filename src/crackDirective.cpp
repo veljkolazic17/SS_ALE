@@ -88,11 +88,10 @@ void Assembler::crackEXTERN(Directive* directive){
 
 void Assembler::crackSECTION(Directive* directive){ 
     this->currentSection = new Section(
-        entry,
         directive->getSectionName()
     );
+    
     this->sections->push_back(this->currentSection);
-
     SymbolTableElement* symbolTableElement = new SymbolTableElement(
         entry,
         0,
@@ -104,6 +103,7 @@ void Assembler::crackSECTION(Directive* directive){
         currentSection,
         currentSection->getSectionName()
     );
+    this->currentSection->setSymbolTableEntry(symbolTableElement);
     entry++;
     this->symbolTable->push_back(symbolTableElement);
 }

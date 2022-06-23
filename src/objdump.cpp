@@ -30,7 +30,7 @@ void Assembler::objdump(){
             else{
                 printf(" ");
             }
-            printf("%02x",this->sections->at(i)->getData(j));
+            printf("%02X",(unsigned int)(this->sections->at(i)->getData(j) & 0xFF));
         }
         printf("\n");
     }

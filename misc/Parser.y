@@ -21,7 +21,6 @@
   #include "../inc/Instruction.hpp"
   #include "../inc/Line.hpp"
   #include "../inc/Label.hpp"
-  #include "../inc/OPCodes.h"
   #include "../inc/Lines.hpp"
 
   extern Lines* lineVec;  
@@ -281,7 +280,7 @@ instruction:
     $$ = new Instruction(LDR_TYPE, new Argument(REGISTER_TYPE,$2),$4);
   } 
   | STR REGISTER COMMA dataOperand{
-    $$ = new Instruction(LDR_TYPE, new Argument(REGISTER_TYPE,$2),$4);
+    $$ = new Instruction(STR_TYPE, new Argument(REGISTER_TYPE,$2),$4);
   }
   ;
 

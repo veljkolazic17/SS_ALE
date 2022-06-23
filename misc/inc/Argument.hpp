@@ -10,9 +10,13 @@ class Argument{
     Argument(ArgumentTypes type, char reg, int litreal);
     Argument(ArgumentTypes type, std::string* symbol);
     Argument(ArgumentTypes type, char reg, std::string* symbol);
-
     ~Argument();
 
+    ArgumentTypes getArgumentType();
+    std::string getSymbol();
+    char getRegister();
+    int getLiteral();
+  
   private:
     ArgumentTypes type;
 

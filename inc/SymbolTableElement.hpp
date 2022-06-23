@@ -1,9 +1,9 @@
 #pragma once
 #include "../misc/inc/Types.h"
-#include "../inc/Section.hpp"
 #include "../inc/BackpatchElement.hpp"
 #include<vector>
 #include<string>
+class Section;
 #define UND -1
 #define ABS -2
 class SymbolTableElement{

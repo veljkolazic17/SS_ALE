@@ -2,7 +2,6 @@
 
 #include "Argument.hpp"
 #include "Types.h"
-#include "OPCodes.h"
 
 #include <vector>
 
@@ -19,12 +18,8 @@ class Instruction{
     Argument* getArgument(int index);
     int getNumOfArguments();
     InstructionTypes getInstructionType();
-
-    void setInstructionOPCode(OPCodes instruction_opcode);
-    OPCodes getIntstructionOPCode();
+    
   private:
-
-    OPCodes instruction_opcode;
     InstructionTypes instruction_type;
     std::vector<Argument*>* operands;
 };

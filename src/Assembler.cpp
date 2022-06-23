@@ -27,6 +27,6 @@ void Assembler::crackLine(Line* line){
         this->insertDirective(line->getDirective());
     }
     if(line->getInstruction() != nullptr){
-        // TODO Implementirati insertInstruction !!!
+        this->insertInstruction(line->getInstruction());
     }
 }
