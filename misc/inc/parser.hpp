@@ -52,12 +52,11 @@ extern int yydebug;
   #include "../inc/Instruction.hpp"
   #include "../inc/Line.hpp"
   #include "../inc/Label.hpp"
-  #include "../inc/OPCodes.h"
   #include "../inc/Lines.hpp"
 
   extern Lines* lineVec;  
 
-#line 61 "./inc/parser.hpp"
+#line 60 "./inc/parser.hpp"
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -123,7 +122,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 33 "Parser.y"
+#line 32 "Parser.y"
 
   std::string *symbol;
   int token;
@@ -144,7 +143,7 @@ union YYSTYPE
   Argument *dataOperand;
 
 
-#line 148 "./inc/parser.hpp"
+#line 147 "./inc/parser.hpp"
 
 };
 typedef union YYSTYPE YYSTYPE;

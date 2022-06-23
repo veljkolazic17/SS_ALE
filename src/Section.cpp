@@ -2,17 +2,20 @@
 #include <stdlib.h>
 #include <string.h>
 
-Section::Section(char index, std::string sectionName){
-    this->index = index;
+Section::Section(std::string sectionName){
     this->sectionName = sectionName;
+}
+
+ SymbolTableElement* Section::getSymbolTableEntry(){
+     return this->symbolTableEntry;
+ }
+
+void Section::setSymbolTableEntry(SymbolTableElement* symbolTableEntry){
+    this->symbolTableEntry = symbolTableEntry;
 }
 
 int Section::getLocationCounter(){
     return this->locationCounter;
-}
-
-char Section::getIndex(){
-    return this->index;
 }
 
 std::string Section::getSectionName(){
@@ -34,6 +37,7 @@ void Section::setDataByOffsetByte(int offset, char data, size_t size){
     for(int i = 0;i < size;i++){
         this->data[offset+i]=data;
     }
+    this->symbolTableEntry->setSize(this->dataSize);
 }
 
 void Section::setDataByOffsetMem(int offset, char* data, size_t size){
@@ -44,9 +48,8 @@ void Section::setDataByOffsetMem(int offset, char* data, size_t size){
         this->dataSize+=size;
         this->data = (char*)realloc(this->data, this->dataSize);
     }
-    for(int i = 0;i < size;i++){
-        this->data[offset+i]=data[i];
-    }
+    memcpy(this->data+offset,data,size);
+    this->symbolTableEntry->setSize(this->dataSize);
 }
 
 char Section::getData(int index){
@@ -57,3 +60,6 @@ int Section::getDataSize(){
     return this->dataSize;
 }
 
+void Section::incrementLocationCounter(int increment){
+    this->locationCounter+=increment;
+}

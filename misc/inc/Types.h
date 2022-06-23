@@ -5,7 +5,7 @@ enum ArgumentTypes {
   /*
     DATA OPERANDS
   */
-  DATA_OPERAND_LIT,
+  DATA_OPERAND_LIT, 
   DATA_OPERAND_SYM,
   DATA_OPERAND_MEMLIT,
   DATA_OPERAND_MEMSYMABS,
@@ -56,7 +56,6 @@ enum InstructionTypes {
   LDR_TYPE,
   STR_TYPE,
 };
-
 enum DirectiveType {
   GLOBAL_TYPE,
   EXTERN_TYPE,

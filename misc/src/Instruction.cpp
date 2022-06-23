@@ -42,14 +42,6 @@ InstructionTypes Instruction::getInstructionType(){
   return this->instruction_type;
 }
 
-void Instruction::setInstructionOPCode(OPCodes instruction_opcode){
-  this->instruction_opcode = instruction_opcode;
-}
-
-OPCodes Instruction::getIntstructionOPCode(){
-  return this->instruction_opcode;
-}
-
 Instruction::~Instruction(){
   int size = this->operands->size();
   for(int i = 0; i < size ;i++){

@@ -1,8 +1,10 @@
-.global a
-.extern d
 .section .text
-.skip 14
-label1:
+jmp %labela1
+ldr r0, %labela1
+ldr r0,labela1
+ldr r0, [r0 + 0x13]
+jmp *[r1 + labela1]
 .section .data
-.skip 69
-label2:
+labela1:
+xor r1, r1
+.end

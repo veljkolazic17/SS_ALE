@@ -18,3 +18,6 @@ int SymbolListElement::getLiteral(){
   return this->literal;
 }
 
+SymbolListElementType SymbolListElement::getSymbolListElementType(){
+  return this->type;
+}
