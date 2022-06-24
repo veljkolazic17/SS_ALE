@@ -30,3 +30,76 @@ void Assembler::crackLine(Line* line){
         this->insertInstruction(line->getInstruction());
     }
 }
+
+void Assembler::backpatch(){
+    int size = this->symbolTable->size();
+    for(int i = 0;i<size;i++){
+        this->backpatchSingle(
+            this->symbolTable->at(i)
+        );
+    }
+}
+
+void Assembler::backpatchSingle(SymbolTableElement* symbolTableElement){
+    if(symbolTableElement->getType() == SCTN)
+        return;
+ 
+    int flinkSize = symbolTableElement->getFlinkSize();
+    Binding BIND = symbolTableElement->getBinding();
+    //iterate over flinks
+    for(int i = 0;i<flinkSize;i++){
+        BackpatchElement backpatchElement = symbolTableElement->getBackpatchElement(i);
+        //consider backpatching
+        if(
+                backpatchElement.action & UNDEFINED
+            &&  symbolTableElement->getSection() == backpatchElement.section
+            &&  symbolTableElement->getDefined()
+        ){
+            
+            uint16_t Data = symbolTableElement->getValue()>>8 | symbolTableElement->getValue()<<8;
+            backpatchElement.section->insertDataByOffsetMem(
+                backpatchElement.offset,
+                (char*)&Data,
+                2
+            );
+        }
+        //should enter relocation table
+        else{
+            if(BIND == LOC){
+                if(backpatchElement.action & R_X86_64_PC16){
+                    backpatchElement.section->insertRelocationTableElement({
+                        backpatchElement.offset,
+                        -2+(int)symbolTableElement->getValue(),
+                        R_X86_64_PC16,
+                        symbolTableElement->getSection()->getSymbolTableEntry()
+                    });
+                }
+                else if(backpatchElement.action & R_X86_64_16){
+                    backpatchElement.section->insertRelocationTableElement({
+                        backpatchElement.offset,
+                        (int)symbolTableElement->getValue(),
+                        R_X86_64_16,
+                        symbolTableElement->getSection()->getSymbolTableEntry()
+                    });
+                }
+            }else{
+                if(backpatchElement.action & R_X86_64_PLT16){
+                    backpatchElement.section->insertRelocationTableElement({
+                        backpatchElement.offset,
+                        -2,
+                        R_X86_64_PLT16,
+                        symbolTableElement
+                    });
+                }
+                else if(backpatchElement.action & R_X86_64_16){
+                    backpatchElement.section->insertRelocationTableElement({
+                        backpatchElement.offset,
+                        0,
+                        R_X86_64_16,
+                        symbolTableElement
+                    });
+                }
+            }
+        }
+    }
+}

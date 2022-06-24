@@ -96,6 +96,14 @@ void SymbolTableElement::setNDX(int Ndx){
     this->Ndx = Ndx;
 }
 
-void SymbolTableElement::backpatch(BackpatchElement backpatchElement){
+void SymbolTableElement::insertFlink(BackpatchElement backpatchElement){
     this->flink->push_back(backpatchElement);
+}
+
+int SymbolTableElement::getFlinkSize(){
+    return this->flink->size();
+}
+
+BackpatchElement SymbolTableElement::getBackpatchElement(int index){
+    return this->flink->at(index);
 }

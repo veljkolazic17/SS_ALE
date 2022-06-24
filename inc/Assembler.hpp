@@ -45,6 +45,12 @@ class Assembler{
          * 
          */
         void insertSection(Section*);
+        /**
+         * @brief backpatcing method
+         * 
+         */
+        void backpatchSingle(SymbolTableElement*);
+        void backpatch();
     private:
         std::vector<SymbolTableElement*>* symbolTable;
         std::vector<Section*>* sections;

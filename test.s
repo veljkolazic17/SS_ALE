@@ -1,10 +1,11 @@
 .section .text
-jmp %labela1
-ldr r0, %labela1
-ldr r0,labela1
-ldr r0, [r0 + 0x13]
-jmp *[r1 + labela1]
+.skip 9
+e: .word 6,7
+jmp %f
+x: .word 1,x,8
 .section .data
-labela1:
-xor r1, r1
-.end
+.skip 8
+f:
+jmp e
+
+

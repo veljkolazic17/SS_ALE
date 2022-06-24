@@ -32,7 +32,8 @@ int main(int argc, char** argv){
     Assembler assembler;
 
     assembler.crack(lineVec);
+    assembler.backpatch();
     assembler.objdump();
-    // printLines(lineVec);
+
 
 }
