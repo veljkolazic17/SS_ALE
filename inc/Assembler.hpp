@@ -51,6 +51,14 @@ class Assembler{
          */
         void backpatchSingle(SymbolTableElement*);
         void backpatch();
+        /**
+         * @brief form SElf file and .o file
+         * 
+         */
+        void createSElf(char* obj_filename);
+
+
+
     private:
         std::vector<SymbolTableElement*>* symbolTable;
         std::vector<Section*>* sections;

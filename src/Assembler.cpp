@@ -1,4 +1,7 @@
 #include "../inc/Assembler.hpp"
+#include "../inc/SELF.h"
+#include <string.h>
+#include <stdlib.h>
 
 Assembler::Assembler(){
     this->symbolTable = new std::vector<SymbolTableElement*>();

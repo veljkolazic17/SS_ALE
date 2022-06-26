@@ -10,7 +10,7 @@ typedef __u32   SElf16_Dword;
 typedef __u64   Self16_Qword;
 
 //*.*.Magic.*.*
-#define MAGIC           4
+#define MAGIC           5
 
 //DCLASS
 #define SELFDATANONE    0
@@ -51,11 +51,8 @@ typedef struct{
     SElf16_Half se_dclass;          /* Data representation type */
     SElf16_Half se_type;            /* Type of file (always will be REL) */
     SElf16_Addr se_entry;           /* Entry virtual address */
-    SElf16_Off se_phoff;            /* Does not exist */
     SElf16_Off se_shoff;            /* Section header table offset */
     SElf16_Half se_shsize;          /* Size of SELF header */
-    SElf16_Half se_phentsize;       /* Prgoram header table entry size */
-    SElf16_Half se_phnum;           /* Program hedaer table number of entries */
     SElf16_Half se_shentsize;       /* Section header table entry size */
     SElf16_Half se_shnum;           /* Section header table number of entries */
     SElf16_Half se_shstrndx;        /* Section name string table index in section header table*/
@@ -85,4 +82,5 @@ typedef struct{
     SElf16_Addr r_offset;           /* Offset where change is needed */
     SElf16_Word r_addend;           /* Addend */
     SElf16_Half r_type;             /* Type */
+    SElf16_Off r_symbol;           /* Index in symbol table of symbol */
 }self16_rela;

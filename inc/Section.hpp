@@ -4,6 +4,8 @@
 #include "./Section.hpp"
 #include<string>
 
+class Assembler;
+
 class Section{
     public:
         Section(std::string);
@@ -32,4 +34,6 @@ class Section{
         std::vector<RelocationTableElement> relocationTable = std::vector<RelocationTableElement>();
         std::string sectionName;
         char* data;
+
+    friend Assembler;
 };
