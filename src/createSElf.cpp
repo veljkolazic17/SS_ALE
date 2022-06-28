@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-void Assembler::createSElf(char* obj_filename){
+void Assembler::createSElf(std::string obj_filename){
 
     __u8* data = (__u8*)malloc(sizeof(self16_hdr));
     __u8* string_table = 0;
@@ -195,8 +195,6 @@ void Assembler::createSElf(char* obj_filename){
     SElf16_Off temp_size = sections_size*sizeof(self16_shdr);
     size_t realloc_size = (sections_size*2 +  2)*sizeof(self16_shdr);
 
-    printf("\n BABA : %d\n",realloc_size);
-
     data = (__u8*)realloc(data,offset+realloc_size);
     
     memcpy(
@@ -237,7 +235,7 @@ void Assembler::createSElf(char* obj_filename){
 
     memcpy(data,&header,sizeof(header));
 
-    FILE* obj_file = fopen(obj_filename,"wb+");
+    FILE* obj_file = fopen(obj_filename.c_str(),"wb+");
     fwrite(data,1,offset,obj_file);
     fclose(obj_file);
 }

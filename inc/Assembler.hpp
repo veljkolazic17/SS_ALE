@@ -55,7 +55,7 @@ class Assembler{
          * @brief form SElf file and .o file
          * 
          */
-        void createSElf(char* obj_filename);
+        void createSElf(std::string obj_filename);
 
 
 

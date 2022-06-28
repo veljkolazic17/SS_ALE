@@ -15,3 +15,11 @@ extern INSLEN   INSLENS[];
 #define REGINDIR    0b0010
 #define REGINDPOM   0b0011
 #define MEM         0b0100
+
+/* Don't ask why is this here */
+#define IMMED       0b0000
+#define REGDIR      0b0001
+#define REGDIRPOM   0b0101
+#define REGINDIR    0b0010
+#define REGINDIRPOM 0b0011
+#define MEM         0b0100
