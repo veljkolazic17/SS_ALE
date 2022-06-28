@@ -217,10 +217,10 @@ instruction:
     $$ = new Instruction(INT_TYPE, new Argument(REGISTER_TYPE,$2));
   }
   | PUSH REGISTER{
-    $$ = new Instruction(PUSH_TYPE, new Argument(REGISTER_TYPE,$2));
+    $$ = new Instruction(PUSH_TYPE, new Argument(REGISTER_TYPE,$2),new Argument(DATA_OPERAND_REGMEM,6));
   }
   | POP REGISTER{
-    $$ = new Instruction(POP_TYPE, new Argument(REGISTER_TYPE,$2));
+    $$ = new Instruction(POP_TYPE, new Argument(REGISTER_TYPE,$2),new Argument(DATA_OPERAND_REGMEM,6));
   }
   | XCHG REGISTER COMMA REGISTER{
     $$ = new Instruction(XCHG_TYPE, new Argument(REGISTER_TYPE,$2), new Argument(REGISTER_TYPE,$4));

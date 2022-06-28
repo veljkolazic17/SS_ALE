@@ -46,7 +46,8 @@ void Assembler::insertInstruction(Instruction* instruction){
                 RegDescr &= 0xF0;
                 RegDescr |= argument->getRegister();
             }
-        }else{
+        }
+        else{
             /**
              * @brief SECOND BYTE
              * 
