@@ -1,5 +1,6 @@
 #include "../misc/inc/Lines.hpp"
 #include "../inc/Assembler.hpp"
+#include "../inc/Emulator.hpp"
 #include <iostream>
 extern int yyparse();
 extern FILE* yyin;
@@ -30,10 +31,13 @@ int main(int argc, char** argv){
     int size = lineVec->getLineSize();
     
     Assembler assembler;
+    Emulator emulator;
 
-    assembler.crack(lineVec);
-    assembler.backpatch();
-    assembler.objdump();
-    assembler.createSElf("main.o");
+    // assembler.crack(lineVec);
+    // assembler.backpatch();
+    // assembler.objdump();
+    // assembler.createSElf("main.o");
+
+    emulator.start("../KURAC.txt");
 
 }

@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include<string>
 #include <fstream>
+#include "../misc/inc/Codes.h"
 
 #define PC          7
 #define SP          6
@@ -11,12 +12,6 @@
 #define INVALID     1
 #define TIMER       2
 #define TERMINAL    3
-
-#define CREGD       0
-#define CREGS       1
-#define CREGDS      2
-#define CNOREGS     3
-#define CREGS       4
 
 typedef short REGISTER;
 typedef unsigned short SYSREG;
@@ -41,10 +36,11 @@ class Emulator{
 
         Emulator();
         void start(std::string);
-        void load(std::string);
+
     
     private:
         void config_emulator();
+        void load(std::string);
 
         void handle_intr();
 
@@ -91,3 +87,5 @@ class Emulator{
         INTERRUPT user_interputs[4] = {false,false,false,false};
 
 };
+
+unsigned short switch_bytes(unsigned short word);

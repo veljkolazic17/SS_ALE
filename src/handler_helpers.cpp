@@ -1,5 +1,4 @@
 #include "../inc/Emulator.hpp"
-#include "../misc/inc/Codes.h"
 #include "../misc/inc/Types.h"
 int Emulator::check_rd(REGISTER* regD, BYTE* _regD){
     BYTE regs = memory[(SYSREG)registers[PC]];
@@ -56,7 +55,6 @@ bool Emulator::scoop_operand(OPERAND* operand, INSLEN* inslen, SOURCE** source){
             immed = switch_bytes(immed);
             *operand = immed;
             *inslen = 5;
-            return true;
         }    
         break;
 
@@ -74,7 +72,6 @@ bool Emulator::scoop_operand(OPERAND* operand, INSLEN* inslen, SOURCE** source){
             if(source){
                 *source = &registers[_regS];
             }
-            return true;
         }
         break;
 
@@ -91,7 +88,6 @@ bool Emulator::scoop_operand(OPERAND* operand, INSLEN* inslen, SOURCE** source){
             pom = switch_bytes(pom);
             *operand = pom + regS;
             *inslen = 5;
-            return true;
         }
         break;
 
@@ -153,7 +149,6 @@ bool Emulator::scoop_operand(OPERAND* operand, INSLEN* inslen, SOURCE** source){
                     *inslen = 3;
                     return false;
             }
-            return true;
         }
         break;
 
@@ -233,7 +228,6 @@ bool Emulator::scoop_operand(OPERAND* operand, INSLEN* inslen, SOURCE** source){
                         *source = (SOURCE*)(memory + (SYSREG)immed);
             }
             *inslen = 5;
-            return true;
         }
         break;
 
@@ -244,6 +238,7 @@ bool Emulator::scoop_operand(OPERAND* operand, INSLEN* inslen, SOURCE** source){
         }
         break;
     }
+    return true;
 }
 BYTE Emulator::get_upmode(){
     return (memory[(SYSREG)registers[PC] + 2] & 0xF0) >> 4;

@@ -1,5 +1,4 @@
 #include "../inc/Emulator.hpp"
-#include "../misc/inc/Codes.h"
 #include "../misc/inc/Types.h"
 
 void Emulator::handle_HALT(){
@@ -237,4 +236,8 @@ void Emulator::handle_STR_PUSH(){
         system_interupts[INVALID] = true;
     }
     registers[PC] += inslen;
+}
+
+void Emulator::handle_intr(){
+    
 }

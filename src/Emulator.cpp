@@ -42,7 +42,7 @@ void Emulator::config_emulator(){
 
 
 void Emulator::start(std::string filename){
-    
+    load(filename);
 
     while(!stop){
         /* instruction fetch decode and execute */
