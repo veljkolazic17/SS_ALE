@@ -7,24 +7,6 @@ extern FILE* yyin;
 
 Lines* lineVec;
 
-void printLines(Lines* lines){
-
-    int size = lines->getLineSize();
-    for(int i = 0;i<size;i++){
-        if(lines->getLine(i)->getLabel() != nullptr){
-            std::cout<<lines->getLine(i)->getLabel()->toString()+"\n";
-        }
-        if(lines->getLine(i)->getDirective() != nullptr){
-            std::cout<<lines->getLine(i)->getDirective()->toString()+"\n";
-        }
-        if(lines->getLine(i)->getInstruction() != nullptr){
-        // TODO Implementirati insertInstruction !!!
-        }   
-    }    
-}
-
-
-
 int main(int argc, char** argv){
     yyin = fopen("../test.s","r");
     yyparse();
@@ -33,10 +15,10 @@ int main(int argc, char** argv){
     Assembler assembler;
     Emulator emulator;
 
-    // assembler.crack(lineVec);
-    // assembler.backpatch();
-    // assembler.objdump();
-    // assembler.createSElf("main.o");
+//     assembler.crack(lineVec);
+//     assembler.backpatch();
+//     assembler.objdump();
+//     assembler.createSElf("../misc/main.o");
 
     emulator.start("../KURAC.txt");
 

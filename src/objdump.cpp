@@ -46,13 +46,16 @@ void Assembler::objdump(){
         std::cout<<COLORS[i%5];
         printf("%s",("#."+section->getSectionName()).c_str());
         int dataSize = section->getDataSize();
+        int counter = 0;
         for(int j = 0;j<dataSize;j++){
             if(j%8 == 0){
                 printf("\n");
+                printf("%04X: ",(unsigned  int)(counter & 0xFFFF));
+                counter+=8;
             }
-            else if(j%4 == 0){
-                printf("\t");
-            }
+//            else if(j%4 == 0){
+//                printf("\t");
+//            }
             else{
                 printf(" ");
             }

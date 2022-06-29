@@ -4,7 +4,7 @@
 #include <fstream>
 #include "../misc/inc/Codes.h"
 
-#define PC          7
+#define IP          7
 #define SP          6
 #define PSW         8
 
@@ -81,8 +81,8 @@ class Emulator{
         MEMORY memory;
         bool stop = false;
 
-        REGISTER psw;
-        REGISTER registers[8];
+        REGISTER psw = 0;
+        REGISTER registers[8] = {0,0,0,0,0,0,0,0};
         INTERRUPT system_interupts[4] = {false,false,false,false};
         INTERRUPT user_interputs[4] = {false,false,false,false};
 

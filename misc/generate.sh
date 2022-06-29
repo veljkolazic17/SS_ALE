@@ -4,4 +4,4 @@ clear
 # bison Parser.y
 g++ -g -o executable ./src/* ../src/*
 ./executable
-hexdump -C main.o
+# hexdump -C main.o

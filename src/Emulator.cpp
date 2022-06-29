@@ -6,7 +6,6 @@
 Emulator::Emulator(){
     this->memory = (MEMORY)malloc(65536);
     this->config_emulator();
-
 }
 
 void Emulator::config_emulator(){
@@ -46,10 +45,10 @@ void Emulator::start(std::string filename){
 
     while(!stop){
         /* instruction fetch decode and execute */
-        if(this->opcode_map.find(this->memory[(SYSREG)this->registers[PC]]) == this->opcode_map.end()){
-            this->registers[PC]++;
+        if(this->opcode_map.find(this->memory[(SYSREG)this->registers[IP]]) == this->opcode_map.end()){
+            this->registers[IP]++;
         }else{
-            (this->*(this->opcode_map[this->memory[(SYSREG)this->registers[PC]]]))();
+            (this->*(this->opcode_map[this->memory[(SYSREG)this->registers[IP]]]))();
         }
         /* interrupts */
         this->handle_intr();

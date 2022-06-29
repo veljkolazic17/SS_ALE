@@ -60,7 +60,7 @@
 /*
   LEXSYMBOLS
 */
-%token<token>       PC PSW SP
+%token<token>       IP PSW SP
 %token<token>       COMMENT
 %token<token>       COMMA DOT COLON PLUS MINUS STAR MOD DOLLAR LBRACKET RBRACKET NEW_LINE
 

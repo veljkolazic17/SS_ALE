@@ -70,7 +70,7 @@ void Assembler::insertInstruction(Instruction* instruction){
                 ||  argumentType == JMP_OPERAND_SYMPCREL
             ){
                 RegDescr &= 0xF0;
-                RegDescr |= 7; //PC
+                RegDescr |= 7; //IP
             }
             /**
              * @brief THIRD BYTE

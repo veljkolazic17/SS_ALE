@@ -55,7 +55,7 @@
 "shr"                   {return SHR;}
 "ldr"                   {return LDR;}
 "str"                   {return STR;}
-"pc"                    {return PC;}
+"pc"                    {return IP;}
 "psw"                   {return PSW;}
 "sp"                    {return SP;}
 #.*                     {return COMMENT;}

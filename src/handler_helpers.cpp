@@ -1,7 +1,7 @@
 #include "../inc/Emulator.hpp"
 #include "../misc/inc/Types.h"
 int Emulator::check_rd(REGISTER* regD, BYTE* _regD){
-    BYTE regs = memory[(SYSREG)registers[PC]];
+    BYTE regs = memory[(SYSREG)registers[IP] + 1];
     BYTE regD_num = (regs&0xF0)>>4;
     if(_regD){
         *_regD = regD_num;
@@ -22,7 +22,7 @@ int Emulator::check_rd(REGISTER* regD, BYTE* _regD){
     }
 }
 int Emulator::check_rs(REGISTER* regS, BYTE* _regS){
-    BYTE regs = memory[(SYSREG)registers[PC]];
+    BYTE regs = memory[(SYSREG)registers[IP] + 1];
     BYTE regS_num = (regs&0x0F);
     if(_regS){
         *_regS = regS_num;
@@ -43,7 +43,7 @@ int Emulator::check_rs(REGISTER* regS, BYTE* _regS){
     }
 }
 bool Emulator::scoop_operand(OPERAND* operand, INSLEN* inslen, SOURCE** source){
-    ADDRMODE AddrMode = (memory[(SYSREG)registers[PC] + 2] & 0x0F) >> 4;
+    ADDRMODE AddrMode = (memory[(SYSREG)registers[IP] + 2] & 0x0F);
     switch (AddrMode){
         case IMMED:{      
             if(check_rs(0,0) < 1){
@@ -51,7 +51,7 @@ bool Emulator::scoop_operand(OPERAND* operand, INSLEN* inslen, SOURCE** source){
                 *inslen = 3;   
                 return false;
             }
-            OPERAND immed = *((OPERAND*)(memory + 3));
+            OPERAND immed = *((OPERAND*)(memory + (SYSREG)registers[IP] + 3));
             immed = switch_bytes(immed);
             *operand = immed;
             *inslen = 5;
@@ -221,7 +221,7 @@ bool Emulator::scoop_operand(OPERAND* operand, INSLEN* inslen, SOURCE** source){
                 *inslen = 3;   
                 return false;
             }
-            OPERAND immed = *((OPERAND*)(memory + 3));
+            OPERAND immed = *((OPERAND*)(memory + registers[IP] + 3));
             immed = switch_bytes(immed);
             *operand = *((OPERAND*)(memory + (SYSREG)immed));
             if(source){
@@ -241,7 +241,7 @@ bool Emulator::scoop_operand(OPERAND* operand, INSLEN* inslen, SOURCE** source){
     return true;
 }
 BYTE Emulator::get_upmode(){
-    return (memory[(SYSREG)registers[PC] + 2] & 0xF0) >> 4;
+    return (memory[(SYSREG)registers[IP] + 2] & 0xF0) >> 4;
     
 }
 unsigned short switch_bytes(unsigned short word){

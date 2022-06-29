@@ -624,7 +624,7 @@ static const char *const yytname[] =
   "EXTERN", "SECTION", "WORD", "SKIP", "ASCII", "EQU", "END", "HALT",
   "INT", "RET", "IRET", "CALL", "JMP", "JEQ", "JNE", "JGT", "PUSH", "POP",
   "XCHG", "ADD", "SUB", "MUL", "DIV", "CMP", "NOT", "AND", "OR", "XOR",
-  "TEST", "SHL", "SHR", "LDR", "STR", "PC", "PSW", "SP", "COMMENT",
+  "TEST", "SHL", "SHR", "LDR", "STR", "IP", "PSW", "SP", "COMMENT",
   "COMMA", "DOT", "COLON", "PLUS", "MINUS", "STAR", "MOD", "DOLLAR",
   "LBRACKET", "RBRACKET", "NEW_LINE", "$accept", "program", "lines",
   "line", "label", "directive", "symbolList", "symbolLiterallList",

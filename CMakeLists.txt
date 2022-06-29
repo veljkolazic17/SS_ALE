@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.22)
+project(untitled)
+file(GLOB_RECURSE SOURCES_CPP RELATIVE ${CMAKE_SOURCE_DIR} "src/*.cpp")
+file(GLOB_RECURSE SOURCES_C RELATIVE ${CMAKE_SOURCE_DIR} "src/*.c")
+file(GLOB_RECURSE MISC_SOURCES_CPP RELATIVE ${CMAKE_SOURCE_DIR} "misc/src/*.cpp")
+file(GLOB_RECURSE MISC_SOURCES_C RELATIVE ${CMAKE_SOURCE_DIR} "misc/src/*.c")
+
+add_executable(untitled ${SOURCES_CPP} ${SOURCES_C} ${MISC_SOURCES_CPP} ${MISC_SOURCES_C})
