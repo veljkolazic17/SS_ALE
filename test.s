@@ -16,3 +16,7 @@ str r4, 200     # 47
 halt            # 52
 ldr r4, $1      # 53
 ret             # 58
+
+.section .baba
+veljko: .word 5,6,7
+jmp veljko

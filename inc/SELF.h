@@ -46,6 +46,8 @@ typedef __u64   Self16_Qword;
 #define R_X86_64_PLT16  8
 #define R_X86_64_PC16   16
 
+#define HEADER_OFFSET   16
+
 typedef struct{
     unsigned char se_ident[MAGIC];  /* SELF "magic number" */
     SElf16_Half se_dclass;          /* Data representation type */

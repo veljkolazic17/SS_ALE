@@ -26,7 +26,7 @@ void Assembler::createSElf(char* obj_filename){
     offset += sizeof(self16_hdr);
 
     int sections_size = this->sections->size();
-    self16_shdr* section_headers = (self16_shdr*)malloc(sections_size*sizeof(Section));
+    self16_shdr* section_headers = (self16_shdr*)malloc(sections_size*sizeof(self16_shdr));
 
     /* writing sections */
     //----------------------------------------------------------------
@@ -35,11 +35,11 @@ void Assembler::createSElf(char* obj_filename){
 
         /* write name in string table */
         if(string_table == 0){
-            string_table = (__u8*)malloc(section->sectionName.length()*sizeof(__u8));
+            string_table = (__u8*)malloc((section->sectionName.length()+1)*sizeof(__u8));
         }else{
             string_table = (__u8*)realloc(string_table,name_offset+section->sectionName.length());
         }
-        memcpy(string_table+name_offset,section->sectionName.c_str(),section->sectionName.length());
+        memcpy(string_table+name_offset,(section->sectionName+'\0').c_str(),section->sectionName.length()+1);
        
         /* create section header */
         section_headers[i] = {
@@ -53,7 +53,7 @@ void Assembler::createSElf(char* obj_filename){
             0
         };
 
-        name_offset += section->getSectionName().length();
+        name_offset += section->getSectionName().length()+1;
         
         /* write section data */
         data = (__u8*)realloc(data,offset+section->dataSize);
@@ -73,66 +73,70 @@ void Assembler::createSElf(char* obj_filename){
     SElf16_Word symbol_table_size_bytes = symbol_table_size*sizeof(slef16_sym);
     slef16_sym* symbol_table_section = (slef16_sym*)malloc(symbol_table_size_bytes);
 
-    
+    self16_shdr symbol_table_header;
     SElf16_Half last_index = 0;
 
-    for(int i = 0;i<symbol_table_size;i++){
-        SymbolTableElement* symbolTableElement = this->symbolTable->at(i);
-        string_table = (__u8*)realloc(string_table,name_offset+symbolTableElement->getSymbolName().length());
-        memcpy(
-            string_table+name_offset,
-            symbolTableElement->getSymbolName().c_str(),
-            symbolTableElement->getSymbolName().length()
-        );
+    if(symbol_table_size){
+        for(int i = 0;i<symbol_table_size;i++){
+            SymbolTableElement* symbolTableElement = this->symbolTable->at(i);
+            string_table = (__u8*)realloc(string_table,name_offset+symbolTableElement->getSymbolName().length()+1);
+            memcpy(
+                string_table+name_offset,
+                (symbolTableElement->getSymbolName() + '\0').c_str(),
+                symbolTableElement->getSymbolName().length()+1
+            );
 
 
-        /* undefined section (extern symbol) */
-        SElf16_Off ndx = 0;
-        if(symbolTableElement->getSection()){
-            ndx = symbolTableElement->getSection()->getSymbolTableEntry()->getNum();
-            last_index = ndx;
+            /* undefined section (extern symbol) */
+            SElf16_Off ndx = 0;
+            if(symbolTableElement->getSection()){
+                ndx = symbolTableElement->getSection()->getSymbolTableEntry()->getNum();
+                last_index = ndx;
+            }
+            symbol_table_section[i] = {
+                name_offset,
+                (SElf16_Half)symbolTableElement->getBinding(),
+                (SElf16_Half)symbolTableElement->getType(),
+                ndx,
+                (SElf16_Sword)symbolTableElement->getValue(),
+                (SElf16_Word)symbolTableElement->getSize()
+            };
+            name_offset += symbolTableElement->getSymbolName().length()+1;
         }
-        symbol_table_section[i] = {
-            name_offset,
-            (SElf16_Half)symbolTableElement->getBinding(),
-            (SElf16_Half)symbolTableElement->getType(),
-            ndx,
-            (SElf16_Sword)symbolTableElement->getValue(),
-            (SElf16_Word)symbolTableElement->getSize()
+         /* symbol table header */
+        symbol_table_header = {
+            0,
+            SHT_SYMTAB,
+            0,
+            offset,
+            symbol_table_size_bytes,
+            0,
+            last_index,
+            sizeof(slef16_sym)
         };
-        name_offset += symbolTableElement->getSymbolName().length();
+        data = (__u8*)realloc(data,offset+symbol_table_size_bytes);
+        memcpy(
+            data+offset,
+            symbol_table_section,
+            symbol_table_size_bytes
+        );
+        offset += symbol_table_size_bytes;
     }
-    /* symbol table header */
-    self16_shdr symbol_table_header = {
-        0,
-        SHT_SYMTAB,
-        0,
-        offset,
-        symbol_table_size_bytes,
-        0,
-        last_index,
-        sizeof(slef16_sym)
-    };
-    data = (__u8*)realloc(data,offset+symbol_table_size_bytes);
-    memcpy(
-        data+offset,
-        symbol_table_section,
-        symbol_table_size_bytes
-    );
-    offset += symbol_table_size_bytes;
     //----------------------------------------------------------------
 
-    self16_shdr* relocation_headers = (self16_shdr*)malloc(sections_size*sizeof(self16_shdr));
+   
 
     /* write relocation section */
     //----------------------------------------------------------------
+    self16_shdr* relocation_headers;
+    int number_of_relocation_headers = 0;
 
+    relocation_headers = (self16_shdr*)malloc(sections_size*sizeof(self16_shdr));
     for(int i = 0;i<sections_size;i++){
         Section* section = this->sections->at(i);
         /* relocations for this section */
         int relocations_per_section_size = section->relocationTable.size();
         int relocations_per_section_size_byte = relocations_per_section_size*sizeof(self16_rela);
-
 
         self16_rela* relocations_section = (self16_rela*)malloc(relocations_per_section_size_byte);
         for(int j = 0;j<relocations_per_section_size;j++){
@@ -148,23 +152,27 @@ void Assembler::createSElf(char* obj_filename){
         }
 
         /* write relocations of section i  */
-        data = (__u8*)realloc(data,offset+relocations_per_section_size_byte);
+        if(relocations_per_section_size){
+            data = (__u8*)realloc(data,offset+relocations_per_section_size_byte);
 
-        memcpy(
-            data+offset,
-            relocations_section,
-            relocations_per_section_size_byte
-        );
-        
-        relocation_headers[i].sh_offset = offset;
-        relocation_headers[i].sh_size = relocations_per_section_size_byte;
-        relocation_headers[i].sh_link = sections_size +1; //CHECK IF RIGHT
-        relocation_headers[i].sh_info = i+1;
-        relocation_headers[i].sh_entsize = sizeof(self16_rela);
-
-        offset += relocations_per_section_size_byte;
-
+            memcpy(
+                data+offset,
+                relocations_section,
+                relocations_per_section_size_byte
+            );
+            
+            relocation_headers[number_of_relocation_headers].sh_type = SHT_RELA;
+            relocation_headers[number_of_relocation_headers].sh_offset = offset;
+            relocation_headers[number_of_relocation_headers].sh_size = relocations_per_section_size_byte;
+            relocation_headers[number_of_relocation_headers].sh_link = sections_size +1; //CHECK IF RIGHT
+            relocation_headers[number_of_relocation_headers].sh_info = i+1;
+            relocation_headers[number_of_relocation_headers].sh_entsize = sizeof(self16_rela);
+            number_of_relocation_headers++;
+            
+            offset += relocations_per_section_size_byte;   
+        }
     }
+    
     //----------------------------------------------------------------
     
 
@@ -192,17 +200,20 @@ void Assembler::createSElf(char* obj_filename){
     header.se_shoff = offset;
 
     /* write section headers */
-    SElf16_Off temp_size = sections_size*sizeof(self16_shdr);
-    size_t realloc_size = (sections_size*2 +  2)*sizeof(self16_shdr);
+    SElf16_Off temp_size1 = sections_size*sizeof(self16_shdr);
+    SElf16_Off temp_size2 = number_of_relocation_headers*sizeof(self16_shdr);
+    /* sections + realloc + symtable + stringtalbe */
+    size_t realloc_size = (sections_size +  2 + number_of_relocation_headers)*sizeof(self16_shdr);
 
     data = (__u8*)realloc(data,offset+realloc_size);
     
+    /* write section headers */
     memcpy(
         data+offset,
         section_headers,
-        temp_size
+        temp_size1
     );
-    offset += temp_size;
+    offset += temp_size1;
 
     /* write symbol table section header */
     memcpy(
@@ -216,9 +227,9 @@ void Assembler::createSElf(char* obj_filename){
     memcpy(
         data+offset,
         relocation_headers,
-        temp_size
+        temp_size2
     );
-    offset += temp_size;
+    offset += temp_size2;
 
     /* write string name table header */
     memcpy(
@@ -230,8 +241,9 @@ void Assembler::createSElf(char* obj_filename){
     //----------------------------------------------------------------
     
     header.se_shentsize = realloc_size;
-    header.se_shnum = sections_size*2 +  2;
-    header.se_shstrndx = sections_size*2 +  2;
+    header.se_shsize = offset;
+    header.se_shnum = sections_size + 2 + number_of_relocation_headers;
+    header.se_shstrndx =sections_size + 1 + number_of_relocation_headers + 1;
 
     memcpy(data,&header,sizeof(header));
 
