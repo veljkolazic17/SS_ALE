@@ -59,7 +59,8 @@ void Assembler::backpatchSingle(SymbolTableElement* symbolTableElement){
             &&  symbolTableElement->getDefined()
         ){
             
-            uint16_t Data = symbolTableElement->getValue()>>8 | symbolTableElement->getValue()<<8;
+            uint16_t Data = symbolTableElement->getValue() - 5;
+            Data = Data>>8 | Data<<8;
             backpatchElement.section->insertDataByOffsetMem(
                 backpatchElement.offset,
                 (char*)&Data,

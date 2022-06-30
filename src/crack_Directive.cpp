@@ -166,8 +166,7 @@ void Assembler::crackSKIP(Directive* directive){
     this->currentSection->setDataByOffsetByte(currentLocationCounter,0,directiveLiteral);
     this->currentSection->setLocationCounter(
         currentLocationCounter + directiveLiteral
-    );
-    
+    );    
 }
 
 void Assembler::crackEND(Directive* directive){

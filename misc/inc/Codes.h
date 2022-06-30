@@ -41,3 +41,5 @@ typedef short SOURCE;
 #define FTIMER       8192
 #define FTERMINAL    16384
 #define FINTERRUPT    32768
+
+unsigned short switch_bytes(unsigned short);

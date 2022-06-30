@@ -117,3 +117,7 @@ INSLEN INSLENS[] = {
     5,
     5
 };
+
+unsigned short switch_bytes(unsigned short word){
+    return (word)>>8 | (word)<<8;
+}

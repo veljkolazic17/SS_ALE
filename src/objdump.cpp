@@ -53,9 +53,6 @@ void Assembler::objdump(){
                 printf("%04X: ",(unsigned  int)(counter & 0xFFFF));
                 counter+=8;
             }
-//            else if(j%4 == 0){
-//                printf("\t");
-//            }
             else{
                 printf(" ");
             }

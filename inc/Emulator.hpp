@@ -61,5 +61,3 @@ class Emulator{
         INTERRUPT user_interputs[4] = {false,false,false,false};
 
 };
-
-unsigned short switch_bytes(unsigned short word);

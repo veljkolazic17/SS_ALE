@@ -244,6 +244,3 @@ BYTE Emulator::get_upmode(){
     return (memory[(SYSREG)registers[IP] + 2] & 0xF0) >> 4;
     
 }
-unsigned short switch_bytes(unsigned short word){
-    return (word)>>8 | (word)<<8;
-}

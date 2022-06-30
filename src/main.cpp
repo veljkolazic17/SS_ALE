@@ -27,6 +27,12 @@ int main(int argc, char** argv){
     char* test[1];
     test[0] = (char*)std::string("../misc/main.o").c_str();
 
-    linker.load(1,test);
+
+    // linker.load(1,test);
+
+    linker.link(1,test);
+    linker._hex("out.hex");
+
+    // linker.load(1,test);
 
 }
