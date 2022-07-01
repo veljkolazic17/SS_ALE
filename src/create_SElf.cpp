@@ -147,7 +147,7 @@ void Assembler::createSElf(char* obj_filename){
                 (SElf16_Addr)relocationTableElement.offset,
                 (SElf16_Word)relocationTableElement.addend,
                 relocationTableElement.type,
-                (SElf16_Off)relocationTableElement.symbol->getNDX()
+                (SElf16_Off)relocationTableElement.symbol->getNum()
             };
         }
 

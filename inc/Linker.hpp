@@ -48,6 +48,7 @@ class Linker{
         std::unordered_map<std::string,std::vector<self16_shdr>> section_headers;
 
         std::unordered_map<std::string,__symbol> symbols;
+        std::unordered_map<std::string,__symbol> undefined;
         std::unordered_map<std::string,std::vector<__relocation>> relocations;
 
         /* per file structures */

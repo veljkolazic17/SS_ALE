@@ -72,8 +72,9 @@ void Linker::load(int argc, char** argv){
                         __symbol symbol;
                         symbol.name = extract_first_string(string_table,symbol_table[k].st_name);
                         symbol.value = symbol_table[k].st_value;
-                        symbol.section = extract_first_string(string_table,symbol_table[symbol_table[k].st_shndx - 1].st_name);
-                        symbol.nofile = i;
+                        std::string section_name = extract_first_string(string_table,symbol_table[symbol_table[k].st_shndx - 1].st_name);
+                        symbol.section = section_name;
+                        symbol.nofile = section_headers[section_name].size() - 1;
 
                         if(symbols.find(symbol.name) != symbols.end()){
                             printf("MULTIPLE SYMBOL DEFINITION : EXITING LINKER\n");
@@ -110,9 +111,10 @@ void Linker::load(int argc, char** argv){
                         __relocation relocation;
                         relocation.offset = relocation_table[k].r_offset;
                         relocation.type = relocation_table[k].r_type;
-                        relocation.symbol = extract_first_string(string_table,symbol_table[symbol_index-1].st_name);
                         relocation.addent = relocation_table[k].r_addend;
-                        relocation.nofile = i;
+                        relocation.symbol = extract_first_string(string_table,symbol_table[symbol_index-1].st_name);
+                        relocation.nofile = section_headers[section_name].size() - 1;
+
 
                         relocations[section_name].push_back(relocation);
                     }

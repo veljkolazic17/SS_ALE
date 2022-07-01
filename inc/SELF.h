@@ -84,5 +84,5 @@ typedef struct{
     SElf16_Addr r_offset;           /* Offset where change is needed */
     SElf16_Word r_addend;           /* Addend */
     SElf16_Half r_type;             /* Type */
-    SElf16_Off r_symbol;           /* Index in symbol table of symbol */
+    SElf16_Off r_symbol;            /* Index in symbol table of symbol */
 }self16_rela;

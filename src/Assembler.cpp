@@ -69,11 +69,14 @@ void Assembler::backpatchSingle(SymbolTableElement* symbolTableElement){
         }
         //should enter relocation table
         else{
-            int addend_plus = 0;
-            unsigned char action = (backpatchElement.action & HYPO_PC16)?HYPO_PC16:HYPO_16;
+            int addend_plus;
+            unsigned char action;
             if(backpatchElement.action & HYPO_REL16){
                 addend_plus = -2;
                 action = HYPO_REL16;
+            }else{
+                addend_plus = 0;
+                action = HYPO_16;
             }
             if(BIND == LOC){
                 backpatchElement.section->insertRelocationTableElement({
@@ -86,7 +89,7 @@ void Assembler::backpatchSingle(SymbolTableElement* symbolTableElement){
                 backpatchElement.section->insertRelocationTableElement({
                     backpatchElement.offset,
                     0 + addend_plus,
-                    HYPO_REL16,
+                    action,
                     symbolTableElement
                 });
             }

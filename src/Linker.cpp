@@ -36,7 +36,7 @@ void Linker::_map(){
         std::vector<self16_shdr>* section_headers_local = &section_headers[section_name];
         int headers_count = section_headers_local->size();
         int cur_section_size = 0;
-         for(int i = 0;i<headers_count;i++){
+        for(int i = 0;i<headers_count;i++){
             self16_shdr* cur_section_header = &section_headers_local->at(i);
             
 
@@ -80,7 +80,7 @@ void Linker::_finalize(){
             short insertion_value;
 
             if(relocation.type == HYPO_REL16){
-                insertion_value = symbols[relocation.symbol].value + relocation.addent - (relocation.offset + section_start_addrs[section]);
+                insertion_value = symbols[relocation.symbol].value + relocation.addent - (relocation.offset + section_start_addrs[section] + find_offset_in_files(section,relocation.nofile));
             }else{
                 insertion_value = symbols[relocation.symbol].value + relocation.addent;
             }        
