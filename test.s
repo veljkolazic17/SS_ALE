@@ -6,6 +6,5 @@ b: .word 9
 jmp c
 
 .section .baba
-	
+.skip 8	
 c:
-	

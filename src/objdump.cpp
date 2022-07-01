@@ -66,14 +66,14 @@ void Assembler::objdump(){
                 std::string type;
                 RelocationTableElement relocationTableElement = section->getRelocationTableElement(j);
                 switch (relocationTableElement.type){
-                    case R_X86_64_16:
-                        type = "R_X86_64_16";
+                    case HYPO_16:
+                        type = "HYPO_16  ";
                         break;
-                    case R_X86_64_PC16:
-                        type = "R_X86_64_PC16";
+                    case HYPO_PC16:
+                        type = "HYPO_PC16";
                         break;
-                    case R_X86_64_PLT16:
-                        type = "R_X86_64_PLT16";
+                    case HYPO_REL16:
+                        type = "HYPO_REL16";
                         break;
                 }
                 printf(

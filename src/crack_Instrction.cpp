@@ -145,28 +145,28 @@ void Assembler::insertInstruction(Instruction* instruction){
                     RELOCATION_TYPE type = 0;
                     switch (argumentType){
                         case DATA_OPERAND_MEMSYMPCREL:
-                            type = UNDEFINED | R_X86_64_16;
+                            type = HYPO_REL16 | HYPO_16;
                             break;
                         case JMP_OPERAND_SYMPCREL:
-                            type = UNDEFINED | R_X86_64_PC16 | R_X86_64_PLT16;
+                            type = HYPO_REL16 | HYPO_PC16;
                             break;
                         case DATA_OPERAND_SYM:
-                            type = R_X86_64_16;
+                            type = HYPO_16;
                             break;
                         case DATA_OPERAND_MEMSYMABS:
-                            type = R_X86_64_16;
+                            type = HYPO_16;
                             break;
                         case DATA_OPERAND_REGMEMSYM:
-                            type = R_X86_64_16;
+                            type = HYPO_16;
                             break;
                         case JMP_OPERAND_SYM:
-                            type = R_X86_64_PC16 | R_X86_64_PLT16;
+                            type = HYPO_PC16;
                             break;
                         case JMP_OPERAND_MEMSYM:
-                            type = R_X86_64_PC16 | R_X86_64_PLT16;
+                            type = HYPO_PC16;
                             break;
                         case JMP_OPERAND_REGMEMSYM:
-                            type = R_X86_64_PC16 | R_X86_64_PLT16;
+                            type = HYPO_PC16;
                             break;
                     }                  
                     symbolToPatch->insertFlink({this->currentSection->getLocationCounter()+2,type,this->currentSection});

@@ -54,7 +54,7 @@ void Assembler::backpatchSingle(SymbolTableElement* symbolTableElement){
         BackpatchElement backpatchElement = symbolTableElement->getBackpatchElement(i);
         //consider backpatching
         if(
-                backpatchElement.action & UNDEFINED
+                backpatchElement.action & HYPO_REL16
             &&  symbolTableElement->getSection() == backpatchElement.section
             &&  symbolTableElement->getDefined()
         ){
@@ -69,40 +69,26 @@ void Assembler::backpatchSingle(SymbolTableElement* symbolTableElement){
         }
         //should enter relocation table
         else{
+            int addend_plus = 0;
+            unsigned char action = (backpatchElement.action & HYPO_PC16)?HYPO_PC16:HYPO_16;
+            if(backpatchElement.action & HYPO_REL16){
+                addend_plus = -2;
+                action = HYPO_REL16;
+            }
             if(BIND == LOC){
-                if(backpatchElement.action & R_X86_64_PC16){
-                    backpatchElement.section->insertRelocationTableElement({
-                        backpatchElement.offset,
-                        -2+(int)symbolTableElement->getValue(),
-                        R_X86_64_PC16,
-                        symbolTableElement->getSection()->getSymbolTableEntry()
-                    });
-                }
-                else if(backpatchElement.action & R_X86_64_16){
-                    backpatchElement.section->insertRelocationTableElement({
-                        backpatchElement.offset,
-                        (int)symbolTableElement->getValue(),
-                        R_X86_64_16,
-                        symbolTableElement->getSection()->getSymbolTableEntry()
-                    });
-                }
+                backpatchElement.section->insertRelocationTableElement({
+                    backpatchElement.offset,
+                    (int)symbolTableElement->getValue() + addend_plus,
+                    action,
+                    symbolTableElement->getSection()->getSymbolTableEntry()
+                });        
             }else{
-                if(backpatchElement.action & R_X86_64_PLT16){
-                    backpatchElement.section->insertRelocationTableElement({
-                        backpatchElement.offset,
-                        -2,
-                        R_X86_64_PLT16,
-                        symbolTableElement
-                    });
-                }
-                else if(backpatchElement.action & R_X86_64_16){
-                    backpatchElement.section->insertRelocationTableElement({
-                        backpatchElement.offset,
-                        0,
-                        R_X86_64_16,
-                        symbolTableElement
-                    });
-                }
+                backpatchElement.section->insertRelocationTableElement({
+                    backpatchElement.offset,
+                    0 + addend_plus,
+                    HYPO_REL16,
+                    symbolTableElement
+                });
             }
         }
     }

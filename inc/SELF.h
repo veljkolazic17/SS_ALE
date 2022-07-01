@@ -41,10 +41,10 @@ typedef __u64   Self16_Qword;
 
 //Rela types
 #define UNDEFINED       1
-#define R_X86_64_16     2
-#define R_X86_64_16S    4
-#define R_X86_64_PLT16  8
-#define R_X86_64_PC16   16
+#define HYPO_16         2
+#define HYPO_16S        4
+#define HYPO_REL16      8
+#define HYPO_PC16       16
 
 #define HEADER_OFFSET   16
 

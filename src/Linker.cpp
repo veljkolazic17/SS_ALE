@@ -77,10 +77,14 @@ void Linker::_finalize(){
         for(__relocation relocation : relocations_local){
             MEMORY section_raw = section_contets[section].at(relocation.nofile);
             
-            short insertion_value = symbols[relocation.symbol].value + relocation.addent;
-            if(relocation.type == R_X86_64_PC16 || relocation.type == R_X86_64_PLT16){
-                insertion_value = switch_bytes(insertion_value);
-            }
+            short insertion_value;
+
+            if(relocation.type == HYPO_REL16){
+                insertion_value = symbols[relocation.symbol].value + relocation.addent - (relocation.offset + section_start_addrs[section]);
+            }else{
+                insertion_value = symbols[relocation.symbol].value + relocation.addent;
+            }        
+            insertion_value = switch_bytes(insertion_value);
             *(short*)(section_raw + relocation.offset) = insertion_value;
         }
     }
