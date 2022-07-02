@@ -64,6 +64,7 @@ enum DirectiveType {
   SKIP_TYPE,
   EQU_TYPE,
   END_TYPE,
+  ASCII_TYPE,
 };
 
 enum SymbolListElementType {

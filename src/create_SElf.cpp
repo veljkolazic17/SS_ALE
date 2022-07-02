@@ -2,6 +2,38 @@
 #include "../inc/SELF.h"
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
+
+void hexdump(void* data, size_t size, FILE* file) {
+	char ascii[17];
+	size_t i, j;
+	ascii[16] = '\0';
+	for (i = 0; i < size; ++i) {
+		fprintf(file,"%02X ", ((unsigned char*)data)[i]);
+		if (((unsigned char*)data)[i] >= ' ' && ((unsigned char*)data)[i] <= '~') {
+			ascii[i % 16] = ((unsigned char*)data)[i];
+		} else {
+			ascii[i % 16] = '.';
+		}
+		if ((i+1) % 8 == 0 || i+1 == size) {
+			fprintf(file," ");
+			if ((i+1) % 16 == 0) {
+				fprintf(file,"|  %s \n", ascii);
+			} else if (i+1 == size) {
+				ascii[(i+1) % 16] = '\0';
+				if ((i+1) % 16 <= 8) {
+					fprintf(file," ");
+				}
+				for (j = (i+1) % 16; j < 16; ++j) {
+					fprintf(file,"   ");
+				}
+				fprintf(file,"|  %s \n", ascii);
+			}
+		}
+	}
+}
+
+
 
 void Assembler::createSElf(char* obj_filename){
 
@@ -251,7 +283,15 @@ void Assembler::createSElf(char* obj_filename){
 
     memcpy(data,&header,sizeof(header));
 
-    FILE* obj_file = fopen(obj_filename,"wb+");
-    fwrite(data,1,offset,obj_file);
+    std::string txt_file(obj_filename);
+    FILE* obj_file = fopen(("txt_" + txt_file).c_str(),"wb+");
+    hexdump(data,offset,obj_file);
     fclose(obj_file);
+
+    FILE* out_file = fopen(obj_filename,"w+");
+    fwrite(data,1,offset,out_file);
+    fclose(out_file);
+    
 }
+   
+    

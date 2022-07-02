@@ -1,6 +1,9 @@
 CC = g++
 CFLAGS = -g
 
+filenames := assembler linker
+files := $(strip $(foreach f,$(filenames),$(wildcard $(f))))
+
 ASSEMBLER = assembler
 LINKER = linker
 
@@ -15,4 +18,6 @@ $(LINKER):
 			$(CC) $(CFLAGS) -o $(LINKER) $(LINKER_FILES)
 
 clean:
-	$(RM) $(ASSEMBLER) $(LINKER)
+ifneq ($(files),)
+	rm -f $(files)
+endif

@@ -74,5 +74,6 @@ r[0-7]                  {STORE_REG; return REGISTER;}
 "["                     {return LBRACKET;}
 "]"                     {return RBRACKET;}
 "\n"                    {return NEW_LINE;}
+"\""                    {return QUOTATION_MARK;}
 [ \t]+                  {;}
 %%

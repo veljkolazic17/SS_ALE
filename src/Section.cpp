@@ -40,6 +40,20 @@ void Section::setDataByOffsetByte(int offset, char data, size_t size){
     this->symbolTableEntry->setSize(this->dataSize);
 }
 
+void Section::setDataByOffsetRMem(int offset, char* data, size_t size){
+    if(this->dataSize == 0){
+        this->dataSize = size;
+        this->data = (char*)malloc(size*sizeof(char));
+    }else{
+        this->dataSize+=size;
+        this->data = (char*)realloc(this->data, this->dataSize);
+    }
+    for(int i = 0;i < size;i++){
+        this->data[offset+i]=data[i];
+    }
+    this->symbolTableEntry->setSize(this->dataSize);
+}
+
 void Section::setDataByOffsetMem(int offset, char* data, size_t size){
     if(this->dataSize == 0){
         this->dataSize = size;

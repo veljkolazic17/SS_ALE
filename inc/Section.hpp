@@ -14,6 +14,7 @@ class Section{
         void setLocationCounter(int);
         void setDataByOffsetByte(int, char, size_t);
         void setDataByOffsetMem(int, char*, size_t);
+        void setDataByOffsetRMem(int, char*, size_t);
         void insertDataByOffsetMem(int, char*, size_t);
         char getData(int);
         int getDataSize();

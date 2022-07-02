@@ -114,7 +114,8 @@ extern int yydebug;
     DOLLAR = 306,
     LBRACKET = 307,
     RBRACKET = 308,
-    NEW_LINE = 309
+    NEW_LINE = 309,
+    QUOTATION_MARK = 310
   };
 #endif
 
@@ -143,7 +144,7 @@ union YYSTYPE
   Argument *dataOperand;
 
 
-#line 147 "./inc/parser.hpp"
+#line 148 "./inc/parser.hpp"
 
 };
 typedef union YYSTYPE YYSTYPE;

@@ -9,3 +9,4 @@ labela2:
 jmp %darko
 .skip 3
 darko:
+.ascii "BAKAKAKA"

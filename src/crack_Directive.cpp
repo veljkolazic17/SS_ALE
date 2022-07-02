@@ -18,6 +18,9 @@ void Assembler::insertDirective(Directive* directive){
     case SKIP_TYPE:
         crackSKIP(directive);
         break;
+    case ASCII_TYPE:
+        crackASCII(directive);
+        break;
     case END_TYPE:
         crackEND(directive);
         break;
@@ -172,4 +175,15 @@ void Assembler::crackSKIP(Directive* directive){
 void Assembler::crackEND(Directive* directive){
     this->ASMSTATE = END;
     this->currentSection = nullptr;
+}
+
+void Assembler::crackASCII(Directive* directive){
+    std::string ascii_string = directive->getSectionName() + '\0';
+    int size = ascii_string.size();
+
+    int currentLocationCounter = this->currentSection->getLocationCounter();
+    this->currentSection->setDataByOffsetRMem(currentLocationCounter,(char*)ascii_string.c_str(),size);
+    this->currentSection->setLocationCounter(
+        currentLocationCounter + size
+    );
 }

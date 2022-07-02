@@ -40,6 +40,7 @@ class Assembler{
         void crackSKIP(Directive*);
         void crackEQU(Directive*);
         void crackEND(Directive*);
+        void crackASCII(Directive*);
         /**
          * @brief helper functions
          * 
