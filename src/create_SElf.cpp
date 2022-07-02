@@ -37,7 +37,7 @@ void Assembler::createSElf(char* obj_filename){
         if(string_table == 0){
             string_table = (__u8*)malloc((section->sectionName.length()+1)*sizeof(__u8));
         }else{
-            string_table = (__u8*)realloc(string_table,name_offset+section->sectionName.length());
+            string_table = (__u8*)realloc(string_table,name_offset+section->sectionName.length()+1);
         }
         memcpy(string_table+name_offset,(section->sectionName+'\0').c_str(),section->sectionName.length()+1);
        
@@ -208,12 +208,15 @@ void Assembler::createSElf(char* obj_filename){
     data = (__u8*)realloc(data,offset+realloc_size);
     
     /* write section headers */
-    memcpy(
-        data+offset,
-        section_headers,
-        temp_size1
-    );
-    offset += temp_size1;
+    if(temp_size1 != 0){
+         memcpy(
+            data+offset,
+            section_headers,
+            temp_size1
+        );
+        offset += temp_size1;
+    }
+   
 
     /* write symbol table section header */
     memcpy(
@@ -224,13 +227,14 @@ void Assembler::createSElf(char* obj_filename){
     offset += sizeof(self16_shdr);
 
     /* write relocations header */
-    memcpy(
-        data+offset,
-        relocation_headers,
-        temp_size2
-    );
-    offset += temp_size2;
-
+    if(temp_size2 != 0){
+        memcpy(
+            data+offset,
+            relocation_headers,
+            temp_size2
+        );
+        offset += temp_size2;
+    }
     /* write string name table header */
     memcpy(
         data+offset,

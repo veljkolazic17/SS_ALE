@@ -22,6 +22,8 @@ void Linker::_map(){
             cur_section_size += cur_section_header->sh_size;
         }
 
+        check_placement(section_addr,section_addr + cur_section_size,section_name);
+
         /* chek if reached new max address */
         int prob_new_max = cur_section_size + section_addr;
         if(max_addr < prob_new_max){
@@ -90,8 +92,8 @@ void Linker::_finalize(){
     }
 }
 
-void Linker::link(int nofiles, char** files){
-    load(nofiles,files);
+void Linker::link(std::vector<std::string> files){
+    load(files);
     _map();
     _crack();
     _finalize();
@@ -104,4 +106,19 @@ int Linker::find_offset_in_files(std::string section,int file_number){
         offset += grouped_section_headers->at(i).sh_size;
     }
     return offset;
+}
+
+void Linker::check_placement(unsigned short start, unsigned short end,std::string section){
+    for(std::pair<std::string,int> allocated_start : section_start_addrs){
+        if(section == allocated_start.first)
+            continue;
+        if(allocated_start.second >= start && allocated_start.second < end){
+            printf("BAD_PLACEMENT : %s X %s\n",allocated_start.first.c_str(), section.c_str());
+            exit(BAD_PLACEMENT);
+        }
+    }
+}
+
+void Linker::_place(std::string section, int address){
+    this->section_start_addrs[section] = address;
 }

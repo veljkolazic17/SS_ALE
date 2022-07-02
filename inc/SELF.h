@@ -46,7 +46,7 @@ typedef __u64   Self16_Qword;
 #define HYPO_REL16      8
 #define HYPO_PC16       16
 
-#define HEADER_OFFSET   16
+#define HEADER_OFFSET   18
 
 typedef struct{
     unsigned char se_ident[MAGIC];  /* SELF "magic number" */
@@ -54,10 +54,10 @@ typedef struct{
     SElf16_Half se_type;            /* Type of file (always will be REL) */
     SElf16_Addr se_entry;           /* Entry virtual address */
     SElf16_Off se_shoff;            /* Section header table offset */
-    SElf16_Half se_shsize;          /* Size of SELF header */
-    SElf16_Half se_shentsize;       /* Section header table entry size */
-    SElf16_Half se_shnum;           /* Section header table number of entries */
-    SElf16_Half se_shstrndx;        /* Section name string table index in section header table*/
+    SElf16_Off se_shsize;          /* Size of SELF header */
+    SElf16_Off se_shentsize;       /* Section header table entry size */
+    SElf16_Off se_shnum;           /* Section header table number of entries */
+    SElf16_Off se_shstrndx;        /* Section name string table index in section header table*/
 }self16_hdr;
 
 typedef struct{

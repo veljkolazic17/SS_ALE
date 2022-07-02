@@ -5,21 +5,27 @@
 #include <unordered_map>
 #include <vector>
 #include <string>
+#include <set>
 
-#define MULTIPLE_SYMBOL_DEFINITION -2
+#define MULTIPLE_SYMBOL_DEFINITION_FOUND    -2
+#define NO_SYMBOL_DEFINITION_FOUND          -3
+#define BAD_PLACEMENT                       -4 
 
 
 class Linker{
 
     public:
-        void link(int, char**);
+        void link(std::vector<std::string>);
         void _hex(char*);
+        void _place(std::string, int);
            
     private:
         void _map();
         void _crack();
         void _finalize();
-        void load(int, char**);
+        void load(std::vector<std::string>);
+
+        void check_placement(unsigned short, unsigned short, std::string);
 
         int find_offset_in_files(std::string,int);
     private:
@@ -48,7 +54,7 @@ class Linker{
         std::unordered_map<std::string,std::vector<self16_shdr>> section_headers;
 
         std::unordered_map<std::string,__symbol> symbols;
-        std::unordered_map<std::string,__symbol> undefined;
+        std::set<std::string> undefined;
         std::unordered_map<std::string,std::vector<__relocation>> relocations;
 
         /* per file structures */

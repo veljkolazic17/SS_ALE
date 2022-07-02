@@ -1,9 +1,5 @@
-.global f
+.global labela2
+
 .section .text
-.word 6,6,6,6
-jmp %d
-
-d: 
-
-.section .tata
-f: .word 8
+xor r1,r1
+labela2:

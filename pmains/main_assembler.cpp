@@ -34,13 +34,4 @@ int main(int argc, char** argv){
         assembler.objdump();
         assembler.createSElf(test[i]);
     }
-
-
-    // linker.load(1,test);
-
-    linker.link(2,test);
-    linker._hex("out.hex");
-
-    // linker.load(1,test);
-
 }
