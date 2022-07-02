@@ -75,8 +75,6 @@ void Linker::load(std::vector<std::string> input_array){
                             continue;
                         }
 
-                        undefined.erase(symbol_name);
-
                         __symbol symbol;
                         symbol.name =symbol_name;
                         symbol.value = symbol_table[k].st_value;
@@ -130,6 +128,10 @@ void Linker::load(std::vector<std::string> input_array){
                 break;
             }
         }
+    }
+
+    for(std::pair<std::string,__symbol> symbol : symbols){
+        undefined.erase(symbol.first);
     }
     if(undefined.size() > 0){
         printf("NO_SYMBOL_DEFINITION_FOUND :");

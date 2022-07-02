@@ -17,7 +17,6 @@ class Emulator{
         void load(std::string);
 
         void handle_intr();
-
         void handle_HALT();
         void handle_INT();
         void handle_IRET();

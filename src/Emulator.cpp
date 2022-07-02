@@ -47,6 +47,7 @@ void Emulator::start(std::string filename){
         /* instruction fetch decode and execute */
         if(this->opcode_map.find(this->memory[(SYSREG)this->registers[IP]]) == this->opcode_map.end()){
             this->registers[IP]++;
+            this->system_interupts[INVALID] = true;
         }else{
             (this->*(this->opcode_map[this->memory[(SYSREG)this->registers[IP]]]))();
         }

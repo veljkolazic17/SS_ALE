@@ -100,7 +100,7 @@ extern int yydebug;
     SHR = 292,
     LDR = 293,
     STR = 294,
-    PC = 295,
+    IP = 295,
     PSW = 296,
     SP = 297,
     COMMENT = 298,

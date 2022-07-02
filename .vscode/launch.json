@@ -8,8 +8,16 @@
         "name": "(gdb) Launch",
         "type": "cppdbg",
         "request": "launch",
-        "program": "${workspaceFolder}/misc/executable",
-        "args": [],
+        "program": "${workspaceFolder}/misc/assembler",
+        "args": [
+            // "-o main.o main.s",
+            // "-o ivt.o ivt.s",
+            // "-o isr_reset.o isr_reset.s",
+            "-o",
+            "isr_terminal.o",
+            "isr_terminal.s",
+            // "-o isr_timer.o isr_timer.s",
+        ],
         "stopAtEntry": false,
         "cwd": "${fileDirname}",
         "environment": [],
@@ -27,39 +35,6 @@
                 "ignoreFailures": true
             }
         ]
-    },
-        {
-            "name": "(gdb) Launch",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/misc/linker",
-            "args": [
-                "-hex",
-                "-o",
-                "mem_content.hex",
-                "-place=text@0x400",
-                "-place=data@0x440",
-                "../misc/main1.o",
-                "../misc/main2.o",
-            ],
-            "stopAtEntry": false,
-            "cwd": "${fileDirname}",
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "gdb",
-            "setupCommands": [
-                {
-                    "description": "Enable pretty-printing for gdb",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                },
-                {
-                    "description":  "Set Disassembly Flavor to Intel",
-                    "text": "-gdb-set disassembly-flavor intel",
-                    "ignoreFailures": true
-                }
-            ]
-        }
-
+    }
     ]
 }

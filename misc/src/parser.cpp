@@ -181,7 +181,7 @@ extern int yydebug;
     SHR = 292,
     LDR = 293,
     STR = 294,
-    PC = 295,
+    IP = 295,
     PSW = 296,
     SP = 297,
     COMMENT = 298,
@@ -1792,7 +1792,7 @@ yyreduce:
   case 34:
 #line 219 "Parser.y"
                  {
-    (yyval.instruction) = new Instruction(PUSH_TYPE, new Argument(REGISTER_TYPE,(yyvsp[0].reg)));
+    (yyval.instruction) = new Instruction(PUSH_TYPE, new Argument(REGISTER_TYPE,(yyvsp[0].reg)),new Argument(DATA_OPERAND_REGMEM,(char)6));
   }
 #line 1798 "./src/parser.cpp"
     break;
@@ -1800,7 +1800,7 @@ yyreduce:
   case 35:
 #line 222 "Parser.y"
                 {
-    (yyval.instruction) = new Instruction(POP_TYPE, new Argument(REGISTER_TYPE,(yyvsp[0].reg)));
+    (yyval.instruction) = new Instruction(POP_TYPE, new Argument(REGISTER_TYPE,(yyvsp[0].reg)),new Argument(DATA_OPERAND_REGMEM,(char)6));
   }
 #line 1806 "./src/parser.cpp"
     break;

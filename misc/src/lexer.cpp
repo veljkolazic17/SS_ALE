@@ -1002,7 +1002,7 @@ YY_RULE_SETUP
 case 35:
 YY_RULE_SETUP
 #line 58 "Lexer.l"
-{return PC;}
+{return IP;}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
