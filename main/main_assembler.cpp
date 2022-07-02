@@ -14,12 +14,18 @@ int main(int argc, char** argv){
     
     for(int i = 1; i < argc; i ++){
 
-        char* out;
-        char* in;
+        char* out = 0;
+        char* in = 0;
+        char* objdump_filename = 0;
 
-        if(argv[i][0] == '-' && argv[i][1] == 'o'){
+
+        std::string arg(argv[i]);
+
+        if(arg == "-o"){
             out = argv[++i];
             in = argv[++i];
+        }else{
+            objdump_filename = argv[++i];
         }
 
         yyin = fopen(in,"r");
@@ -30,7 +36,9 @@ int main(int argc, char** argv){
  
         assembler.crack(lineVec);
         assembler.backpatch();
-        assembler.objdump();
+        if(objdump_filename){
+            assembler.objdump(objdump_filename);
+        }  
         assembler.createSElf(out);
     }
 }

@@ -37,5 +37,6 @@ void Emulator::load(std::string filename){
 
         }
     }
+    this->registers[IP] = *(SYSREG*)(memory);
     file.close();
 }

@@ -47,7 +47,7 @@ bool Emulator::scoop_operand(OPERAND* operand, INSLEN* inslen, SOURCE** source){
     switch (AddrMode){
         case IMMED:{      
             if(check_rs(0,0) < 1){
-                system_interupts[INVALID] = true;
+                interupts[INVALID] = true;
                 *inslen = 3;   
                 return false;
             }
@@ -63,7 +63,7 @@ bool Emulator::scoop_operand(OPERAND* operand, INSLEN* inslen, SOURCE** source){
             BYTE _regS;
             int res = check_rs(&regS,&_regS);
             if(res == 1 || res == -1){
-                system_interupts[INVALID] = true;
+                interupts[INVALID] = true;
                 *inslen = 3;   
                 return false;
             }
@@ -80,7 +80,7 @@ bool Emulator::scoop_operand(OPERAND* operand, INSLEN* inslen, SOURCE** source){
             BYTE _regS;
             int res = check_rs(&regS,&_regS);
             if(res == 1 || res == -1){
-                system_interupts[INVALID] = true;
+                interupts[INVALID] = true;
                 *inslen = 5;   
                 return false;
             }
@@ -96,7 +96,7 @@ bool Emulator::scoop_operand(OPERAND* operand, INSLEN* inslen, SOURCE** source){
             BYTE _regS;
             int res = check_rs(&regS,&_regS);
             if(res == 1 || res == -1){
-                system_interupts[INVALID] = true;
+                interupts[INVALID] = true;
                 *inslen = 3;   
                 return false;
             }
@@ -145,7 +145,7 @@ bool Emulator::scoop_operand(OPERAND* operand, INSLEN* inslen, SOURCE** source){
                     registers[_regS]+=2;
                     regS+=2;
                 default:
-                    system_interupts[INVALID] = true;
+                    interupts[INVALID] = true;
                     *inslen = 3;
                     return false;
             }
@@ -157,7 +157,7 @@ bool Emulator::scoop_operand(OPERAND* operand, INSLEN* inslen, SOURCE** source){
             BYTE _regS;
             int res = check_rs(&regS,&_regS);
             if(res == 1 || res == -1){
-                system_interupts[INVALID] = true;
+                interupts[INVALID] = true;
                 *inslen = 3;   
                 return false;
             }
@@ -208,7 +208,7 @@ bool Emulator::scoop_operand(OPERAND* operand, INSLEN* inslen, SOURCE** source){
                     registers[_regS]+=2;
                     regS+=2;
                 default:
-                    system_interupts[INVALID] = true;
+                    interupts[INVALID] = true;
                     *inslen = 3;
                     return false;
             }
@@ -217,7 +217,7 @@ bool Emulator::scoop_operand(OPERAND* operand, INSLEN* inslen, SOURCE** source){
 
         case MEM:{
             if(check_rs(0,0) < 1){
-                system_interupts[INVALID] = true;
+                interupts[INVALID] = true;
                 *inslen = 3;   
                 return false;
             }
@@ -232,7 +232,7 @@ bool Emulator::scoop_operand(OPERAND* operand, INSLEN* inslen, SOURCE** source){
         break;
 
         default:{
-            system_interupts[INVALID] = true;
+            interupts[INVALID] = true;
             *inslen = 3;   
             return false;
         }

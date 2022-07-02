@@ -28,7 +28,6 @@ void Emulator::config_emulator(){
     Emulator::opcode_map[0b01110100] = &Emulator::handle_CMP;
     Emulator::opcode_map[0b10000000] = &Emulator::handle_NOT;
     Emulator::opcode_map[0b10000001] = &Emulator::handle_AND;
-    Emulator::opcode_map[0b10000001] = &Emulator::handle_AND;
     Emulator::opcode_map[0b10000010] = &Emulator::handle_OR;
     Emulator::opcode_map[0b10000011] = &Emulator::handle_XOR;
     Emulator::opcode_map[0b10000100] = &Emulator::handle_TEST;
@@ -38,22 +37,44 @@ void Emulator::config_emulator(){
     Emulator::opcode_map[0b10110000] = &Emulator::handle_STR_PUSH;    
 }
 
-
+ void Emulator::exit_routine(){
+    printf("------------------------------------------------\n"
+           "Emulated processor state: psw=0b"
+           PRINTF_BINARY_PATTERN_INT16
+           "r0=0x%04X\t"
+           "r1=0x%04X\t"
+           "r2=0x%04X\t"
+           "r3=0x%04X\n"
+           "r4=0x%04X\t"
+           "r5=0x%04X\t"
+           "r6=0x%04X\t"
+           "r7=0x%04X\n",
+           (unsigned int)(psw & 0xFFFF),
+           (unsigned int)(registers[0] & 0xFF),
+           (unsigned int)(registers[1] & 0xFF),
+           (unsigned int)(registers[2] & 0xFF),
+           (unsigned int)(registers[3] & 0xFF),
+           (unsigned int)(registers[4] & 0xFF),
+           (unsigned int)(registers[5] & 0xFF),
+           (unsigned int)(registers[6] & 0xFF),
+           (unsigned int)(registers[7] & 0xFF)
+    );
+ }
 
 void Emulator::start(std::string filename){
-    load(filename);
-
+    this->load(filename);
     while(!stop){
         /* instruction fetch decode and execute */
         if(this->opcode_map.find(this->memory[(SYSREG)this->registers[IP]]) == this->opcode_map.end()){
             this->registers[IP]++;
-            this->system_interupts[INVALID] = true;
+            this->interupts[INVALID] = true;
         }else{
             (this->*(this->opcode_map[this->memory[(SYSREG)this->registers[IP]]]))();
         }
         /* interrupts */
         this->handle_intr();
     }
+    this->exit_routine();
 }
 
 

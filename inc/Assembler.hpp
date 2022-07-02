@@ -19,7 +19,7 @@ class Assembler{
          * @brief used for printing tables and contetn
          * 
          */
-        void objdump();
+        void objdump(char*);
         /**
          * @brief assembler main loop instructions
          * 

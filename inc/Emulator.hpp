@@ -4,14 +4,38 @@
 #include <fstream>
 #include "../misc/inc/Codes.h"
 
+/* macro for prinf binary */
+#define PRINTF_BINARY_PATTERN_INT8 "%c%c%c%c%c%c%c%c"
+#define PRINTF_BYTE_TO_BINARY_INT8(i)    \
+    (((i) & 0x80ll) ? '1' : '0'), \
+    (((i) & 0x40ll) ? '1' : '0'), \
+    (((i) & 0x20ll) ? '1' : '0'), \
+    (((i) & 0x10ll) ? '1' : '0'), \
+    (((i) & 0x08ll) ? '1' : '0'), \
+    (((i) & 0x04ll) ? '1' : '0'), \
+    (((i) & 0x02ll) ? '1' : '0'), \
+    (((i) & 0x01ll) ? '1' : '0')
+
+#define PRINTF_BINARY_PATTERN_INT16 \
+    PRINTF_BINARY_PATTERN_INT8              PRINTF_BINARY_PATTERN_INT8
+#define PRINTF_BYTE_TO_BINARY_INT16(i) \
+    PRINTF_BYTE_TO_BINARY_INT8((i) >> 8),   PRINTF_BYTE_TO_BINARY_INT8(i)
+#define PRINTF_BINARY_PATTERN_INT32 \
+    PRINTF_BINARY_PATTERN_INT16             PRINTF_BINARY_PATTERN_INT16
+#define PRINTF_BYTE_TO_BINARY_INT32(i) \
+    PRINTF_BYTE_TO_BINARY_INT16((i) >> 16), PRINTF_BYTE_TO_BINARY_INT16(i)
+#define PRINTF_BINARY_PATTERN_INT64    \
+    PRINTF_BINARY_PATTERN_INT32             PRINTF_BINARY_PATTERN_INT32
+#define PRINTF_BYTE_TO_BINARY_INT64(i) \
+    PRINTF_BYTE_TO_BINARY_INT32((i) >> 32), PRINTF_BYTE_TO_BINARY_INT32(i)
+
+
+
 class Emulator{
 
     public:
-
         Emulator();
         void start(std::string);
-
-    
     private:
         void config_emulator();
         void load(std::string);
@@ -49,6 +73,8 @@ class Emulator{
 
         std::unordered_map<char, void(Emulator::*)()> opcode_map;
 
+        void exit_routine();
+
         void updatePSW(REGISTER,REGISTER);
 
         MEMORY memory;
@@ -56,7 +82,6 @@ class Emulator{
 
         REGISTER psw = 0;
         REGISTER registers[8] = {0,0,0,0,0,0,0,0};
-        INTERRUPT system_interupts[4] = {false,false,false,false};
-        INTERRUPT user_interputs[4] = {false,false,false,false};
+        INTERRUPT interupts[8] = {false,false,false,false,false,false,false,false};
 
 };

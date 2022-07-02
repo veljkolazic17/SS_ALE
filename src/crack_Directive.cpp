@@ -150,7 +150,7 @@ void Assembler::crackWORD(Directive* directive){
                 entry++;
                 this->symbolTable->push_back(symbolToPatch);
             }
-            symbolToPatch->insertFlink({this->currentSection->getLocationCounter(),HYPO_16,this->currentSection});
+            symbolToPatch->insertFlink({this->currentSection->getLocationCounter(),HYPO_16 | HYPO_16_BIG,this->currentSection});
             
             this->currentSection->setDataByOffsetByte(currentLocationCounter,0,2);
             this->currentSection->setLocationCounter(
