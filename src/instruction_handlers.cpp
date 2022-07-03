@@ -98,7 +98,7 @@ void Emulator::handle_JGT(){
     OPERAND operand;
     INSLEN inslen;
      if(scoop_operand(&operand,&inslen,0) && check_rd(0,0)==1){
-        if(((((psw&0x000F)>>3)^((psw&0x000F)>>1))|(psw&FZERO))){
+        if(((((psw&1)>>3)^((psw&1)>>1))|(psw&~FZERO))){
             registers[IP] = operand;
         }else{
             registers[IP] += inslen;
@@ -166,7 +166,38 @@ void Emulator::handle_DIV(){
     registers[IP] += 2;
 }
 void Emulator::handle_CMP(){
-    
+    REGISTER regD,regS;
+    BYTE _regD,_regS;
+    if(!(check_rd(&regD,&_regD)==0 && check_rs(&regS,&_regS)==0)){
+        interupts[INVALID] = true;
+    }else{
+        REGISTER res_ref = regD - regS;
+
+        if((regD - regS) & 0x10000){
+            psw |= FCARRY;
+        }else{
+            psw &= ~FCARRY;
+        }
+        
+        if((regD > 0 && regS < 0 && res_ref < 0) || (regD < 0 && regS > 0 && res_ref > 0)){
+            psw |= FOVERFLOW;
+        }else{
+            psw &= ~FOVERFLOW;
+        }
+
+        if(regD == regS){
+            psw |= FZERO;
+        }else{
+            psw &= ~FZERO;
+        }
+
+        if(res_ref < 0){
+            psw |= FNEGATIVE;
+        }else{
+            psw &= ~FNEGATIVE;
+        }
+    }
+    registers[IP] += 2;
 }
 void Emulator::handle_NOT(){
     REGISTER regD;
@@ -202,7 +233,7 @@ void Emulator::handle_OR(){
     registers[IP] += 2;
 }
 void Emulator::handle_XOR(){
-     REGISTER regD,regS;
+    REGISTER regD,regS;
     BYTE _regD,_regS;
     if(check_rd(&regD,&_regD)==0 && check_rs(&regS,&_regS)==0){
         registers[_regD] = regD ^ regS;
@@ -213,13 +244,92 @@ void Emulator::handle_XOR(){
     registers[IP] += 2;
 }
 void Emulator::handle_TEST(){
+    REGISTER regD,regS;
+    BYTE _regD,_regS;
+    if(!(check_rd(&regD,&_regD)==0 && check_rs(&regS,&_regS)==0)){
+        interupts[INVALID] = true;
+    }else{
+        REGISTER res_ref = regD & regS;
 
+        if(res_ref  == 0){
+            psw |= FZERO;
+        }else{
+            psw &= ~FZERO;
+        }
+
+        if(res_ref < 0){
+            psw |= FNEGATIVE;
+        }else{
+            psw &= ~FNEGATIVE;
+        }
+    }
+    registers[IP] += 2;
 }
 void Emulator::handle_SHL(){
+    REGISTER regD,regS;
+    BYTE _regD,_regS;
+    if(check_rd(&regD,&_regD)==0 && check_rs(&regS,&_regS)==0){
+        REGISTER res_ref = regD << regS;
+        registers[_regD] = res_ref;
 
+        if(res_ref == 0){
+            psw |= FZERO;
+        }
+        else{
+            psw &= ~FZERO;
+        }
+
+        if(regD & 0x8000){
+            psw |= FCARRY;
+        }
+        else{
+            psw &= ~FCARRY;
+        }
+
+        if(res_ref < 0){
+            psw |= FNEGATIVE;
+        }
+        else{
+            psw &= ~FNEGATIVE;
+        }
+    }
+    else{
+        interupts[INVALID] = true;
+    }
+    registers[IP] += 2;
 }
 void Emulator::handle_SHR(){
+    REGISTER regD,regS;
+    BYTE _regD,_regS;
+    if(check_rd(&regD,&_regD)==0 && check_rs(&regS,&_regS)==0){
+        REGISTER res_ref = regD >> regS;
+        registers[_regD] = res_ref;
 
+        if(res_ref == 0){
+            psw |= FZERO;
+        }
+        else{
+            psw &= ~FZERO;
+        }
+
+        if(regD & 0x0001){
+            psw |= FCARRY;
+        }
+        else{
+            psw &= ~FCARRY;
+        }
+
+        if(res_ref < 0){
+            psw |= FNEGATIVE;
+        }
+        else{
+            psw &= ~FNEGATIVE;
+        }
+    }
+    else{
+        interupts[INVALID] = true;
+    }
+    registers[IP] += 2;
 }
 void Emulator::handle_LDR_POP(){
     BYTE _regD;
@@ -248,12 +358,9 @@ void Emulator::handle_STR_PUSH(){
 }
 
 void Emulator::handle_intr(){
-
-
-
-    for(int i = 0;i<8;i++){
+    for(unsigned int i = 0;i<8;i++){
         if(interupts[i]){
-            
+            registers[IP] = *(short*)(memory + i*2);
         }
     }
 }

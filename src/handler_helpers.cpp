@@ -8,7 +8,11 @@ int Emulator::check_rd(REGISTER* regD, BYTE* _regD){
     }
     if(regD_num < 8){
         if(regD){
-            *regD = registers[regD_num];
+            if(regD_num == IP){
+                *regD = registers[regD_num] + 5;
+            }else{
+                *regD = registers[regD_num];
+            }
         }
         return 0;
     }
@@ -29,7 +33,11 @@ int Emulator::check_rs(REGISTER* regS, BYTE* _regS){
     }
     if(regS_num < 8){
         if(regS){
-            *regS = registers[regS_num];
+            if(regS_num == IP){
+                *regS = registers[regS_num] + 5;
+            }else{
+                *regS = registers[regS_num];
+            }
         }
         return 0;
     }
@@ -67,8 +75,39 @@ bool Emulator::scoop_operand(OPERAND* operand, INSLEN* inslen, SOURCE** source){
                 *inslen = 3;   
                 return false;
             }
-            *operand = regS;
-            *inslen = 3;
+            switch (get_upmode()){
+                case 0b0000:
+                    *operand = regS;
+                    *inslen = 3;
+                    break; 
+                case 0b0001:
+                    registers[_regS]-=2;
+                    regS-=2;
+                    *operand = regS;
+                    *inslen = 3;
+                    break;
+                case 0b0010:
+                    registers[_regS]+=2;
+                    regS+=2;
+                    *operand = regS;
+                    *inslen = 3;
+                    break;
+                case 0b0011:  
+                    *operand = regS;
+                    *inslen = 3;
+                    registers[_regS]-=2;
+                    regS-=2;
+                    break;
+                case 0b0100:
+                    *operand = regS;
+                    *inslen = 3;
+                    registers[_regS]+=2;
+                    regS+=2;
+                default:
+                    interupts[INVALID] = true;
+                    *inslen = 3;
+                    return false;
+            }
             if(source){
                 *source = &registers[_regS];
             }
@@ -81,13 +120,43 @@ bool Emulator::scoop_operand(OPERAND* operand, INSLEN* inslen, SOURCE** source){
             int res = check_rs(&regS,&_regS);
             if(res == 1 || res == -1){
                 interupts[INVALID] = true;
-                *inslen = 5;   
+                *inslen = 3;   
                 return false;
             }
-            OPERAND pom = *((OPERAND*)(memory + 3));
-            pom = switch_bytes(pom);
-            *operand = pom + regS;
-            *inslen = 5;
+            OPERAND pom = switch_bytes(*((SYSREG*)(memory + (SYSREG)registers[IP] + 3)));
+            switch (get_upmode()){
+                case 0b0000:
+                    *operand = regS + pom;
+                    *inslen = 5;
+                    break; 
+                case 0b0001:
+                    registers[_regS]-=2;
+                    regS-=2;
+                    *operand = regS + pom;
+                    *inslen = 5;
+                    break;
+                case 0b0010:
+                    registers[_regS]+=2;
+                    regS+=2;
+                    *operand = regS + pom;
+                    *inslen = 5;
+                    break;
+                case 0b0011:  
+                    *operand = regS + pom;
+                    *inslen = 5;
+                    registers[_regS]-=2;
+                    regS-=2;
+                    break;
+                case 0b0100:
+                    *operand = regS + pom;
+                    *inslen = 5;
+                    registers[_regS]+=2;
+                    regS+=2;
+                default:
+                    interupts[INVALID] = true;
+                    *inslen = 3;
+                    return false;
+            }
         }
         break;
 
@@ -99,55 +168,43 @@ bool Emulator::scoop_operand(OPERAND* operand, INSLEN* inslen, SOURCE** source){
                 interupts[INVALID] = true;
                 *inslen = 3;   
                 return false;
-            }
-            
+            }  
             switch (get_upmode()){
                 case 0b0000:
                     *operand = *((OPERAND*)(memory + (SYSREG)regS));
-                    if(source){
-                        *source = (SOURCE*)(memory + (SYSREG)regS);
-                    }
                     *inslen = 3;
                     break; 
                 case 0b0001:
                     registers[_regS]-=2;
                     regS-=2;
                     *operand = *((OPERAND*)(memory + (SYSREG)regS));
-                    if(source){
-                        *source = (SOURCE*)(memory + (SYSREG)regS);
-                    }
                     *inslen = 3;
                     break;
                 case 0b0010:
                     registers[_regS]+=2;
                     regS+=2;
                     *operand = *((OPERAND*)(memory + (SYSREG)regS));
-                    if(source){
-                        *source = (SOURCE*)(memory + (SYSREG)regS);
-                    }
                     *inslen = 3;
                     break;
                 case 0b0011:  
                     *operand = *((OPERAND*)(memory + (SYSREG)regS));
-                    if(source){
-                        *source = (SOURCE*)(memory + (SYSREG)regS);
-                    }
                     *inslen = 3;
                     registers[_regS]-=2;
                     regS-=2;
                     break;
                 case 0b0100:
                     *operand = *((OPERAND*)(memory + (SYSREG)regS));
-                    if(source){
-                        *source = (SOURCE*)(memory + (SYSREG)regS);
-                    }
                     *inslen = 3;
                     registers[_regS]+=2;
                     regS+=2;
+                    break;
                 default:
                     interupts[INVALID] = true;
                     *inslen = 3;
                     return false;
+            }
+            if(source){
+                *source = (SOURCE*)(memory + (SYSREG)regS);
             }
         }
         break;
@@ -161,56 +218,43 @@ bool Emulator::scoop_operand(OPERAND* operand, INSLEN* inslen, SOURCE** source){
                 *inslen = 3;   
                 return false;
             }
-            OPERAND pom = *((OPERAND*)(memory + 3));
-            pom = switch_bytes(pom);
+            OPERAND pom = switch_bytes(*((SYSREG*)(memory + (SYSREG)registers[IP] + 3)));
 
             switch (get_upmode()){
                 case 0b0000:
                     *operand = *((OPERAND*)(memory + (SYSREG)regS + pom));
-                    if(source){
-                        *source = (SOURCE*)(memory + (SYSREG)regS + pom);
-                    }
-                    *inslen = 3;
+                    *inslen = 5; 
                     break; 
                 case 0b0001:
                     registers[_regS]-=2;
                     regS-=2;
                     *operand = *((OPERAND*)(memory + (SYSREG)regS + pom));
-                    if(source){
-                        *source = (SOURCE*)(memory + (SYSREG)regS + pom);
-                    }
-                    *inslen = 3;
+                    *inslen = 5;
                     break;
                 case 0b0010:
                     registers[_regS]+=2;
                     regS+=2;
                     *operand = *((OPERAND*)(memory + (SYSREG)regS + pom));
-                    if(source){
-                        *source = (SOURCE*)(memory + (SYSREG)regS + pom);
-                    }
-                    *inslen = 3;
+                    *inslen = 5;
                     break;
                 case 0b0011:  
                     *operand = *((OPERAND*)(memory + (SYSREG)regS + pom));
-                    if(source){
-                        *source = (SOURCE*)(memory + (SYSREG)regS + pom);
-                    }
-                    *inslen = 3;
+                    *inslen = 5;
                     registers[_regS]-=2;
                     regS-=2;
                     break;
                 case 0b0100:
                     *operand = *((OPERAND*)(memory + (SYSREG)regS + pom));
-                    if(source){
-                        *source = (SOURCE*)(memory + (SYSREG)regS + pom);
-                    }
-                    *inslen = 3;
+                    *inslen = 5;
                     registers[_regS]+=2;
                     regS+=2;
                 default:
                     interupts[INVALID] = true;
                     *inslen = 3;
                     return false;
+            }
+            if(source){
+                *source = (SOURCE*)(memory + (SYSREG)regS + pom);
             }
         }
         break;
@@ -225,7 +269,7 @@ bool Emulator::scoop_operand(OPERAND* operand, INSLEN* inslen, SOURCE** source){
             immed = switch_bytes(immed);
             *operand = *((OPERAND*)(memory + (SYSREG)immed));
             if(source){
-                        *source = (SOURCE*)(memory + (SYSREG)immed);
+                *source = (SOURCE*)(memory + (SYSREG)immed);
             }
             *inslen = 5;
         }
@@ -242,5 +286,4 @@ bool Emulator::scoop_operand(OPERAND* operand, INSLEN* inslen, SOURCE** source){
 }
 BYTE Emulator::get_upmode(){
     return (memory[(SYSREG)registers[IP] + 2] & 0xF0) >> 4;
-    
 }

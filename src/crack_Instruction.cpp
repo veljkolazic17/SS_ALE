@@ -137,7 +137,7 @@ void Assembler::insertInstruction(Instruction* instruction){
                     &&  (argumentType == DATA_OPERAND_MEMSYMPCREL ||  argumentType == JMP_OPERAND_SYMPCREL)
                     &&  (this->currentSection == symbolToPatch->getSection())
                 ){
-                    int symdata = symbolToPatch->getValue() - this->currentSection->getLocationCounter();
+                    unsigned short symdata = symbolToPatch->getValue() - this->currentSection->getLocationCounter() -4;
                     //SWAP BITS
                     Data = symdata>>8 | symdata<<8;
                 }
@@ -145,10 +145,10 @@ void Assembler::insertInstruction(Instruction* instruction){
                     RELOCATION_TYPE type = 0;
                     switch (argumentType){
                         case DATA_OPERAND_MEMSYMPCREL:
-                            type = HYPO_REL16 | HYPO_16;
+                            type = HYPO_REL16;
                             break;
                         case JMP_OPERAND_SYMPCREL:
-                            type = HYPO_REL16 | HYPO_PC16;
+                            type = HYPO_REL16;
                             break;
                         case DATA_OPERAND_SYM:
                             type = HYPO_16;

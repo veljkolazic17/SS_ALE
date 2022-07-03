@@ -39,25 +39,25 @@ void Emulator::config_emulator(){
 
  void Emulator::exit_routine(){
     printf("------------------------------------------------\n"
-           "Emulated processor state: psw=0b"
-           PRINTF_BINARY_PATTERN_INT16
-           "r0=0x%04X\t"
-           "r1=0x%04X\t"
-           "r2=0x%04X\t"
-           "r3=0x%04X\n"
-           "r4=0x%04X\t"
-           "r5=0x%04X\t"
-           "r6=0x%04X\t"
-           "r7=0x%04X\n",
-           (unsigned int)(psw & 0xFFFF),
-           (unsigned int)(registers[0] & 0xFF),
-           (unsigned int)(registers[1] & 0xFF),
-           (unsigned int)(registers[2] & 0xFF),
-           (unsigned int)(registers[3] & 0xFF),
-           (unsigned int)(registers[4] & 0xFF),
-           (unsigned int)(registers[5] & 0xFF),
-           (unsigned int)(registers[6] & 0xFF),
-           (unsigned int)(registers[7] & 0xFF)
+    "Emulated processor state: psw=0b"
+    PRINTF_BINARY_PATTERN_INT16
+    "\nr0=0x%04X\t"
+    "r1=0x%04X\t"
+    "r2=0x%04X\t"
+    "r3=0x%04X\n"
+    "r4=0x%04X\t"
+    "r5=0x%04X\t"
+    "r6=0x%04X\t"
+    "r7=0x%04X\n",
+    PRINTF_BYTE_TO_BINARY_INT16(psw),
+    (unsigned int)(registers[0] & 0xFFFF),
+    (unsigned int)(registers[1] & 0xFFFF),
+    (unsigned int)(registers[2] & 0xFFFF),
+    (unsigned int)(registers[3] & 0xFFFF),
+    (unsigned int)(registers[4] & 0xFFFF),
+    (unsigned int)(registers[5] & 0xFFFF),
+    (unsigned int)(registers[6] & 0xFFFF),
+    (unsigned int)(registers[7] & 0xFFFF)
     );
  }
 
@@ -76,5 +76,3 @@ void Emulator::start(std::string filename){
     }
     this->exit_routine();
 }
-
-

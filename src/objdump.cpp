@@ -84,6 +84,9 @@ void Assembler::objdump(char* filename){
                     case HYPO_REL16:
                         type = "HYPO_REL16";
                         break;
+                    case HYPO_16_BIG:
+                        type = "HYPO_16_BIG";
+                        break;
                 }
                 fprintf(
                     file,

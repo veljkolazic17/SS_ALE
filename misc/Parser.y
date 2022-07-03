@@ -51,6 +51,7 @@
 }
 %token<reg>         REGISTER
 %token<symbol>      SYMBOL
+%token<symbol>      STRING
 %token<number>      NUMBER
 %token<token>       GLOBAL EXTERN SECTION WORD SKIP ASCII EQU END
 %token<token>       HALT INT RET IRET CALL
@@ -62,7 +63,7 @@
 */
 %token<token>       IP PSW SP
 %token<token>       COMMENT
-%token<token>       COMMA DOT COLON PLUS MINUS STAR MOD DOLLAR LBRACKET RBRACKET NEW_LINE QUOTATION_MARK
+%token<token>       COMMA DOT COLON PLUS MINUS STAR MOD DOLLAR LBRACKET RBRACKET NEW_LINE
 
 %type<directive> directive
 %type<instruction> instruction
@@ -162,8 +163,8 @@ directive:
   GLOBAL symbolList{
     $$ = new Directive(GLOBAL_TYPE,$2);
   }
-  | ASCII QUOTATION_MARK SYMBOL QUOTATION_MARK{
-    $$ = new Directive(ASCII_TYPE,$3);
+  | ASCII STRING{
+    $$ = new Directive(ASCII_TYPE,$2);
   }
   | EXTERN symbolList{
     $$ = new Directive(EXTERN_TYPE,$2);

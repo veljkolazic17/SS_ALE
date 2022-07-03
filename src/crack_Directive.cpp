@@ -153,7 +153,7 @@ void Assembler::crackWORD(Directive* directive){
                 entry++;
                 this->symbolTable->push_back(symbolToPatch);
             }
-            symbolToPatch->insertFlink({this->currentSection->getLocationCounter(),HYPO_16 | HYPO_16_BIG,this->currentSection});
+            symbolToPatch->insertFlink({this->currentSection->getLocationCounter(),HYPO_16_BIG,this->currentSection});
             
             this->currentSection->setDataByOffsetByte(currentLocationCounter,0,2);
             this->currentSection->setLocationCounter(
@@ -178,7 +178,14 @@ void Assembler::crackEND(Directive* directive){
 }
 
 void Assembler::crackASCII(Directive* directive){
-    std::string ascii_string = directive->getSectionName() + '\0';
+    std::string ascii_string = directive->getSectionName();
+    if(ascii_string.size() == 2){
+        ascii_string = "\0";
+    }else{
+        ascii_string = ascii_string.substr(1,ascii_string.size()-2);
+    }
+
+    
     int size = ascii_string.size();
 
     int currentLocationCounter = this->currentSection->getLocationCounter();

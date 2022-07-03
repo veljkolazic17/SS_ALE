@@ -1,12 +1,10 @@
-.global labela2
+.global array
+.global array_size
+.section .data
+array:
+    .word 1,2,3,4,5,6,7,8,9,10
 
-.section .text
-xor r1,r1
-labela2:
+array_size:
+    .word 10
 
-.section .fedja
-
-jmp %darko
-.skip 3
-darko:
-.ascii "BAKAKAKA"
+halt

@@ -81,13 +81,13 @@ void Linker::_finalize(){
             
             short insertion_value;
 
-            if(relocation.type & HYPO_REL16){
+            if(relocation.type == HYPO_REL16){
                 insertion_value = symbols[relocation.symbol].value + relocation.addent - (relocation.offset + section_start_addrs[section] + find_offset_in_files(section,relocation.nofile));
             }else{
                 insertion_value = symbols[relocation.symbol].value + relocation.addent;
             }
 
-            if(relocation.type & HYPO_16_BIG == 0){
+            if(relocation.type != HYPO_16_BIG){
                 insertion_value = switch_bytes(insertion_value);
             }
             *(short*)(section_raw + relocation.offset) = insertion_value;

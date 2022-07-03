@@ -54,7 +54,7 @@ void Assembler::backpatchSingle(SymbolTableElement* symbolTableElement){
         BackpatchElement backpatchElement = symbolTableElement->getBackpatchElement(i);
         //consider backpatching
         if(
-                backpatchElement.action & HYPO_REL16
+                backpatchElement.action == HYPO_REL16
             &&  symbolTableElement->getSection() == backpatchElement.section
             &&  symbolTableElement->getDefined()
         ){
@@ -71,13 +71,26 @@ void Assembler::backpatchSingle(SymbolTableElement* symbolTableElement){
         else{
             int addend_plus;
             unsigned char action;
-            if(backpatchElement.action & HYPO_REL16){
-                addend_plus = -2;
-                action = HYPO_REL16;
-            }else{
-                addend_plus = 0;
-                action = HYPO_16;
+
+            switch (backpatchElement.action){
+                case HYPO_REL16:
+                    addend_plus = -2;
+                    action = HYPO_REL16;
+                    break;
+                case HYPO_16:
+                    addend_plus = 0;
+                    action = HYPO_16;
+                    break;
+                case HYPO_PC16:
+                    addend_plus = 0;
+                    action = HYPO_PC16;
+                    break;
+                case HYPO_16_BIG:
+                    addend_plus = 0;
+                    action = HYPO_16_BIG;
+                    break;
             }
+
             if(BIND == LOC){
                 backpatchElement.section->insertRelocationTableElement({
                     backpatchElement.offset,

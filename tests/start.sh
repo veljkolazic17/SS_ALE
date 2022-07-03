@@ -1,6 +1,6 @@
 ASSEMBLER=../assembler
 LINKER=../linker
-# EMULATOR=./emulator
+EMULATOR=../emulator
 
 # ${ASSEMBLER} -o main.o main.s
 # ${ASSEMBLER} -o ivt.o ivt.s
@@ -11,4 +11,5 @@ LINKER=../linker
 
 ${ASSEMBLER} -o test1.o test1.s
 ${ASSEMBLER} -o test2.o test2.s
-${LINKER} -hex -o test_program.hex test1.o test2.o
+${LINKER} -hex -place=data@0x400 -place=text@0x0 -o test_program.hex test1.o test2.o
+${EMULATOR} test_program.hex
