@@ -9,7 +9,13 @@ EMULATOR=../emulator
 # ${ASSEMBLER} -o isr_timer.o isr_timer.s
 # ${LINKER} -hex -place=ivt@0x0000 -o program.hex main.o isr_reset.o isr_terminal.o isr_timer.o ivt.o
 
-${ASSEMBLER} -o test1.o test1.s
-${ASSEMBLER} -o test2.o test2.s
-${LINKER} -hex -place=data@0x400 -place=text@0x0 -o test_program.hex test1.o test2.o
-${EMULATOR} test_program.hex
+# ${ASSEMBLER} -o test1.o test1.s
+# ${ASSEMBLER} -o test2.o test2.s
+# ${LINKER} -hex -place=data@0x400 -place=text@0x0 -o test_program.hex test1.o test2.o
+# ${EMULATOR} test_program.hex
+
+
+
+${ASSEMBLER} -o testterminal.o testterminal.s
+${LINKER} -hex -o testterminal.hex testterminal.o 
+${EMULATOR} testterminal.hex

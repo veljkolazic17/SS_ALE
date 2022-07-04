@@ -1,14 +1,16 @@
 #include "../inc/Emulator.hpp"
+#include "../inc/InputThread.hpp"
+#include "../inc/OutputThread.hpp"
 #include <algorithm>
 #include <string.h>
 #include <iostream>
 
-Emulator::Emulator(){
-    this->memory = (MEMORY)malloc(65536);
+Emulator::Emulator(){ 
     this->config_emulator();
 }
 
 void Emulator::config_emulator(){
+    this->memory = (MEMORY)malloc(65536);
     this->opcode_map = std::unordered_map<char, void(Emulator::*)()>();
 
     Emulator::opcode_map[0b00000000] = &Emulator::handle_HALT;
@@ -35,6 +37,11 @@ void Emulator::config_emulator(){
     Emulator::opcode_map[0b10010001] = &Emulator::handle_SHR;
     Emulator::opcode_map[0b10100000] = &Emulator::handle_LDR_POP;
     Emulator::opcode_map[0b10110000] = &Emulator::handle_STR_PUSH;    
+
+    psw = 0b0110000000000000;
+
+    input = new InputThread(this);
+    output = new OutputThread(this);
 }
 
  void Emulator::exit_routine(){
@@ -63,6 +70,12 @@ void Emulator::config_emulator(){
 
 void Emulator::start(std::string filename){
     this->load(filename);
+
+
+
+    input->start();
+    output->start();
+
     while(!stop){
         /* instruction fetch decode and execute */
         if(this->opcode_map.find(this->memory[(SYSREG)this->registers[IP]]) == this->opcode_map.end()){
@@ -75,4 +88,6 @@ void Emulator::start(std::string filename){
         this->handle_intr();
     }
     this->exit_routine();
+    this->input->stop();
+    this->output->stop();
 }

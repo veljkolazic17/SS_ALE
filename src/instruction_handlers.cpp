@@ -361,14 +361,13 @@ void Emulator::handle_intr(){
     if(interupts[RESET]){
         interupts[RESET] = false;
 
-
         registers[SP] -= 2;
         *((short*)(memory + (SYSREG)registers[SP])) = psw;
         
         registers[SP]-= 2;
         *((short*)(memory + (SYSREG)registers[SP])) = registers[IP];
 
-        psw &= 0x7FFF;
+        psw |= 0x8000;
 
         registers[IP] = *((short*)(memory + RESET*2));
     }
@@ -381,26 +380,28 @@ void Emulator::handle_intr(){
         registers[SP]-= 2;
         *((short*)(memory + (SYSREG)registers[SP])) = registers[IP];
 
-        psw &= 0x7FFF;
+        psw |= 0x8000;
 
         registers[IP] = *((short*)(memory + INVALID*2));
 
 
     }
-     else if(interupts[TERMINAL] && (psw & FINTERRUPT) && (psw & FTERMINAL)){
+     else if(interupts[TERMINAL] && ((psw & FINTERRUPT) == 0) && (psw & FTERMINAL)){
         interupts[TERMINAL] = false;
         
-        registers[SP] -= 2;
-        *((short*)(memory + (SYSREG)registers[SP])) = psw;
-        
+        printf("USO");
+
         registers[SP]-= 2;
         *((short*)(memory + (SYSREG)registers[SP])) = registers[IP];
 
-        psw &= 0x7FFF;
+        registers[SP] -= 2;
+        *((short*)(memory + (SYSREG)registers[SP])) = psw;
+        
+        psw |= 0x8000;
 
         registers[IP] = *((short*)(memory + TERMINAL*2));
     }   
-    else if(interupts[TIMER] && (psw & FINTERRUPT) && (psw & FTIMER)){
+    else if(interupts[TIMER] && ((psw & FINTERRUPT) == 0) && (psw & FTIMER)){
         interupts[TIMER] = false;
         
         registers[SP] -= 2;
@@ -409,7 +410,7 @@ void Emulator::handle_intr(){
         registers[SP]-= 2;
         *((short*)(memory + (SYSREG)registers[SP])) = registers[IP];
 
-        psw &= 0x7FFF;
+        psw |= 0x8000;
 
         registers[IP] = *((short*)(memory + TIMER*2));
     }   

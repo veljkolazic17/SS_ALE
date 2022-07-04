@@ -1,7 +1,7 @@
-make --dry-run --always-make --keep-going --print-directory
+make --dry-run --keep-going --print-directory
 make: Entering directory '/home/veljko/SS_ALE'
 g++ -g -o assembler ./misc/src/* ./src/Assembler.cpp ./src/crack_Directive.cpp ./src/crack_Instruction.cpp ./src/crack_Label.cpp ./src/RelocationTableElement.cpp ./src/Section.cpp ./src/SymbolTableElement.cpp ./src/objdump.cpp ./src/create_SElf.cpp ./main/main_assembler.cpp
 g++ -g -o linker ./misc/src/Codes.c ./src/hex.cpp ./src/linker_loader.cpp ./src/Linker.cpp ./main/main_linker.cpp
-g++ -g -o emulator ./misc/src/Codes.c ./src/Emulator.cpp ./src/handler_helpers.cpp ./src/emulator_loader.cpp ./src/instruction_handlers.cpp ./main/main_emulator.cpp
+g++ -g -pthread -o emulator ./misc/src/Codes.c ./src/Emulator.cpp ./src/handler_helpers.cpp ./src/emulator_loader.cpp ./src/instruction_handlers.cpp ./main/main_emulator.cpp ./src/Thread.cpp ./src/InputThread.cpp ./src/OutputThread.cpp
 make: Leaving directory '/home/veljko/SS_ALE'
  

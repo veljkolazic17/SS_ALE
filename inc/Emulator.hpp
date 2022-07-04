@@ -4,6 +4,9 @@
 #include <fstream>
 #include "../misc/inc/Codes.h"
 
+class InputThread;
+class OutputThread;
+
 /* macro for prinf binary */
 #define PRINTF_BINARY_PATTERN_INT8 "%c%c%c%c%c%c%c%c"
 #define PRINTF_BYTE_TO_BINARY_INT8(i)    \
@@ -80,8 +83,14 @@ class Emulator{
         MEMORY memory;
         bool stop = false;
 
-        REGISTER psw = 0;
+        SYSREG psw;
         REGISTER registers[8] = {0,0,0,0,0,0,0,0};
         INTERRUPT interupts[8] = {false,false,false,false,false,false,false,false};
 
+        InputThread* input;
+        OutputThread* output;
+
+
+    friend InputThread;
+    friend OutputThread;
 };

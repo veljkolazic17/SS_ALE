@@ -22,8 +22,8 @@ extern INSLEN   INSLENS[];
 
 #define RESET       0
 #define INVALID     1
-#define TIMER       2
-#define TERMINAL    3
+#define TERMINAL    2
+#define TIMER       3
 
 typedef short REGISTER;
 typedef unsigned short SYSREG;
@@ -40,6 +40,6 @@ typedef short SOURCE;
 #define FNEGATIVE    8
 #define FTIMER       8192
 #define FTERMINAL    16384
-#define FINTERRUPT    32768
+#define FINTERRUPT   32768
 
 unsigned short switch_bytes(unsigned short);

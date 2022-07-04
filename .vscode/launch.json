@@ -14,7 +14,7 @@
             // "-o ivt.o ivt.s",
             // "-o isr_reset.o isr_reset.s",
             // "-o",
-            "${workspaceFolder}/tests/test_program.hex",
+            "${workspaceFolder}/tests/testterminal.hex",
             // "${workspaceFolder}/tests/test2.s",
             // "-objdump",
             // "${workspaceFolder}/tests/test1dump"
