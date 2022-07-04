@@ -12,7 +12,7 @@ halt
 .section .keyboard
 KEYBOARD:
 ldr r2, 0xFF02
-ldr r1, $11
+ldr r1, $80
 cmp r1,r2
 jeq END
 str r2,0xFF00

@@ -389,8 +389,6 @@ void Emulator::handle_intr(){
      else if(interupts[TERMINAL] && ((psw & FINTERRUPT) == 0) && (psw & FTERMINAL)){
         interupts[TERMINAL] = false;
         
-        printf("USO");
-
         registers[SP]-= 2;
         *((short*)(memory + (SYSREG)registers[SP])) = registers[IP];
 
