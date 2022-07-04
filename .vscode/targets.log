@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Jul  3 16:15:08 2022
+# Make data base, printed on Sun Jul  3 19:03:11 2022
 
 # Variables
 
@@ -57,7 +57,7 @@ files := assembler linker emulator
 # environment
 VSCODE_LOG_STACK = false
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-f40d7332-ee0e-4baf-96a9-e73a47655b23.sock
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-6ddf9147-7513-48ec-bb35-75c9e8642d00.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -71,7 +71,7 @@ PWD = /home/veljko/SS_ALE
 # default
 .LOADED := 
 # environment
-WSL_INTEROP = /run/WSL/6649_interop
+WSL_INTEROP = /run/WSL/13401_interop
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
@@ -199,7 +199,7 @@ makefile:
 
 assembler:
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-03 16:10:50.484759295
+#  Last modified 2022-07-03 18:33:53.374761307
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'makefile', line 18):
@@ -213,7 +213,7 @@ assembler:
 
 emulator:
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-03 16:10:58.844759297
+#  Last modified 2022-07-03 18:34:01.934761309
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'makefile', line 22):
@@ -228,7 +228,7 @@ clean:
 
 linker:
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-03 16:10:55.574759296
+#  Last modified 2022-07-03 18:33:58.684761309
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'makefile', line 20):
@@ -248,6 +248,6 @@ linker:
 # strcache performance: lookups = 36 / hit rate = 44%
 # hash-table stats:
 # Load=20/8192=0%, Rehash=0, Collisions=1/36=3%
-# Finished Make data base on Sun Jul  3 16:15:08 2022
+# Finished Make data base on Sun Jul  3 19:03:11 2022
 
  

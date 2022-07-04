@@ -18,12 +18,12 @@ for:
     add r0, r2
 
     ldr r2, $1
-    sub r5, r1
+    sub r5, r2
     ldr r2, $0
     
 
     cmp r5, r2
-    jne for
+    jne %for
 
-halt    
+    push r4
 .end

@@ -358,9 +358,59 @@ void Emulator::handle_STR_PUSH(){
 }
 
 void Emulator::handle_intr(){
-    for(unsigned int i = 0;i<8;i++){
-        if(interupts[i]){
-            registers[IP] = *(short*)(memory + i*2);
-        }
+    if(interupts[RESET]){
+        interupts[RESET] = false;
+
+
+        registers[SP] -= 2;
+        *((short*)(memory + (SYSREG)registers[SP])) = psw;
+        
+        registers[SP]-= 2;
+        *((short*)(memory + (SYSREG)registers[SP])) = registers[IP];
+
+        psw &= 0x7FFF;
+
+        registers[IP] = *((short*)(memory + RESET*2));
     }
+    else if(interupts[INVALID]){
+        interupts[INVALID] = false;
+        
+        registers[SP] -= 2;
+        *((short*)(memory + (SYSREG)registers[SP])) = psw;
+        
+        registers[SP]-= 2;
+        *((short*)(memory + (SYSREG)registers[SP])) = registers[IP];
+
+        psw &= 0x7FFF;
+
+        registers[IP] = *((short*)(memory + INVALID*2));
+
+
+    }
+     else if(interupts[TERMINAL] && (psw & FINTERRUPT) && (psw & FTERMINAL)){
+        interupts[TERMINAL] = false;
+        
+        registers[SP] -= 2;
+        *((short*)(memory + (SYSREG)registers[SP])) = psw;
+        
+        registers[SP]-= 2;
+        *((short*)(memory + (SYSREG)registers[SP])) = registers[IP];
+
+        psw &= 0x7FFF;
+
+        registers[IP] = *((short*)(memory + TERMINAL*2));
+    }   
+    else if(interupts[TIMER] && (psw & FINTERRUPT) && (psw & FTIMER)){
+        interupts[TIMER] = false;
+        
+        registers[SP] -= 2;
+        *((short*)(memory + (SYSREG)registers[SP])) = psw;
+        
+        registers[SP]-= 2;
+        *((short*)(memory + (SYSREG)registers[SP])) = registers[IP];
+
+        psw &= 0x7FFF;
+
+        registers[IP] = *((short*)(memory + TIMER*2));
+    }   
 }
