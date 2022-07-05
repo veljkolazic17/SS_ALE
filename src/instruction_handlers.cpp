@@ -361,11 +361,11 @@ void Emulator::handle_intr(){
     if(interupts[RESET]){
         interupts[RESET] = false;
 
-        registers[SP] -= 2;
-        *((short*)(memory + (SYSREG)registers[SP])) = psw;
-        
         registers[SP]-= 2;
         *((short*)(memory + (SYSREG)registers[SP])) = registers[IP];
+
+        registers[SP] -= 2;
+        *((short*)(memory + (SYSREG)registers[SP])) = psw;
 
         psw |= 0x8000;
 
@@ -374,11 +374,11 @@ void Emulator::handle_intr(){
     else if(interupts[INVALID]){
         interupts[INVALID] = false;
         
-        registers[SP] -= 2;
-        *((short*)(memory + (SYSREG)registers[SP])) = psw;
-        
         registers[SP]-= 2;
         *((short*)(memory + (SYSREG)registers[SP])) = registers[IP];
+
+        registers[SP] -= 2;
+        *((short*)(memory + (SYSREG)registers[SP])) = psw;
 
         psw |= 0x8000;
 
@@ -402,11 +402,11 @@ void Emulator::handle_intr(){
     else if(interupts[TIMER] && ((psw & FINTERRUPT) == 0) && (psw & FTIMER)){
         interupts[TIMER] = false;
         
-        registers[SP] -= 2;
-        *((short*)(memory + (SYSREG)registers[SP])) = psw;
-        
         registers[SP]-= 2;
         *((short*)(memory + (SYSREG)registers[SP])) = registers[IP];
+
+        registers[SP] -= 2;
+        *((short*)(memory + (SYSREG)registers[SP])) = psw;
 
         psw |= 0x8000;
 

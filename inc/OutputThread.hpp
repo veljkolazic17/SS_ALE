@@ -12,5 +12,4 @@ class OutputThread : public Thread{
     private:
         bool end = false;
         Emulator* emulator;
-        std::mutex my_mutex;   
 };

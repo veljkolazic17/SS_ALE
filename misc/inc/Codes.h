@@ -18,7 +18,6 @@ extern INSLEN   INSLENS[];
 
 #define IP          7
 #define SP          6
-#define PSW         8
 
 #define RESET       0
 #define INVALID     1

@@ -12,7 +12,7 @@ ASSEMBLER_FILES = ./misc/src/* ./src/Assembler.cpp ./src/crack_Directive.cpp ./s
 LINKER_FILES = ./misc/src/Codes.c ./src/hex.cpp ./src/linker_loader.cpp ./src/Linker.cpp ./main/main_linker.cpp
 EMULATOR_FILES = ./misc/src/Codes.c ./src/Emulator.cpp ./src/handler_helpers.cpp ./src/emulator_loader.cpp ./src/instruction_handlers.cpp ./main/main_emulator.cpp ./src/Thread.cpp ./src/InputThread.cpp ./src/OutputThread.cpp
 
-all: $(ASSEMBLER) $(LINKER) $(EMULATOR)
+all: $(EMULATOR)
 
 $(ASSEMBLER): 
 			$(CC) $(CFLAGS) -o $(ASSEMBLER) $(ASSEMBLER_FILES)
@@ -23,5 +23,5 @@ $(EMULATOR):
 
 clean:
 ifneq ($(files),)
-	rm -f $(files)
+	rm -f emulator
 endif

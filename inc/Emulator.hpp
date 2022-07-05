@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include<string>
 #include <fstream>
+#include <mutex>
 #include "../misc/inc/Codes.h"
 
 class InputThread;
@@ -78,8 +79,6 @@ class Emulator{
 
         void exit_routine();
 
-        void updatePSW(REGISTER,REGISTER);
-
         MEMORY memory;
         bool stop = false;
 
@@ -89,6 +88,8 @@ class Emulator{
 
         InputThread* input;
         OutputThread* output;
+
+        std::mutex* mem_mutex;
 
 
     friend InputThread;

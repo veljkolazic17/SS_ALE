@@ -5,6 +5,10 @@
 #include <string.h>
 #include <iostream>
 
+#include <stdio.h>
+#include <unistd.h>
+#include <termios.h>
+
 Emulator::Emulator(){ 
     this->config_emulator();
 }
@@ -39,9 +43,9 @@ void Emulator::config_emulator(){
     Emulator::opcode_map[0b10110000] = &Emulator::handle_STR_PUSH;    
 
     psw = 0b0110000000000000;
-
+    mem_mutex = new std::mutex();
     input = new InputThread(this);
-    output = new OutputThread(this);
+    output = new OutputThread(this);    
 }
 
  void Emulator::exit_routine(){
@@ -68,10 +72,12 @@ void Emulator::config_emulator(){
     );
  }
 
+
 void Emulator::start(std::string filename){
     this->load(filename);
-
-
+    
+    struct termios oldtc;
+    tcgetattr(STDIN_FILENO, &oldtc);
 
     input->start();
     output->start();
@@ -90,4 +96,5 @@ void Emulator::start(std::string filename){
     this->exit_routine();
     this->input->stop();
     this->output->stop();
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldtc);
 }
