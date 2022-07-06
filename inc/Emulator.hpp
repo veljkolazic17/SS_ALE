@@ -7,6 +7,7 @@
 
 class InputThread;
 class OutputThread;
+class Timer;
 
 /* macro for prinf binary */
 #define PRINTF_BINARY_PATTERN_INT8 "%c%c%c%c%c%c%c%c"
@@ -88,10 +89,11 @@ class Emulator{
 
         InputThread* input;
         OutputThread* output;
+        Timer* timer;
 
-        std::mutex* mem_mutex;
-
+        std::mutex* mymutex = new std::mutex();
 
     friend InputThread;
     friend OutputThread;
+    friend Timer;
 };

@@ -7,4 +7,4 @@ int main(int argc, char** argv){
     return 0;
 }
 
-//valgrind --tool=memcheck  --show-reachable=yes --input-fd=0 ./emulator ./tests/testterminal.hex
+//valgrind --tool=memcheck  --show-reachable=yes --input-fd=0 ./emulator ./tests/equ_test.hex

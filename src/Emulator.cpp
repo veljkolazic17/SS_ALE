@@ -1,6 +1,7 @@
 #include "../inc/Emulator.hpp"
 #include "../inc/InputThread.hpp"
 #include "../inc/OutputThread.hpp"
+#include "../inc/Timer.hpp"
 #include <algorithm>
 #include <string.h>
 #include <iostream>
@@ -42,12 +43,11 @@ void Emulator::config_emulator(){
     Emulator::opcode_map[0b10100000] = &Emulator::handle_LDR_POP;
     Emulator::opcode_map[0b10110000] = &Emulator::handle_STR_PUSH;    
 
-    psw = 0b0110000000000000;
-    mem_mutex = new std::mutex();
+    psw = 0b0000000000000000;
     input = new InputThread(this);
     output = new OutputThread(this);    
+    timer = new Timer(this);
 }
-
  void Emulator::exit_routine(){
     printf("------------------------------------------------\n"
     "Emulated processor state: psw=0b"
@@ -79,6 +79,7 @@ void Emulator::start(std::string filename){
     struct termios oldtc;
     tcgetattr(STDIN_FILENO, &oldtc);
 
+    timer->start();
     input->start();
     output->start();
 
@@ -93,8 +94,9 @@ void Emulator::start(std::string filename){
         /* interrupts */
         this->handle_intr();
     }
-    this->exit_routine();
     this->input->stop();
     this->output->stop();
+    timer->stop();
+    this->exit_routine();
     tcsetattr(STDIN_FILENO, TCSANOW, &oldtc);
 }

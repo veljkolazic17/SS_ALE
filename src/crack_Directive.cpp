@@ -1,4 +1,5 @@
 #include "../inc/Assembler.hpp"
+#include "../misc/inc/ExpressionElement.hpp"
 
 void Assembler::insertDirective(Directive* directive){
     switch (directive->getDirectiveType())
@@ -24,6 +25,99 @@ void Assembler::insertDirective(Directive* directive){
     case END_TYPE:
         crackEND(directive);
         break;
+    case EQU_TYPE:
+        crackEQU(directive);
+        break;
+    }
+}
+
+void Assembler::crackEQU(Directive* directive){
+    Expression* expression = directive->getExpression();
+
+    std::vector<Expression::ExpressionElement> expression_ = *expression->getExpression();
+    int symbolTableSize = this->symbolTable->size();
+
+    int value = 0;
+
+    bool literal_present = false;
+    int literal;
+
+    bool found = false;
+    bool should_write = true;
+
+
+    for(int i = expression_.size() - 1; i >= 0; i--){
+        Expression::ExpressionElement element = expression_.at(i);
+        switch (element.type){
+        case SYMBOL_TYPE_EXP:
+            for(int j = 0;j<symbolTableSize;j++){
+                if(this->symbolTable->at(j)->getSymbolName() == element.value){
+
+                    found = true;
+
+                    if(this->symbolTable->at(j)->getDefined() == true){
+                        if(i == 0){
+                            value += this->symbolTable->at(j)->getValue();
+                        }else{
+                            literal = this->symbolTable->at(j)->getValue();
+                            literal_present = true;
+                        }
+                        break;
+                    }else{
+                        TNSElement tns;
+                        tns.expression = expression;
+                        insertTNSElement(tns);
+                        should_write = false;
+                        break;
+                    }
+                }
+            }
+
+            if(!found){
+                TNSElement tns;
+                tns.expression = expression;
+                insertTNSElement(tns); 
+                should_write = false;
+            }
+
+            break;
+        case LITERAL_TYPE_EXP:
+            literal = stoi(element.value);
+            literal_present = true;
+            if(i == 0){
+                value += literal;
+            }
+            break;
+        case MINUS_TYPE_EXP:
+            if(literal_present){
+                value-=literal;
+                literal_present = false;
+            }
+            break;
+        case PLUS_TYPE_EXP:
+            if(literal_present){
+                value+=literal;
+                literal_present = false;
+            }
+            break;
+        }
+    }
+ 
+    if(should_write){
+        SymbolTableElement* symbolTableElement = new SymbolTableElement(
+            this->entry,
+            value,
+            0,
+            0,
+            NOTYP,
+            LOC,
+            1,
+            ABS_section,
+            expression->getSymbol()
+        );
+        entry++;
+        symbolTableElement->setDefined(true);
+        this->symbolTable->push_back(symbolTableElement);
     }
 }
 

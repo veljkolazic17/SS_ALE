@@ -386,7 +386,7 @@ void Emulator::handle_intr(){
 
 
     }
-     else if(interupts[TERMINAL] && ((psw & FINTERRUPT) == 0) && (psw & FTERMINAL)){
+     else if(interupts[TERMINAL] && ((psw & FINTERRUPT) == 0) && ((psw & FTERMINAL) == 0)){
         interupts[TERMINAL] = false;
         
         registers[SP]-= 2;
@@ -399,7 +399,7 @@ void Emulator::handle_intr(){
 
         registers[IP] = *((short*)(memory + TERMINAL*2));
     }   
-    else if(interupts[TIMER] && ((psw & FINTERRUPT) == 0) && (psw & FTIMER)){
+    else if(interupts[TIMER] && ((psw & FINTERRUPT) == 0) && ((psw & FTIMER) == 0)){
         interupts[TIMER] = false;
         
         registers[SP]-= 2;

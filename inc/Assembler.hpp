@@ -14,6 +14,10 @@ typedef unsigned char STATE;
 
 class Assembler{
     public:
+        struct TNSElement{
+            Expression* expression;
+        };
+
         Assembler();
         /**
          * @brief used for printing tables and contetn
@@ -58,12 +62,14 @@ class Assembler{
          */
         void createSElf(char* obj_filename);
 
-
+        void insertTNSElement(TNSElement);
 
     private:
         std::vector<SymbolTableElement*>* symbolTable;
         std::vector<Section*>* sections;
         Section* currentSection = nullptr;
+        Section* ABS_section = nullptr;
         int entry = 1;
-        STATE ASMSTATE = PROCESSING; 
+        STATE ASMSTATE = PROCESSING;
+        std::vector<TNSElement> TNS;
 };

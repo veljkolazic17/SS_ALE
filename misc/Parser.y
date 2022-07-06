@@ -15,13 +15,14 @@
 %}
 
 %code requires{
-   #include "../inc/Types.h"
+  #include "../inc/Types.h"
   #include "../inc/Directive.hpp"
   #include "../inc/Argument.hpp"
   #include "../inc/Instruction.hpp"
   #include "../inc/Line.hpp"
   #include "../inc/Label.hpp"
   #include "../inc/Lines.hpp"
+  #include "../inc/ExpressionElement.hpp"
 
   extern Lines* lineVec;  
 }
@@ -34,6 +35,8 @@
   int token;
   int number;
   char reg;
+
+  std::vector<Expression::ExpressionElement>* expression;
 
   Directive* directive;
   Instruction* instruction;
@@ -75,6 +78,7 @@
 %type<symbolLiterallList> symbolLiterallList
 %type<jumpOperand> jumpOperand
 %type<dataOperand> dataOperand
+%type<expression> expression
 
 %start program
 
@@ -181,7 +185,64 @@ directive:
   | END{
     $$ = new Directive(END_TYPE);
   }
+  | EQU SYMBOL COMMA expression {
+    $$ = new Directive(EQU_TYPE, new Expression(*$2,$4));
+  }
   ;
+
+expression:
+  SYMBOL{
+    $$ = new std::vector<Expression::ExpressionElement>();
+    Expression::ExpressionElement element1;
+    element1.type = SYMBOL_TYPE_EXP;
+    element1.value = *$1;
+    $$->push_back(element1);
+  }
+  | NUMBER{
+    $$ = new std::vector<Expression::ExpressionElement>();
+    Expression::ExpressionElement element1;
+    element1.type = LITERAL_TYPE_EXP;
+    element1.value = std::to_string($1);
+    $$->push_back(element1);
+  }
+  | expression MINUS SYMBOL{
+    Expression::ExpressionElement element1,element2;
+    element1.type = MINUS_TYPE_EXP;
+    element2.type = SYMBOL_TYPE_EXP;
+    element2.value = *$3;
+  
+    $1->push_back(element1);
+    $1->push_back(element2);
+  }
+  | expression PLUS SYMBOL{
+    Expression::ExpressionElement element1,element2;
+    element1.type = PLUS_TYPE_EXP;
+    element2.type = SYMBOL_TYPE_EXP;
+    element2.value = *$3;
+
+    $1->push_back(element1);
+    $1->push_back(element2);
+  }
+  | expression PLUS NUMBER{
+    Expression::ExpressionElement element1,element2;
+    element1.type = PLUS_TYPE_EXP;
+    element2.type = LITERAL_TYPE_EXP;
+    element2.value = std::to_string($3);
+
+    $1->push_back(element1);
+    $1->push_back(element2);
+  }
+  | expression MINUS NUMBER{
+    Expression::ExpressionElement element1,element2;
+    element1.type = MINUS_TYPE_EXP;
+    element2.type = LITERAL_TYPE_EXP;
+    element2.value = std::to_string($3);
+
+    $1->push_back(element1);
+    $1->push_back(element2);
+  }
+  ;
+
 symbolList:
   SYMBOL{
     $$ = new std::vector<SymbolListElement*>();

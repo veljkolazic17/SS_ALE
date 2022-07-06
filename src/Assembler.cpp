@@ -6,6 +6,22 @@
 Assembler::Assembler(){
     this->symbolTable = new std::vector<SymbolTableElement*>();
     this->sections = new std::vector<Section*>();
+    this->ABS_section = new Section("ABS");
+    this->sections->push_back(this->ABS_section);
+    SymbolTableElement* symbolTableElement = new SymbolTableElement(
+        entry,
+        0,
+        0,
+        0,
+        SCTN,
+        LOC,
+        entry,
+        ABS_section,
+        ABS_section->getSectionName()
+    );
+    entry++;
+    this->ABS_section->setSymbolTableEntry(symbolTableElement);
+    this->symbolTable->push_back(symbolTableElement);
 }
 
 void Assembler::insertSection(Section* section){
@@ -108,4 +124,8 @@ void Assembler::backpatchSingle(SymbolTableElement* symbolTableElement){
             }
         }
     }
+}
+
+void Assembler::insertTNSElement(TNSElement tns){
+    this->TNS.push_back(tns);
 }

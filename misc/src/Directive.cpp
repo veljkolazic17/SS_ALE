@@ -9,7 +9,12 @@ Directive::Directive(DirectiveType directiveType){
 Directive::Directive(DirectiveType directiveType, std::string* section){
   this->directive_type = directiveType;
   this->section = section;
-  this->symbolList = new std::vector<SymbolListElement*>();
+  this->symbolList = new std::vector<SymbolListElement*>(); 
+}
+
+Directive::Directive(DirectiveType directiveType, Expression* expression){
+  this->directive_type = directiveType;
+  this->expression = expression;
 }
 
 Directive::Directive(DirectiveType directiveType, int literal){
@@ -37,6 +42,10 @@ std::string Directive::getSectionName(){
 
 int Directive::getLiteral(){
   return this->literal;
+}
+
+Expression* Directive::getExpression(){
+  return this->expression;
 }
 
 Directive::~Directive(){

@@ -46,17 +46,18 @@ extern int yydebug;
 /* "%code requires" blocks.  */
 #line 17 "Parser.y"
 
-   #include "../inc/Types.h"
+  #include "../inc/Types.h"
   #include "../inc/Directive.hpp"
   #include "../inc/Argument.hpp"
   #include "../inc/Instruction.hpp"
   #include "../inc/Line.hpp"
   #include "../inc/Label.hpp"
   #include "../inc/Lines.hpp"
+  #include "../inc/ExpressionElement.hpp"
 
   extern Lines* lineVec;  
 
-#line 60 "./inc/parser.hpp"
+#line 61 "./inc/parser.hpp"
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -123,12 +124,14 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 32 "Parser.y"
+#line 33 "Parser.y"
 
   std::string *symbol;
   int token;
   int number;
   char reg;
+
+  std::vector<Expression::ExpressionElement>* expression;
 
   Directive* directive;
   Instruction* instruction;
@@ -144,7 +147,7 @@ union YYSTYPE
   Argument *dataOperand;
 
 
-#line 148 "./inc/parser.hpp"
+#line 151 "./inc/parser.hpp"
 
 };
 typedef union YYSTYPE YYSTYPE;

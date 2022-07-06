@@ -16,6 +16,7 @@ EMULATOR=../emulator
 
 
 
-${ASSEMBLER} -o testterminal.o testterminal.s
-${LINKER} -hex -o testterminal.hex testterminal.o 
-${EMULATOR} testterminal.hex
+${ASSEMBLER} -o equ_test.o equ_test.s -objdump equ.dump
+${LINKER} -hex -o equ_test.hex equ_test.o
+ulimit -c unlimited
+${EMULATOR} equ_test.hex
