@@ -1,5 +1,5 @@
-.section .text
-.word 8,6,KEYBOARD,TIMER
+.section text
+.word 8,6,TIMER,KEYBOARD
 ldr r6, $0xFEFE
 ldr r1,$3
 str r1, 0xFF10
@@ -8,7 +8,7 @@ jmp BEGIN
 END:
 halt
 
-.section .keyboard
+.section keyboard
 KEYBOARD:
 ldr r2, 0xFF02
 ldr r1, $10

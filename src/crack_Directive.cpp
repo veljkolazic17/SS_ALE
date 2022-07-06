@@ -119,6 +119,13 @@ void Assembler::crackEQU(Directive* directive){
         symbolTableElement->setDefined(true);
         this->symbolTable->push_back(symbolTableElement);
     }
+
+    
+
+
+
+
+
 }
 
 void Assembler::crackGLOBAL(Directive* directive){

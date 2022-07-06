@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed Jul  6 00:56:01 2022
+# Make data base, printed on Wed Jul  6 13:29:29 2022
 
 # Variables
 
@@ -57,7 +57,7 @@ files := assembler linker emulator
 # environment
 VSCODE_LOG_STACK = false
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-9849d1e9-2f31-49cc-8315-02b9be3a103f.sock
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-86dc66ff-4b58-4856-9d6f-9fee60b2c272.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -71,7 +71,7 @@ PWD = /home/veljko/SS_ALE
 # default
 .LOADED := 
 # environment
-WSL_INTEROP = /run/WSL/13402_interop
+WSL_INTEROP = /run/WSL/29312_interop
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
@@ -173,9 +173,9 @@ WSL_DISTRO_NAME = Ubuntu
 
 # Directories
 
-# . (device 2064, inode 36968): 14 files, no impossibilities.
+# . (device 2064, inode 36968): 15 files, no impossibilities.
 
-# 14 files, no impossibilities in 1 directories.
+# 15 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -199,7 +199,7 @@ makefile:
 
 assembler:
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-06 00:55:00.703066816
+#  Last modified 2022-07-06 11:31:53.244134841
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'makefile', line 18):
@@ -213,7 +213,7 @@ assembler:
 
 emulator:
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-06 00:55:11.693066818
+#  Last modified 2022-07-06 11:32:04.054134843
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'makefile', line 22):
@@ -228,7 +228,7 @@ clean:
 
 linker:
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-06 00:55:05.643066817
+#  Last modified 2022-07-06 11:31:58.114134842
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'makefile', line 20):
@@ -242,12 +242,12 @@ linker:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 20 / storage = 148 B / avg = 7 B
-# current buf: size = 8162 B / used = 148 B / count = 20 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 21 / storage = 161 B / avg = 7 B
+# current buf: size = 8162 B / used = 161 B / count = 21 / avg = 7 B
 
-# strcache performance: lookups = 36 / hit rate = 44%
+# strcache performance: lookups = 37 / hit rate = 43%
 # hash-table stats:
-# Load=20/8192=0%, Rehash=0, Collisions=1/36=3%
-# Finished Make data base on Wed Jul  6 00:56:01 2022
+# Load=21/8192=0%, Rehash=0, Collisions=1/37=3%
+# Finished Make data base on Wed Jul  6 13:29:29 2022
 
  

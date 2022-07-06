@@ -21,8 +21,8 @@ extern INSLEN   INSLENS[];
 
 #define RESET       0
 #define INVALID     1
-#define TERMINAL    2
-#define TIMER       3
+#define TIMER       2
+#define TERMINAL    3
 
 typedef short REGISTER;
 typedef unsigned short SYSREG;

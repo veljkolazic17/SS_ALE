@@ -26,9 +26,7 @@ void InputThread::run(){
     char c;    
     while(true){
         c = getch();
-        emulator->mymutex->try_lock();
         *((short*)(emulator->memory + 0xFF02)) = c;
-        emulator->mymutex->unlock();
         emulator->interupts[TERMINAL] = true;
     }
 }

@@ -176,6 +176,9 @@ directive:
   | SECTION DOT SYMBOL{
     $$ = new Directive(SECTION_TYPE,$3);
   }
+  | SECTION SYMBOL{
+    $$ = new Directive(SECTION_TYPE,$2);
+  }
   | WORD symbolLiterallList{
     $$ = new Directive(WORD_TYPE,$2);
   }

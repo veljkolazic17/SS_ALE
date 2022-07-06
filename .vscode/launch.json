@@ -8,14 +8,14 @@
         "name": "(gdb) Launch",
         "type": "cppdbg",
         "request": "launch",
-        "program": "${workspaceFolder}/assembler",
+        "program": "${workspaceFolder}/emulator",
         "args": [
             // "-o main.o main.s",
             // "-o ivt.o ivt.s",
             // "-o isr_reset.o isr_reset.s",
-            "-o",
-            "${workspaceFolder}/tests/equ_test.o",
-            "${workspaceFolder}/tests/equ_test.s",
+            // "-o",
+            "${workspaceFolder}/public_tests/program.hex",
+            // "${workspaceFolder}/tests/equ_test.s",
             // "${workspaceFolder}/tests/test2.s",
             // "-objdump",
             // "${workspaceFolder}/tests/test1dump"

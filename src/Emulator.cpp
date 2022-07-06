@@ -49,7 +49,7 @@ void Emulator::config_emulator(){
     timer = new Timer(this);
 }
  void Emulator::exit_routine(){
-    printf("------------------------------------------------\n"
+    printf("\n------------------------------------------------\n"
     "Emulated processor state: psw=0b"
     PRINTF_BINARY_PATTERN_INT16
     "\nr0=0x%04X\t"
@@ -89,6 +89,7 @@ void Emulator::start(std::string filename){
             this->registers[IP]++;
             this->interupts[INVALID] = true;
         }else{
+            
             (this->*(this->opcode_map[this->memory[(SYSREG)this->registers[IP]]]))();
         }
         /* interrupts */
