@@ -3,8 +3,10 @@
 
 // CHECKED
 void Emulator::handle_HALT(){
+    pthread_mutex_lock(&mutex);
     stop = true;
     // registers[IP]++;
+    pthread_mutex_unlock(&mutex);
 }
 // CHECKED
 void Emulator::handle_INT(){

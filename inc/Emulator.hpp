@@ -2,12 +2,16 @@
 #include <unordered_map>
 #include<string>
 #include <fstream>
-#include <mutex>
+#include <pthread.h>
+#include <semaphore.h>
+
 #include "../misc/inc/Codes.h"
 
 class InputThread;
 class OutputThread;
 class Timer;
+
+#define MEMSIZE 65536
 
 /* macro for prinf binary */
 #define PRINTF_BINARY_PATTERN_INT8 "%c%c%c%c%c%c%c%c"
@@ -87,11 +91,12 @@ class Emulator{
         REGISTER registers[8] = {0,0,0,0,0,0,0,0};
         INTERRUPT interupts[8] = {false,false,false,false,false,false,false,false};
 
+        pthread_mutex_t mutex;
+        sem_t continue_sem;
+
         InputThread* input;
         OutputThread* output;
         Timer* timer;
-
-        std::mutex* mymutex = new std::mutex();
 
     friend InputThread;
     friend OutputThread;

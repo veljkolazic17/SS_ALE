@@ -10,12 +10,13 @@
 #include <unistd.h>
 #include <termios.h>
 
+
 Emulator::Emulator(){ 
     this->config_emulator();
 }
 
 void Emulator::config_emulator(){
-    this->memory = (MEMORY)malloc(65536);
+    this->memory = (MEMORY)malloc(MEMSIZE);
     this->opcode_map = std::unordered_map<char, void(Emulator::*)()>();
 
     Emulator::opcode_map[0b00000000] = &Emulator::handle_HALT;
@@ -47,6 +48,9 @@ void Emulator::config_emulator(){
     input = new InputThread(this);
     output = new OutputThread(this);    
     timer = new Timer(this);
+
+    pthread_mutex_init(&mutex, NULL);
+    sem_init(&continue_sem, 0, 0);
 }
  void Emulator::exit_routine(){
     printf("\n------------------------------------------------\n"
@@ -79,7 +83,7 @@ void Emulator::start(std::string filename){
     struct termios oldtc;
     tcgetattr(STDIN_FILENO, &oldtc);
 
-    timer->start();
+    // timer->start();
     input->start();
     output->start();
 
@@ -89,15 +93,15 @@ void Emulator::start(std::string filename){
             this->registers[IP]++;
             this->interupts[INVALID] = true;
         }else{
-            
             (this->*(this->opcode_map[this->memory[(SYSREG)this->registers[IP]]]))();
         }
         /* interrupts */
         this->handle_intr();
     }
+    sem_wait(&continue_sem);
     this->input->stop();
     this->output->stop();
-    timer->stop();
+    // timer->stop();
     this->exit_routine();
     tcsetattr(STDIN_FILENO, TCSANOW, &oldtc);
 }

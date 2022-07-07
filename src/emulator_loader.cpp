@@ -17,7 +17,14 @@ void Emulator::load(std::string filename){
         char delimiter = ' ';
         while(getline(file,line)){
             
+            /* should not happen */
+            size_t string_end = line.find(":");
+            if(string_end > 4){
+                printf("\nprogram could not be loaded\n");
+            } 
+
             unsigned short addr = std::stoul(line.substr(0,4), nullptr, 16);
+
             line = line.substr(6, line.length());
 
 
