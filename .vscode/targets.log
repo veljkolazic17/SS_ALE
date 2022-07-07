@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed Jul  6 13:29:29 2022
+# Make data base, printed on Thu Jul  7 05:04:27 2022
 
 # Variables
 
@@ -53,11 +53,11 @@ MAKE_HOST := x86_64-pc-linux-gnu
 # environment
 PATH = /home/veljko/.vscode-server/bin/30d9c6cd9483b2cc586687151bcbcd635f373630/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files/WindowsApps/CanonicalGroupLimited.UbuntuonWindows_2004.2022.1.0_x64__79rhkp1fndgsc:/mnt/c/Program Files (x86)/VMware/VMware Workstation/bin/:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/RedHat/java-17-openjdk-17.0.3.0.6-3/bin:/mnt/c/Users/veljk/AppData/Local/Programs/Python/Python310/Scripts/:/mnt/c/Users/veljk/AppData/Local/Programs/Python/Python310/:/mnt/c/Program Files/MySQL/MySQL Shell 8.0/bin/:/mnt/c/Users/veljk/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/veljk/AppData/Local/Programs/Microsoft VS Code/bin:/snap/bin
 # makefile (from 'makefile', line 5)
-files := assembler linker emulator
+files := 
 # environment
 VSCODE_LOG_STACK = false
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-86dc66ff-4b58-4856-9d6f-9fee60b2c272.sock
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-6cea2d2a-2b90-4fa3-80be-f3fe1f97c388.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -71,7 +71,7 @@ PWD = /home/veljko/SS_ALE
 # default
 .LOADED := 
 # environment
-WSL_INTEROP = /run/WSL/29312_interop
+WSL_INTEROP = /run/WSL/5292_interop
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
@@ -87,7 +87,7 @@ VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # automatic
 ^D = $(patsubst %/,%,$(dir $^))
 # makefile (from 'makefile', line 12)
-LINKER_FILES = ./misc/src/Codes.c ./src/hex.cpp ./src/linker_loader.cpp ./src/Linker.cpp ./main/main_linker.cpp
+LINKER_FILES = ./misc/src/Codes.c ./src/hex.cpp ./src/linker_loader.cpp ./src/Linker.cpp ./src/main_linker.cpp
 # environment
 MAKELEVEL := 0
 # default
@@ -107,7 +107,7 @@ USER = veljko
 # environment
 NAME = Code
 # makefile (from 'makefile', line 11)
-ASSEMBLER_FILES = ./misc/src/* ./src/Assembler.cpp ./src/crack_Directive.cpp ./src/crack_Instruction.cpp ./src/crack_Label.cpp ./src/RelocationTableElement.cpp ./src/Section.cpp ./src/SymbolTableElement.cpp ./src/objdump.cpp ./src/create_SElf.cpp ./main/main_assembler.cpp
+ASSEMBLER_FILES = ./misc/src/* ./src/Assembler.cpp ./src/crack_Directive.cpp ./src/crack_Instruction.cpp ./src/crack_Label.cpp ./src/RelocationTableElement.cpp ./src/Section.cpp ./src/SymbolTableElement.cpp ./src/objdump.cpp ./src/create_SElf.cpp ./src/main_assembler.cpp
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # environment
@@ -137,7 +137,7 @@ VSCODE_HANDLES_SIGPIPE = true
 # default
 MAKEFILES := 
 # makefile (from 'makefile', line 13)
-EMULATOR_FILES = ./misc/src/Codes.c ./src/Emulator.cpp ./src/handler_helpers.cpp ./src/emulator_loader.cpp ./src/instruction_handlers.cpp ./main/main_emulator.cpp ./src/Thread.cpp ./src/InputThread.cpp ./src/OutputThread.cpp ./src/Timer.cpp
+EMULATOR_FILES = ./misc/src/Codes.c ./src/Emulator.cpp ./src/handler_helpers.cpp ./src/emulator_loader.cpp ./src/instruction_handlers.cpp ./src/main_emulator.cpp ./src/Thread.cpp ./src/InputThread.cpp ./src/OutputThread.cpp ./src/Timer.cpp
 # automatic
 <F = $(notdir $<)
 # environment
@@ -165,7 +165,7 @@ VSCODE_EXTHOST_WILL_SEND_SOCKET = true
 # environment
 WSL_DISTRO_NAME = Ubuntu
 # variable set hash-table stats:
-# Load=77/1024=8%, Rehash=0, Collisions=7/110=6%
+# Load=77/1024=8%, Rehash=0, Collisions=7/117=6%
 
 # Pattern-specific Variable Values
 
@@ -173,9 +173,9 @@ WSL_DISTRO_NAME = Ubuntu
 
 # Directories
 
-# . (device 2064, inode 36968): 15 files, no impossibilities.
+# . (device 2064, inode 36968): 9 files, no impossibilities.
 
-# 15 files, no impossibilities in 1 directories.
+# 9 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -188,20 +188,47 @@ all: assembler linker emulator
 #  Implicit rule search has been done.
 #  File does not exist.
 #  File has been updated.
-#  Successfully updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/7=0%
+
+# Not a target:
+.SUFFIXES:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # Not a target:
 makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-06 00:45:31.983066683
+#  Last modified 2022-07-07 04:54:12.164149505
 #  File has been updated.
 #  Successfully updated.
 
 assembler:
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-06 11:31:53.244134841
+#  Implicit/static pattern stem: ''
+#  File does not exist.
 #  File has been updated.
-#  Successfully updated.
+#  Needs to be updated (-q is set).
+# automatic
+# @ := assembler
+# automatic
+# % := 
+# automatic
+# * := 
+# automatic
+# + := 
+# automatic
+# | := 
+# automatic
+# < := 
+# automatic
+# ^ := 
+# automatic
+# ? := 
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=1/15=7%
 #  recipe to execute (from 'makefile', line 18):
 			$(CC) $(CFLAGS) -o $(ASSEMBLER) $(ASSEMBLER_FILES)
 
@@ -213,9 +240,8 @@ assembler:
 
 emulator:
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-06 11:32:04.054134843
-#  File has been updated.
-#  Successfully updated.
+#  Modification time never checked.
+#  File has not been updated.
 #  recipe to execute (from 'makefile', line 22):
 			$(CC) $(CFLAGS) -pthread -o $(EMULATOR) $(EMULATOR_FILES)
 
@@ -223,31 +249,28 @@ clean:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'makefile', line 26):
-	rm -f $(files)
 
 linker:
 #  Implicit rule search has not been done.
-#  Last modified 2022-07-06 11:31:58.114134842
-#  File has been updated.
-#  Successfully updated.
+#  Modification time never checked.
+#  File has not been updated.
 #  recipe to execute (from 'makefile', line 20):
 			$(CC) $(CFLAGS) -o $(LINKER) $(LINKER_FILES)
 
 # files hash-table stats:
-# Load=8/1024=1%, Rehash=0, Collisions=0/25=0%
+# Load=8/1024=1%, Rehash=0, Collisions=0/26=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 21 / storage = 161 B / avg = 7 B
-# current buf: size = 8162 B / used = 161 B / count = 21 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 18 / storage = 137 B / avg = 7 B
+# current buf: size = 8162 B / used = 137 B / count = 18 / avg = 7 B
 
-# strcache performance: lookups = 37 / hit rate = 43%
+# strcache performance: lookups = 32 / hit rate = 43%
 # hash-table stats:
-# Load=21/8192=0%, Rehash=0, Collisions=1/37=3%
-# Finished Make data base on Wed Jul  6 13:29:29 2022
+# Load=18/8192=0%, Rehash=0, Collisions=1/32=3%
+# Finished Make data base on Thu Jul  7 05:04:27 2022
 
  
