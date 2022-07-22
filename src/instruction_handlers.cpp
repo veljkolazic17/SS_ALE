@@ -19,10 +19,14 @@ void Emulator::handle_INT(){
     }
 
     registers[SP] -= 2;
+    registers[IP] += 2; // to jump on next intstruction
+    *((short*)(memory + (SYSREG)registers[SP])) = registers[IP];
+
+
+    registers[SP] -= 2;
     *((short*)(memory + (SYSREG)registers[SP])) = psw;
 
     registers[IP] = *((SYSREG*)(memory + ((SYSREG)regD % 8) * 2));
-    registers[IP] += 2;
 }
 // SHOULD CHECKED
 void Emulator::handle_IRET(){

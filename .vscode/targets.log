@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Jul  7 05:04:27 2022
+# Make data base, printed on Tue Jul 12 16:37:01 2022
 
 # Variables
 
@@ -15,11 +15,9 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # automatic
 ?F = $(notdir $?)
 # environment
-WSLENV = ELECTRON_RUN_AS_NODE/w:
+WSLENV = VSCODE_WSL_EXT_LOCATION/up
 # default
 .SHELLFLAGS := -c
-# environment
-VSCODE_LOG_NATIVE = false
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
@@ -33,7 +31,7 @@ SHELL = /bin/sh
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en","availableLanguages":{}}
 # environment
-_ = /mnt/c/Users/veljk/AppData/Local/Programs/Microsoft VS Code/bin/code
+_ = /home/veljko/.vscode-server/bin/92d25e35d9bf1a6b16f7d0758f25d48ace11e5b9/node
 # makefile (from 'makefile', line 2)
 CFLAGS = -g
 # makefile (from 'makefile', line 1)
@@ -43,21 +41,19 @@ GNUMAKEFLAGS :=
 # environment
 XDG_DATA_DIRS = /usr/local/share:/usr/share:/var/lib/snapd/desktop
 # environment
-VSCODE_VERBOSE_LOGGING = true
-# environment
 LESSOPEN = | /usr/bin/lesspipe %s
 # environment
 VSCODE_CWD = /mnt/c/Users/veljk/AppData/Local/Programs/Microsoft VS Code
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
-PATH = /home/veljko/.vscode-server/bin/30d9c6cd9483b2cc586687151bcbcd635f373630/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files/WindowsApps/CanonicalGroupLimited.UbuntuonWindows_2004.2022.1.0_x64__79rhkp1fndgsc:/mnt/c/Program Files (x86)/VMware/VMware Workstation/bin/:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/RedHat/java-17-openjdk-17.0.3.0.6-3/bin:/mnt/c/Users/veljk/AppData/Local/Programs/Python/Python310/Scripts/:/mnt/c/Users/veljk/AppData/Local/Programs/Python/Python310/:/mnt/c/Program Files/MySQL/MySQL Shell 8.0/bin/:/mnt/c/Users/veljk/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/veljk/AppData/Local/Programs/Microsoft VS Code/bin:/snap/bin
+PATH = /home/veljko/.vscode-server/bin/92d25e35d9bf1a6b16f7d0758f25d48ace11e5b9/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files (x86)/VMware/VMware Workstation/bin/:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/RedHat/java-17-openjdk-17.0.3.0.6-3/bin:/mnt/c/Program Files/dotnet/:/mnt/c/Users/veljk/AppData/Local/Programs/Python/Python310/Scripts/:/mnt/c/Users/veljk/AppData/Local/Programs/Python/Python310/:/mnt/c/Program Files/MySQL/MySQL Shell 8.0/bin/:/mnt/c/Users/veljk/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/veljk/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/veljk/AppData/Local/JetBrains/Toolbox/scripts:/mnt/c/Users/veljk/.dotnet/tools:/mnt/c/Users/veljk/Desktop/godot.exe:/snap/bin
 # makefile (from 'makefile', line 5)
-files := 
+files := assembler linker emulator
 # environment
-VSCODE_LOG_STACK = false
+ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-6cea2d2a-2b90-4fa3-80be-f3fe1f97c388.sock
+VSCODE_IPC_HOOK_CLI = /tmp/vscode-ipc-2125c995-bb38-43a2-812b-69d5e2eb0b0e.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -65,13 +61,11 @@ LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:
 # automatic
 %F = $(notdir $%)
 # environment
-VSCODE_PIPE_LOGGING = true
-# environment
 PWD = /home/veljko/SS_ALE
 # default
 .LOADED := 
 # environment
-WSL_INTEROP = /run/WSL/5292_interop
+WSL_INTEROP = /run/WSL/12_interop
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
@@ -81,7 +75,7 @@ LESSCLOSE = /usr/bin/lesspipe %s %s
 # environment
 LOGNAME = veljko
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # automatic
@@ -95,7 +89,7 @@ MAKE = $(MAKE_COMMAND)
 # default
 MAKECMDGOALS := all
 # environment
-SHLVL = 1
+SHLVL = 0
 # makefile (from 'makefile', line 1)
 CC = g++
 # default
@@ -105,7 +99,7 @@ USER = veljko
 # makefile
 .DEFAULT_GOAL := all
 # environment
-NAME = Code
+NAME = DESKTOP-R8UIB16
 # makefile (from 'makefile', line 11)
 ASSEMBLER_FILES = ./misc/src/* ./src/Assembler.cpp ./src/crack_Directive.cpp ./src/crack_Instruction.cpp ./src/crack_Label.cpp ./src/RelocationTableElement.cpp ./src/Section.cpp ./src/SymbolTableElement.cpp ./src/objdump.cpp ./src/create_SElf.cpp ./src/main_assembler.cpp
 # automatic
@@ -161,11 +155,9 @@ LANG = C
 # environment
 TERM = xterm-256color
 # environment
-VSCODE_EXTHOST_WILL_SEND_SOCKET = true
-# environment
 WSL_DISTRO_NAME = Ubuntu
 # variable set hash-table stats:
-# Load=77/1024=8%, Rehash=0, Collisions=7/117=6%
+# Load=73/1024=7%, Rehash=0, Collisions=7/106=7%
 
 # Pattern-specific Variable Values
 
@@ -173,9 +165,9 @@ WSL_DISTRO_NAME = Ubuntu
 
 # Directories
 
-# . (device 2064, inode 36968): 9 files, no impossibilities.
+# . (device 2064, inode 36968): 13 files, no impossibilities.
 
-# 9 files, no impossibilities in 1 directories.
+# 13 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -188,15 +180,7 @@ all: assembler linker emulator
 #  Implicit rule search has been done.
 #  File does not exist.
 #  File has been updated.
-#  Needs to be updated (-q is set).
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/7=0%
-
-# Not a target:
-.SUFFIXES:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+#  Successfully updated.
 
 # Not a target:
 makefile:
@@ -207,28 +191,9 @@ makefile:
 
 assembler:
 #  Implicit rule search has not been done.
-#  Implicit/static pattern stem: ''
-#  File does not exist.
+#  Last modified 2022-07-09 20:48:24.440825363
 #  File has been updated.
-#  Needs to be updated (-q is set).
-# automatic
-# @ := assembler
-# automatic
-# % := 
-# automatic
-# * := 
-# automatic
-# + := 
-# automatic
-# | := 
-# automatic
-# < := 
-# automatic
-# ^ := 
-# automatic
-# ? := 
-# variable set hash-table stats:
-# Load=8/32=25%, Rehash=0, Collisions=1/15=7%
+#  Successfully updated.
 #  recipe to execute (from 'makefile', line 18):
 			$(CC) $(CFLAGS) -o $(ASSEMBLER) $(ASSEMBLER_FILES)
 
@@ -240,8 +205,9 @@ assembler:
 
 emulator:
 #  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+#  Last modified 2022-07-09 20:48:34.850825456
+#  File has been updated.
+#  Successfully updated.
 #  recipe to execute (from 'makefile', line 22):
 			$(CC) $(CFLAGS) -pthread -o $(EMULATOR) $(EMULATOR_FILES)
 
@@ -249,28 +215,31 @@ clean:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+#  recipe to execute (from 'makefile', line 26):
+	rm -f $(files)
 
 linker:
 #  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+#  Last modified 2022-07-09 20:48:29.230825406
+#  File has been updated.
+#  Successfully updated.
 #  recipe to execute (from 'makefile', line 20):
 			$(CC) $(CFLAGS) -o $(LINKER) $(LINKER_FILES)
 
 # files hash-table stats:
-# Load=8/1024=1%, Rehash=0, Collisions=0/26=0%
+# Load=8/1024=1%, Rehash=0, Collisions=0/25=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 18 / storage = 137 B / avg = 7 B
-# current buf: size = 8162 B / used = 137 B / count = 18 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 19 / storage = 143 B / avg = 7 B
+# current buf: size = 8162 B / used = 143 B / count = 19 / avg = 7 B
 
-# strcache performance: lookups = 32 / hit rate = 43%
+# strcache performance: lookups = 35 / hit rate = 45%
 # hash-table stats:
-# Load=18/8192=0%, Rehash=0, Collisions=1/32=3%
-# Finished Make data base on Thu Jul  7 05:04:27 2022
+# Load=19/8192=0%, Rehash=0, Collisions=1/35=3%
+# Finished Make data base on Tue Jul 12 16:37:01 2022
 
  
