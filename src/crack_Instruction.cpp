@@ -24,10 +24,9 @@ void Assembler::insertInstruction(Instruction* instruction){
     }
     char numOfArguments = instruction->getNumOfArguments();
 
-    unsigned char RegDescr = 0xFF;
-    unsigned char AddrMode = 0xFF;
-    unsigned char DataHigh = 0;
-    unsigned char DataLow = 0;
+    uint8_t RegDescr = 0xFF;
+    uint8_t AddrMode = 0xFF;
+    uint16_t Data = 0;
     INSLEN instructionLen;
     
     for(char i = 0;i<numOfArguments;i++){
@@ -47,7 +46,8 @@ void Assembler::insertInstruction(Instruction* instruction){
                 RegDescr &= 0xF0;
                 RegDescr |= argument->getRegister();
             }
-        }else{
+        }
+        else{
             /**
              * @brief SECOND BYTE
              * 
@@ -70,7 +70,7 @@ void Assembler::insertInstruction(Instruction* instruction){
                 ||  argumentType == JMP_OPERAND_SYMPCREL
             ){
                 RegDescr &= 0xF0;
-                RegDescr |= 7; //PC
+                RegDescr |= 7; //IP
             }
             /**
              * @brief THIRD BYTE
@@ -91,15 +91,13 @@ void Assembler::insertInstruction(Instruction* instruction){
                 ||  argumentType == JMP_OPERAND_MEMLIT
                 ||  argumentType == JMP_OPERAND_REGMEMLIT
             ){
-                //SWAP BITS 0005
-                // Data = (argument->getLiteral()<<4) | (0x00FF&(argument->getLiteral()>>4));
-                DataHigh = (0xFF00&argument->getLiteral())>>4;
-                DataLow = 0x00FF&argument->getLiteral();
+                //SWAP BITS
+                Data = argument->getLiteral()>>8 | argument->getLiteral()<<8;
             }
             else if(
                     argumentType == DATA_OPERAND_SYM
                 ||  argumentType == DATA_OPERAND_REGMEMSYM
-                ||  argumentType == DATA_OPERAND_REGMEMSYM
+                ||  argumentType == DATA_OPERAND_MEMSYMABS
                 ||  argumentType == DATA_OPERAND_MEMSYMPCREL
                 ||  argumentType == JMP_OPERAND_SYM
                 ||  argumentType == JMP_OPERAND_SYMPCREL
@@ -139,21 +137,39 @@ void Assembler::insertInstruction(Instruction* instruction){
                     &&  (argumentType == DATA_OPERAND_MEMSYMPCREL ||  argumentType == JMP_OPERAND_SYMPCREL)
                     &&  (this->currentSection == symbolToPatch->getSection())
                 ){
-                    int symdata = symbolToPatch->getValue() - this->currentSection->getLocationCounter();
-                    // Data = (symdata<<4) | (0x00FF&(symdata>>4));
-                    DataHigh = (0xFF00&symdata)>>4;
-                    DataLow = 0x00FF&symdata;
+                    unsigned short symdata = symbolToPatch->getValue() - this->currentSection->getLocationCounter() -4;
+                    //SWAP BITS
+                    Data = symdata>>8 | symdata<<8;
                 }
                 else{
-                    if(
-                            argumentType != DATA_OPERAND_MEMSYMPCREL 
-                        &&  argumentType != JMP_OPERAND_SYMPCREL
-                    ){
-                        symbolToPatch->backpatch({this->currentSection->getLocationCounter(),RELOCATION,this->currentSection});
-                    }
-                    else{
-                        symbolToPatch->backpatch({this->currentSection->getLocationCounter(),UNDEFINED,this->currentSection});
-                    }
+                    RELOCATION_TYPE type = 0;
+                    switch (argumentType){
+                        case DATA_OPERAND_MEMSYMPCREL:
+                            type = HYPO_REL16;
+                            break;
+                        case JMP_OPERAND_SYMPCREL:
+                            type = HYPO_REL16;
+                            break;
+                        case DATA_OPERAND_SYM:
+                            type = HYPO_16;
+                            break;
+                        case DATA_OPERAND_MEMSYMABS:
+                            type = HYPO_16;
+                            break;
+                        case DATA_OPERAND_REGMEMSYM:
+                            type = HYPO_16;
+                            break;
+                        case JMP_OPERAND_SYM:
+                            type = HYPO_PC16;
+                            break;
+                        case JMP_OPERAND_MEMSYM:
+                            type = HYPO_PC16;
+                            break;
+                        case JMP_OPERAND_REGMEMSYM:
+                            type = HYPO_PC16;
+                            break;
+                    }                  
+                    symbolToPatch->insertFlink({this->currentSection->getLocationCounter()+2,type,this->currentSection});
                 }
             }
         }
@@ -176,15 +192,10 @@ void Assembler::insertInstruction(Instruction* instruction){
         this->currentSection->incrementLocationCounter(1);
     }
     if(instructionLen != 0xFF && instructionLen > 3){
-        this->currentSection->setDataByOffsetByte(
+        this->currentSection->setDataByOffsetMem(
             this->currentSection->getLocationCounter(),
-            DataHigh,
-            1
-        );
-        this->currentSection->setDataByOffsetByte(
-            this->currentSection->getLocationCounter()+1,
-            DataLow,
-            1
+            (char*)&Data,
+            2
         );
         this->currentSection->incrementLocationCounter(2);
     }

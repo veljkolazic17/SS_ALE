@@ -15,13 +15,14 @@
 %}
 
 %code requires{
-   #include "../inc/Types.h"
+  #include "../inc/Types.h"
   #include "../inc/Directive.hpp"
   #include "../inc/Argument.hpp"
   #include "../inc/Instruction.hpp"
   #include "../inc/Line.hpp"
   #include "../inc/Label.hpp"
   #include "../inc/Lines.hpp"
+  #include "../inc/ExpressionElement.hpp"
 
   extern Lines* lineVec;  
 }
@@ -34,6 +35,8 @@
   int token;
   int number;
   char reg;
+
+  std::vector<Expression::ExpressionElement>* expression;
 
   Directive* directive;
   Instruction* instruction;
@@ -51,6 +54,7 @@
 }
 %token<reg>         REGISTER
 %token<symbol>      SYMBOL
+%token<symbol>      STRING
 %token<number>      NUMBER
 %token<token>       GLOBAL EXTERN SECTION WORD SKIP ASCII EQU END
 %token<token>       HALT INT RET IRET CALL
@@ -60,7 +64,7 @@
 /*
   LEXSYMBOLS
 */
-%token<token>       PC PSW SP
+%token<token>       IP PSW SP
 %token<token>       COMMENT
 %token<token>       COMMA DOT COLON PLUS MINUS STAR MOD DOLLAR LBRACKET RBRACKET NEW_LINE
 
@@ -74,6 +78,7 @@
 %type<symbolLiterallList> symbolLiterallList
 %type<jumpOperand> jumpOperand
 %type<dataOperand> dataOperand
+%type<expression> expression
 
 %start program
 
@@ -162,11 +167,17 @@ directive:
   GLOBAL symbolList{
     $$ = new Directive(GLOBAL_TYPE,$2);
   }
+  | ASCII STRING{
+    $$ = new Directive(ASCII_TYPE,$2);
+  }
   | EXTERN symbolList{
     $$ = new Directive(EXTERN_TYPE,$2);
   }
   | SECTION DOT SYMBOL{
     $$ = new Directive(SECTION_TYPE,$3);
+  }
+  | SECTION SYMBOL{
+    $$ = new Directive(SECTION_TYPE,$2);
   }
   | WORD symbolLiterallList{
     $$ = new Directive(WORD_TYPE,$2);
@@ -177,7 +188,64 @@ directive:
   | END{
     $$ = new Directive(END_TYPE);
   }
+  | EQU SYMBOL COMMA expression {
+    $$ = new Directive(EQU_TYPE, new Expression(*$2,$4));
+  }
   ;
+
+expression:
+  SYMBOL{
+    $$ = new std::vector<Expression::ExpressionElement>();
+    Expression::ExpressionElement element1;
+    element1.type = SYMBOL_TYPE_EXP;
+    element1.value = *$1;
+    $$->push_back(element1);
+  }
+  | NUMBER{
+    $$ = new std::vector<Expression::ExpressionElement>();
+    Expression::ExpressionElement element1;
+    element1.type = LITERAL_TYPE_EXP;
+    element1.value = std::to_string($1);
+    $$->push_back(element1);
+  }
+  | expression MINUS SYMBOL{
+    Expression::ExpressionElement element1,element2;
+    element1.type = MINUS_TYPE_EXP;
+    element2.type = SYMBOL_TYPE_EXP;
+    element2.value = *$3;
+  
+    $1->push_back(element1);
+    $1->push_back(element2);
+  }
+  | expression PLUS SYMBOL{
+    Expression::ExpressionElement element1,element2;
+    element1.type = PLUS_TYPE_EXP;
+    element2.type = SYMBOL_TYPE_EXP;
+    element2.value = *$3;
+
+    $1->push_back(element1);
+    $1->push_back(element2);
+  }
+  | expression PLUS NUMBER{
+    Expression::ExpressionElement element1,element2;
+    element1.type = PLUS_TYPE_EXP;
+    element2.type = LITERAL_TYPE_EXP;
+    element2.value = std::to_string($3);
+
+    $1->push_back(element1);
+    $1->push_back(element2);
+  }
+  | expression MINUS NUMBER{
+    Expression::ExpressionElement element1,element2;
+    element1.type = MINUS_TYPE_EXP;
+    element2.type = LITERAL_TYPE_EXP;
+    element2.value = std::to_string($3);
+
+    $1->push_back(element1);
+    $1->push_back(element2);
+  }
+  ;
+
 symbolList:
   SYMBOL{
     $$ = new std::vector<SymbolListElement*>();
@@ -217,10 +285,10 @@ instruction:
     $$ = new Instruction(INT_TYPE, new Argument(REGISTER_TYPE,$2));
   }
   | PUSH REGISTER{
-    $$ = new Instruction(PUSH_TYPE, new Argument(REGISTER_TYPE,$2));
+    $$ = new Instruction(PUSH_TYPE, new Argument(REGISTER_TYPE,$2),new Argument(DATA_OPERAND_REGMEM,(char)6));
   }
   | POP REGISTER{
-    $$ = new Instruction(POP_TYPE, new Argument(REGISTER_TYPE,$2));
+    $$ = new Instruction(POP_TYPE, new Argument(REGISTER_TYPE,$2),new Argument(DATA_OPERAND_REGMEM,(char)6));
   }
   | XCHG REGISTER COMMA REGISTER{
     $$ = new Instruction(XCHG_TYPE, new Argument(REGISTER_TYPE,$2), new Argument(REGISTER_TYPE,$4));

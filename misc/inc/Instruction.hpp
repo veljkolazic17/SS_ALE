@@ -11,7 +11,6 @@ class Instruction{
     Instruction(InstructionTypes instruction_type);
     Instruction(InstructionTypes instruction_type, Argument* argument);
     Instruction(InstructionTypes instruction_type, Argument* argument1, Argument* argument2);
-
     ~Instruction();
 
     void addArgument(Argument* argument);

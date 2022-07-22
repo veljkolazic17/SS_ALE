@@ -64,6 +64,7 @@ enum DirectiveType {
   SKIP_TYPE,
   EQU_TYPE,
   END_TYPE,
+  ASCII_TYPE,
 };
 
 enum SymbolListElementType {
@@ -79,4 +80,12 @@ enum SymbolTableEntryType {
 enum Binding{
   LOC,
   GLOB,
+};
+
+enum ExpressionListElementType{
+  SYMBOL_TYPE_EXP,
+  OPERATION_TYPE_EXP,
+  MINUS_TYPE_EXP,
+  PLUS_TYPE_EXP,
+  LITERAL_TYPE_EXP,
 };

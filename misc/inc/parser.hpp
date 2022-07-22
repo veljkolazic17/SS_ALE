@@ -46,17 +46,18 @@ extern int yydebug;
 /* "%code requires" blocks.  */
 #line 17 "Parser.y"
 
-   #include "../inc/Types.h"
+  #include "../inc/Types.h"
   #include "../inc/Directive.hpp"
   #include "../inc/Argument.hpp"
   #include "../inc/Instruction.hpp"
   #include "../inc/Line.hpp"
   #include "../inc/Label.hpp"
   #include "../inc/Lines.hpp"
+  #include "../inc/ExpressionElement.hpp"
 
   extern Lines* lineVec;  
 
-#line 60 "./inc/parser.hpp"
+#line 61 "./inc/parser.hpp"
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -65,56 +66,57 @@ extern int yydebug;
   {
     REGISTER = 258,
     SYMBOL = 259,
-    NUMBER = 260,
-    GLOBAL = 261,
-    EXTERN = 262,
-    SECTION = 263,
-    WORD = 264,
-    SKIP = 265,
-    ASCII = 266,
-    EQU = 267,
-    END = 268,
-    HALT = 269,
-    INT = 270,
-    RET = 271,
-    IRET = 272,
-    CALL = 273,
-    JMP = 274,
-    JEQ = 275,
-    JNE = 276,
-    JGT = 277,
-    PUSH = 278,
-    POP = 279,
-    XCHG = 280,
-    ADD = 281,
-    SUB = 282,
-    MUL = 283,
-    DIV = 284,
-    CMP = 285,
-    NOT = 286,
-    AND = 287,
-    OR = 288,
-    XOR = 289,
-    TEST = 290,
-    SHL = 291,
-    SHR = 292,
-    LDR = 293,
-    STR = 294,
-    PC = 295,
-    PSW = 296,
-    SP = 297,
-    COMMENT = 298,
-    COMMA = 299,
-    DOT = 300,
-    COLON = 301,
-    PLUS = 302,
-    MINUS = 303,
-    STAR = 304,
-    MOD = 305,
-    DOLLAR = 306,
-    LBRACKET = 307,
-    RBRACKET = 308,
-    NEW_LINE = 309
+    STRING = 260,
+    NUMBER = 261,
+    GLOBAL = 262,
+    EXTERN = 263,
+    SECTION = 264,
+    WORD = 265,
+    SKIP = 266,
+    ASCII = 267,
+    EQU = 268,
+    END = 269,
+    HALT = 270,
+    INT = 271,
+    RET = 272,
+    IRET = 273,
+    CALL = 274,
+    JMP = 275,
+    JEQ = 276,
+    JNE = 277,
+    JGT = 278,
+    PUSH = 279,
+    POP = 280,
+    XCHG = 281,
+    ADD = 282,
+    SUB = 283,
+    MUL = 284,
+    DIV = 285,
+    CMP = 286,
+    NOT = 287,
+    AND = 288,
+    OR = 289,
+    XOR = 290,
+    TEST = 291,
+    SHL = 292,
+    SHR = 293,
+    LDR = 294,
+    STR = 295,
+    IP = 296,
+    PSW = 297,
+    SP = 298,
+    COMMENT = 299,
+    COMMA = 300,
+    DOT = 301,
+    COLON = 302,
+    PLUS = 303,
+    MINUS = 304,
+    STAR = 305,
+    MOD = 306,
+    DOLLAR = 307,
+    LBRACKET = 308,
+    RBRACKET = 309,
+    NEW_LINE = 310
   };
 #endif
 
@@ -122,12 +124,14 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 32 "Parser.y"
+#line 33 "Parser.y"
 
   std::string *symbol;
   int token;
   int number;
   char reg;
+
+  std::vector<Expression::ExpressionElement>* expression;
 
   Directive* directive;
   Instruction* instruction;
@@ -143,7 +147,7 @@ union YYSTYPE
   Argument *dataOperand;
 
 
-#line 147 "./inc/parser.hpp"
+#line 151 "./inc/parser.hpp"
 
 };
 typedef union YYSTYPE YYSTYPE;

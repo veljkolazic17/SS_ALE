@@ -8,6 +8,19 @@ class Section;
 #define ABS -2
 class SymbolTableElement{
     public:
+        /**
+         * @brief Construct a new Symbol Table Element object
+         * 
+         * @param num 
+         * @param value 
+         * @param size 
+         * @param offset 
+         * @param type 
+         * @param binding 
+         * @param Ndx 
+         * @param section 
+         * @param symbolName 
+         */
         SymbolTableElement(
         char num, 
         long value, 
@@ -19,7 +32,9 @@ class SymbolTableElement{
         Section* section, 
         std::string symbolName
         );
-
+        /**
+         * @brief   getters and setters 
+        */
         char getNum();
         void setNum(char);
 
@@ -49,8 +64,13 @@ class SymbolTableElement{
 
         std::string getSymbolName();
         void setSymbolName(std::string);
-
-        void backpatch(BackpatchElement);
+        /**
+         * @brief Flink operatioons
+         * 
+         */
+        void insertFlink(BackpatchElement);
+        int getFlinkSize();
+        BackpatchElement getBackpatchElement(int);
 
     private:
         char num;

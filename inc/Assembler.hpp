@@ -14,12 +14,16 @@ typedef unsigned char STATE;
 
 class Assembler{
     public:
+        struct TNSElement{
+            Expression* expression;
+        };
+
         Assembler();
         /**
          * @brief used for printing tables and contetn
          * 
          */
-        void objdump();
+        void objdump(char*);
         /**
          * @brief assembler main loop instructions
          * 
@@ -40,15 +44,32 @@ class Assembler{
         void crackSKIP(Directive*);
         void crackEQU(Directive*);
         void crackEND(Directive*);
+        void crackASCII(Directive*);
         /**
          * @brief helper functions
          * 
          */
         void insertSection(Section*);
+        /**
+         * @brief backpatcing method
+         * 
+         */
+        void backpatchSingle(SymbolTableElement*);
+        void backpatch();
+        /**
+         * @brief form SElf file and .o file
+         * 
+         */
+        void createSElf(char* obj_filename);
+
+        void insertTNSElement(TNSElement);
+
     private:
         std::vector<SymbolTableElement*>* symbolTable;
         std::vector<Section*>* sections;
         Section* currentSection = nullptr;
+        Section* ABS_section = nullptr;
         int entry = 1;
-        STATE ASMSTATE = PROCESSING; 
+        STATE ASMSTATE = PROCESSING;
+        std::vector<TNSElement> TNS;
 };

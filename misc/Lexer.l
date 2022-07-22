@@ -55,7 +55,7 @@
 "shr"                   {return SHR;}
 "ldr"                   {return LDR;}
 "str"                   {return STR;}
-"pc"                    {return PC;}
+"pc"                    {return IP;}
 "psw"                   {return PSW;}
 "sp"                    {return SP;}
 #.*                     {return COMMENT;}
@@ -74,5 +74,6 @@ r[0-7]                  {STORE_REG; return REGISTER;}
 "["                     {return LBRACKET;}
 "]"                     {return RBRACKET;}
 "\n"                    {return NEW_LINE;}
+\".*\"                  {STORE_SYMBOL; return STRING;}
 [ \t]+                  {;}
 %%

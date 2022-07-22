@@ -1,9 +1,9 @@
 #pragma once
+#include "./SELF.h"
 class Section;
 
-#define RELOCATION  0
-#define UNDEFINED   2
 typedef unsigned char ACTION;
+typedef unsigned char RELOCATION_TYPE;
 
 struct BackpatchElement{
     int offset;
